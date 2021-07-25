@@ -1,4 +1,8 @@
-import 'package:app/src/Widget/pesquisa.dart';
+import 'dart:ui';
+import 'package:app/src/Widget/botaoAgenda.dart';
+import 'package:app/src/Widget/cardM.dart';
+import 'package:app/src/Widget/fPerfil.dart';
+import 'package:app/src/Widget/navBar.dart';
 import 'package:flutter/material.dart';
 
 class HomeTurista extends StatefulWidget {
@@ -10,39 +14,63 @@ class _HomeTuristaState extends State<HomeTurista> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.asset(
-            "asset/SP.jpg",
-            fit: BoxFit.cover,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            color: Colors.black.withOpacity(0.8),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  height: 175,
+        body: Container(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                "asset/SP.jpg",
+                fit: BoxFit.cover,
+              ),
+              Container(
+                color: Colors.black.withOpacity(0.7),
+                child: SafeArea(
+                  child: Container(
+                    child: ListView(
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 10, right: 30),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              agenda(),
+                              hPerfil(),
+                            ],
+                          ),
+                        ),
+
+                        ///menu de cima
+                        // Adicionar req do nome do usuario
+                        Padding(
+                          padding: EdgeInsets.only(top: 48, left: 28.8),
+                          child: Text(
+                            "Bem vindo, Fulano!",
+                            style: TextStyle(
+                                fontSize: 28,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 48, left: 28.8),
+                          child: Text(
+                            "Favoritos!",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                        carouselM(),
+                      ],
+                    ),
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'Boa tarde, XXXXXXXX!',
-                      style: TextStyle(
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 24,
-                      ),
-                    )
-                  ],
-                ),
-                pesquisar(),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+        bottomNavigationBar: nBar());
   }
 }
