@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart'
-    show BuildContext, Center, Container, Scaffold, Text, TextStyle, Widget;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'homeGController.dart';
+import 'chatController.dart';
 
-class HomeGuia extends GetView<HomeController> {
+class ChatGuia extends GetView<ChatController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Center(
           child: Text(
-            "Home Page",
+            "Chat",
             style: TextStyle(fontSize: 20),
           ),
         ),

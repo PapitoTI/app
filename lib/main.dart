@@ -1,6 +1,7 @@
-import 'package:app/src/pages/Home/homeG.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'src/Pages/Home/homeT.dart';
 
 void main() {
   runApp(MyApp());
