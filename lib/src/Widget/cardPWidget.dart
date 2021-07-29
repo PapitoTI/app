@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget cardP() => Container(
+Widget cardPWidget() => Container(
       width: 327,
       height: 84,
       child: Row(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-Widget pesquisar() {
+Widget pesquisaWidget() {
   return FloatingSearchBar(
     hint: 'Onde vamos ...',
     openAxisAlignment: 0.0,
