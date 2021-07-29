@@ -37,6 +37,7 @@ class _TuristaHomePageState extends State<TuristaHomePage> {
                             children: [botaoAgendaWidget(), hPerfilWidget()],
                           ),
                         ),
+//teste pull
 
                         ///menu de cima
                         // Adicionar req do nome do usuario
