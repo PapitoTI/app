@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget nBar() => BottomNavigationBar(
+Widget navBarWidget() => BottomNavigationBar(
       //  currentIndex: _currentIndex,
       items: [
         BottomNavigationBarItem(

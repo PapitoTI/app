@@ -5,7 +5,7 @@ _onPressed() {
   Get.snackbar("Clicou", "Clicou na agenda");
 }
 
-Widget agenda() => Container(
+Widget botaoAgendaWidget() => Container(
       height: 46,
       width: 159,
       decoration: BoxDecoration(

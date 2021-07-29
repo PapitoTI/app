@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget infoGuia() => Container(
+Widget infoGuiaWidget() => Container(
       width: 328,
       height: 72,
       child: Row(

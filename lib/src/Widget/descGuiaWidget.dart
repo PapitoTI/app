@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget descGuia() => Container(
+Widget descGuiaWidget() => Container(
       width: 328,
       height: 219.76,
       child: Stack(

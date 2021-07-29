@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget hPerfil() => Container(
+Widget hPerfilWidget() => Container(
     height: 46,
     width: 46,
     padding: EdgeInsets.all(10),

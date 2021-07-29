@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget timeLine() => Container(
+Widget timelineWidget() => Container(
       width: 259,
       height: 279,
       padding: const EdgeInsets.only(
