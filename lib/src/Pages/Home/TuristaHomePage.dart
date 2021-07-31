@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/src/Widget/botaoAgendaWidget.dart';
+import 'package:app/src/Widget/cardPWidget.dart';
 import 'package:app/src/Widget/carouselMWidget.dart';
 import 'package:app/src/Widget/hPerfilWidget.dart';
 import 'package:app/src/Widget/navBarWidget.dart';
@@ -61,7 +62,8 @@ class _TuristaHomePageState extends State<TuristaHomePage> {
                                 fontWeight: FontWeight.w300),
                           ),
                         ),
-                        carouselMWidget(),
+                        //carouselMWidget(),
+                        cardPWidget(),
                       ],
                     ),
                   ),
