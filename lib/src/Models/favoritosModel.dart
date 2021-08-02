@@ -14,7 +14,7 @@ List<FavoritosModel> favoritos = favoritosDB
 
 var favoritosDB = [
   {
-    "local": "São Paulo",
+    "local": "São Paulo, SP",
     "nome": "Bertioga",
     "img":
         "http://naturam.com.br/wp-content/uploads/2019/10/bertioga-destacada.jpg",
