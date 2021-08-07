@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget cardPWidget() => Container(
+class CardPWidget extends StatelessWidget {
+  const CardPWidget({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       width: 327,
       height: 84,
       child: Row(
@@ -62,7 +68,7 @@ Widget cardPWidget() => Container(
                   child: Opacity(
                     opacity: 0.60,
                     child: Text(
-                      "231 East 95th Street, HK",
+                      this.title,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -74,7 +80,7 @@ Widget cardPWidget() => Container(
                   left: 113,
                   top: 20,
                   child: Text(
-                    "Royal Albert Hotel",
+                    this.title,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -151,3 +157,5 @@ Widget cardPWidget() => Container(
         ],
       ),
     );
+  }
+}

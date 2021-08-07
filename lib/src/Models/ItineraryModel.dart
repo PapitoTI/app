@@ -14,7 +14,7 @@ class ItineraryModel {
   int price;
 
   ItineraryModel(
-      {this.name,
+      this.name,
       this.spotsList,
       this.spotDuration,
       this.totalDuration,
@@ -23,7 +23,7 @@ class ItineraryModel {
       this.weekdays,
       this.itineraryImagesList,
       this.itineraryAddsList,
-      this.price});
+      this.price);
 }
 
 class ItineraryAdds {
@@ -31,5 +31,40 @@ class ItineraryAdds {
   String description;
   int price;
 
-  ItineraryAdds({this.name, this.description, this.price});
+  ItineraryAdds(this.name, this.description, this.price);
 }
+
+List<ItineraryModel> itineraryList = itineraryDB
+    .map((item) => ItineraryModel(
+        item['name'].toString(),
+        item['spotsList'] as List<SpotModel>,
+        item['spotDuration'] as List<TimeOfDay>,
+        item['totalDuration'] as TimeOfDay,
+        item['description'].toString(),
+        item['category'].toString(),
+        item['weekdays'] as List<DateTime>,
+        item['itineraryImagesList'] as List<String>,
+        item['itineraryAddsList'] as List<ItineraryAdds>,
+        item['price'] as int))
+    .toList();
+
+ItineraryModel itinerary = itineraryDB as ItineraryModel;
+
+var itineraryDB = [
+  {
+    'name': 'Roteiro A',
+    'spotsList': spotsList,
+    'spotsDuration': [
+      TimeOfDay(hour: 04, minute: 00),
+    ],
+    'totalDuration': TimeOfDay(hour: 04, minute: 00),
+    'description': 'Descrição do roteiro A bla bla bla bla bla bla',
+    'category': 'Histórico',
+    'weekdays': [DateTime.monday, DateTime.tuesday, DateTime.wednesday],
+    'itineraryImagesList': [
+      'https://cdn2.civitatis.com/francia/paris/galeria/header/torre-eiffel-primavera.jpg'
+    ],
+    'itineraryAddsList': [],
+    'price': 250
+  }
+];

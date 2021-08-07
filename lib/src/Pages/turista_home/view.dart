@@ -1,11 +1,13 @@
-import 'dart:ui';
-
 import 'package:app/src/Widget/botaoAgendaWidget.dart';
 import 'package:app/src/Widget/description_widget.dart';
 import 'package:app/src/Widget/hPerfilWidget.dart';
 import 'package:app/src/Widget/spot_images_slider.dart';
 import 'package:app/src/Widget/spot_page_title_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'logic.dart';
+import 'state.dart';
 
 class TuristaHomePage extends StatefulWidget {
   @override
@@ -13,6 +15,9 @@ class TuristaHomePage extends StatefulWidget {
 }
 
 class _TuristaHomePageState extends State<TuristaHomePage> {
+  final TuristaHomeLogic logic = Get.put(TuristaHomeLogic());
+  final TuristaHomeState state = Get.find<TuristaHomeLogic>().state;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

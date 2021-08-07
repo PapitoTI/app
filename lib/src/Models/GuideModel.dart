@@ -6,11 +6,6 @@ class GuideModel {
   String password;
   String certificate;
 
-  GuideModel(
-      {this.imageURL,
-      this.name,
-      this.email,
-      this.phone,
-      this.password,
-      this.certificate});
+  GuideModel(this.imageURL, this.name, this.email, this.phone, this.password,
+      this.certificate);
 }

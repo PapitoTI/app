@@ -69,7 +69,7 @@ Widget cardMWidget() => Container(
                           height: 1.5 /*PERCENT not supported*/
                           ),
                     )),
-                Positioned(top: 0, left: 0, child: null),
+                Positioned(top: 0, left: 0, child: SizedBox()),
               ]))),
       Positioned(
           top: 127,

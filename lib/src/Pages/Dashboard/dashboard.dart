@@ -3,6 +3,7 @@ import 'package:app/src/Pages/Home/homeG.dart';
 import 'package:app/src/Pages/Perfil/perfilG.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'dashboardController.dart';
 
 class Dashboard extends StatelessWidget {
@@ -49,7 +50,7 @@ class Dashboard extends StatelessWidget {
     });
   }
 
-  _bottomNavigationBarItem({IconData icon, String label}) {
+  _bottomNavigationBarItem({required IconData icon, required String label}) {
     return BottomNavigationBarItem(
       icon: Icon(icon),
       label: label,

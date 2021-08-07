@@ -4,5 +4,5 @@ class PaymentModel {
   DateTime expDate;
   int cvv;
 
-  PaymentModel({this.name, this.cardNumber, this.expDate, this.cvv});
+  PaymentModel(this.name, this.cardNumber, this.expDate, this.cvv);
 }
