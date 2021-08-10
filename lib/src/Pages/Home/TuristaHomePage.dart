@@ -5,6 +5,7 @@ import 'package:app/src/Widget/cardPWidget.dart';
 import 'package:app/src/Widget/carouselMWidget.dart';
 import 'package:app/src/Widget/hPerfilWidget.dart';
 import 'package:app/src/Widget/navBarWidget.dart';
+import 'package:app/src/Widget/timelineWidget.dart';
 import 'package:flutter/material.dart';
 
 class TuristaHomePage extends StatefulWidget {
@@ -63,7 +64,8 @@ class _TuristaHomePageState extends State<TuristaHomePage> {
                           ),
                         ),
                         //carouselMWidget(),
-                        cardPWidget(),
+                        //cardPWidget(),
+                        timelineWidget(),
                       ],
                     ),
                   ),

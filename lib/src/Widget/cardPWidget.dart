@@ -5,12 +5,9 @@ final _pageController = PageController(viewportFraction: 0.877);
 
 Widget cardPWidget() => Container(
       width: 327,
-      height: 100,
+      height: 300,
       margin: EdgeInsets.only(top: 16),
-      child: PageView(
-        physics: BouncingScrollPhysics(),
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
+      child: Column(
         children: List.generate(
           favoritos.length,
           (int index) => Row(
@@ -85,8 +82,11 @@ Widget cardPWidget() => Container(
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.white54,
+
                                           blurRadius: 10,
+
                                           // efeito fora da imagem sobra em x : y
+
                                           offset: Offset(0.0, 3.0),
                                         ),
                                       ],
