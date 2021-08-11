@@ -1,15 +1,18 @@
 class FavoritosModel {
-  String? local;
-  String? nome;
-  String? img;
-  String? tipo;
+  String local;
+  String nome;
+  String img;
+  String tipo;
 
   FavoritosModel(this.local, this.nome, this.img, this.tipo);
 }
 
 List<FavoritosModel> favoritos = favoritosDB
-    .map((item) =>
-        FavoritosModel(item['local'], item['nome'], item['img'], item['tipo']))
+    .map((item) => FavoritosModel(
+        item['local'].toString(),
+        item['nome'].toString(),
+        item['img'].toString(),
+        item['tipo'].toString()))
     .toList();
 
 var favoritosDB = [

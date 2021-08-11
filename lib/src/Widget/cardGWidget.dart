@@ -12,9 +12,7 @@ Widget cardGWidget() => Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.6),
         image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(favoritos[0].img ??
-                'https://image.freepik.com/vetores-gratis/fundo-colorido-silhuetas-de-palmeiras_23-2148541792.jpg')),
+            fit: BoxFit.cover, image: NetworkImage(favoritos[0].img)),
       ),
       child: Stack(
         children: [
@@ -37,7 +35,7 @@ Widget cardGWidget() => Container(
                       ),
                       SizedBox(width: 9),
                       Text(
-                        favoritos[0].tipo ?? "Tipo",
+                        favoritos[0].tipo,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                       )
@@ -74,7 +72,7 @@ Widget cardGWidget() => Container(
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              favoritos[0].nome ?? "Nome",
+                              favoritos[0].nome,
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -89,7 +87,7 @@ Widget cardGWidget() => Container(
                                 color: Palette.cinza,
                               ),
                               Text(
-                                favoritos[0].local ?? "Local",
+                                favoritos[0].local,
                                 style: TextStyle(
                                     color: Palette.cinza, fontSize: 15),
                               ),
