@@ -1,4 +1,3 @@
-import 'package:app/src/Widget/cardPWidget.dart';
 import 'package:flutter/material.dart';
 
 Widget timelineWidget() => Container(

@@ -1,23 +1,32 @@
-import 'package:app/src/Pages/Chat/chat.dart';
-import 'package:app/src/Pages/Home/homeG.dart';
-import 'package:app/src/Pages/Perfil/perfilG.dart';
+import 'package:app/src/Pages/chat/view.dart';
+import 'package:app/src/Pages/guide_home/view.dart';
+import 'package:app/src/Pages/profile_g/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'dashboardController.dart';
+import 'logic.dart';
+import 'state.dart';
 
-class Dashboard extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  final logic = Get.find<DashboardLogic>();
+  final DashboardState state = Get.find<DashboardLogic>().state;
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardController>(builder: (controller) {
+    return GetBuilder<DashboardLogic>(builder: (controller) {
       return Scaffold(
         body: SafeArea(
           child: IndexedStack(
-            index: controller.tabIndex,
+            index: logic.tabIndex,
             children: [
-              HomeGuia(),
-              ChatGuia(),
-              PerfilGuia(),
+              GuideHomePage(),
+              ChatPage(),
+              ProfileGPage(),
             ],
           ),
         ),
@@ -55,5 +64,11 @@ class Dashboard extends StatelessWidget {
       icon: Icon(icon),
       label: label,
     );
+  }
+
+  @override
+  void dispose() {
+    Get.delete<DashboardLogic>();
+    super.dispose();
   }
 }

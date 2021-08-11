@@ -1,5 +1,5 @@
-import 'package:app/src/Config/Palette.dart';
-import 'package:app/src/Widget/cardPWidget.dart';
+import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 

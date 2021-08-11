@@ -1,4 +1,4 @@
-import 'package:app/src/Models/SpotModel.dart';
+import 'package:app/src/Models/spot_model.dart';
 import 'package:flutter/material.dart';
 
 class ItineraryModel {

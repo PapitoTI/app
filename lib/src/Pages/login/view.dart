@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
-class LoginP extends StatelessWidget {
-  get child => null;
+import 'logic.dart';
+import 'state.dart';
 
-  get decoration => null;
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final LoginLogic logic = Get.put(LoginLogic());
+  final LoginState state = Get.find<LoginLogic>().state;
 
   @override
   Widget build(BuildContext context) {
@@ -159,5 +167,11 @@ class LoginP extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    Get.delete<LoginLogic>();
+    super.dispose();
   }
 }

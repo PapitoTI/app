@@ -1,7 +1,7 @@
-import 'package:app/src/Widget/botaoAgendaWidget.dart';
+import 'package:app/src/Widget/calendar_button_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
-import 'package:app/src/Widget/hPerfilWidget.dart';
-import 'package:app/src/Widget/spot_images_slider.dart';
+import 'package:app/src/Widget/h_profile_widget.dart';
+import 'package:app/src/Widget/spot_images_slider_widget.dart';
 import 'package:app/src/Widget/spot_page_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,14 +9,14 @@ import 'package:get/get.dart';
 import 'logic.dart';
 import 'state.dart';
 
-class TuristaHomePage extends StatefulWidget {
+class TouristHomePage extends StatefulWidget {
   @override
-  _TuristaHomePageState createState() => _TuristaHomePageState();
+  _TouristHomePageState createState() => _TouristHomePageState();
 }
 
-class _TuristaHomePageState extends State<TuristaHomePage> {
-  final TuristaHomeLogic logic = Get.put(TuristaHomeLogic());
-  final TuristaHomeState state = Get.find<TuristaHomeLogic>().state;
+class _TouristHomePageState extends State<TouristHomePage> {
+  final TouristHomeLogic logic = Get.put(TouristHomeLogic());
+  final TouristHomeState state = Get.find<TouristHomeLogic>().state;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _TuristaHomePageState extends State<TuristaHomePage> {
           fit: StackFit.expand,
           children: [
             Image.asset(
-              "assets/SP.jpg",
+              'assets/images/SP.jpg',
               fit: BoxFit.cover,
             ),
             Container(

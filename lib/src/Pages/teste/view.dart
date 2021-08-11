@@ -1,4 +1,4 @@
-import 'package:app/src/Widget/CustomTableCalendar/CustomTableCalendar.dart';
+import 'package:app/src/Widget/CustomTableCalendar/custom_table_calendar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +20,7 @@ class _TestePageState extends State<TestePage> {
           fit: StackFit.expand,
           children: [
             Image.asset(
-              "assets/SP.jpg",
+              'assets/images/SP.jpg',
               fit: BoxFit.cover,
             ),
             Container(

@@ -1,7 +1,10 @@
-//import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PerfilGController extends GetxController {
+import 'state.dart';
+
+class ProfileGLogic extends GetxController {
+  final state = ProfileGState();
+
   var counter = 0.obs;
 
   void increaseCounter() {

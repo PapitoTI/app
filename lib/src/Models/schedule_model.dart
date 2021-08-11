@@ -1,4 +1,4 @@
-import 'package:app/src/Models/ItineraryModel.dart';
+import 'package:app/src/Models/itinerary_model.dart';
 
 class ScheduleModel {
   ItineraryModel itinerary;

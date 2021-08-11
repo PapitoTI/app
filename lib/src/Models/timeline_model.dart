@@ -7,7 +7,8 @@ class TimelineModel {
 }
 
 List<TimelineModel> timeline = timelineDB
-    .map((item) => TimelineModel(item['local'], item['img'], item['time']))
+    .map((item) => TimelineModel(item['local'].toString(),
+        item['img'].toString(), item['time'].toString()))
     .toList();
 
 var timelineDB = [

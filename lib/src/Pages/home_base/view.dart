@@ -1,6 +1,6 @@
-import 'package:app/src/Config/Palette.dart';
+import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/teste/view.dart';
-import 'package:app/src/Pages/turista_home/view.dart';
+import 'package:app/src/Pages/tourist_home/view.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _HomeBasePageState extends State<HomeBasePage> {
           body: Stack(fit: StackFit.expand, children: [
             IndexedStack(
               index: controller.tabIndex,
-              children: [TestePage(), TuristaHomePage()],
+              children: [TestePage(), TouristHomePage()],
             ),
           ]),
           bottomNavigationBar: FloatingNavbar(

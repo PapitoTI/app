@@ -1,4 +1,4 @@
-import 'package:app/src/Config/Palette.dart';
+import 'package:app/src/Config/palette.dart';
 import 'package:flutter/material.dart';
 
 Widget nomeRoteiroCardWidget() => Container(
@@ -24,7 +24,7 @@ Widget nomeRoteiroCardWidget() => Container(
                       height: 100,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/SP.jpg'),
+                            image: AssetImage('assets/images/SP.jpg'),
                             fit: BoxFit.fitWidth),
                       )),
                 ],

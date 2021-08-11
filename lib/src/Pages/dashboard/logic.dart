@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
 
-class DashboardController extends GetxController {
+import 'state.dart';
+
+class DashboardLogic extends GetxController {
+  final state = DashboardState();
+
   var tabIndex = 0;
 
   void changeTabIndex(int index) {
