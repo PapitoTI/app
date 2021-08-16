@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrionGrpc";
+
+package tourist;
+
+message LoginRequest {
+    string userName = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    int32 status = 1;
+    string cookie = 2;
+}
+
+service TouristService {
+    rpc Login(LoginRequest) returns(LoginResponse);
+}
