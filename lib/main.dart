@@ -1,4 +1,6 @@
 import 'package:app/src/Pages/home_base/view.dart';
+//import 'package:app/src/Pages/splash/splash.dart';
+//import 'package:app/src/Pages/tourist_home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

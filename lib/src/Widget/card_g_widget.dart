@@ -5,8 +5,6 @@ import 'package:app/src/Models/favoritos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-final _pageController = PageController(viewportFraction: 0.877);
-
 Widget cardGWidget() => Container(
       height: 300,
       decoration: BoxDecoration(
