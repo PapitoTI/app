@@ -1,5 +1,6 @@
-import 'package:app/src/Pages/home_base/view.dart';
-//import 'package:app/src/Pages/splash/splash.dart';
+//import 'package:app/src/Pages/home_base/view.dart';
+import 'package:app/src/Pages/login/initialPage.dart';
+
 //import 'package:app/src/Pages/tourist_home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Orion', theme: ThemeData.dark(), home: HomeBasePage());
+        title: 'Orion', theme: ThemeData.dark(), home: InitialPage());
   }
 }
