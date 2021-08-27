@@ -3,8 +3,10 @@ class SpotModel {
   String category;
   String description;
   List<String> spotImagesList;
+  bool isFavorite;
 
-  SpotModel(this.name, this.category, this.description, this.spotImagesList);
+  SpotModel(this.name, this.category, this.description, this.spotImagesList,
+      this.isFavorite);
 }
 
 List<SpotModel> spotsList = spotsDB
@@ -12,7 +14,8 @@ List<SpotModel> spotsList = spotsDB
         item['name'].toString(),
         item['category'].toString(),
         item['description'].toString(),
-        item['spotImagesList'] as List<String>))
+        item['spotImagesList'] as List<String>,
+        item['isFavorite'] as bool))
     .toList();
 
 var spotsDB = [
