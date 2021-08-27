@@ -12,6 +12,7 @@ class ItineraryModel {
   List<String> itineraryImagesList;
   List<ItineraryAdds> itineraryAddsList;
   int price;
+  double stars;
 
   ItineraryModel(
       this.name,
@@ -23,7 +24,8 @@ class ItineraryModel {
       this.weekdays,
       this.itineraryImagesList,
       this.itineraryAddsList,
-      this.price);
+      this.price,
+      this.stars);
 }
 
 class ItineraryAdds {
@@ -45,7 +47,8 @@ List<ItineraryModel> itineraryList = itineraryDB
         item['weekdays'] as List<DateTime>,
         item['itineraryImagesList'] as List<String>,
         item['itineraryAddsList'] as List<ItineraryAdds>,
-        item['price'] as int))
+        item['price'] as int,
+        item['stars'] as double))
     .toList();
 
 ItineraryModel itinerary = itineraryDB as ItineraryModel;
