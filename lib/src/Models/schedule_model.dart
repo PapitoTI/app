@@ -1,17 +1,17 @@
 import 'package:app/src/Models/itinerary_model.dart';
+import 'package:app/src/Models/tourist_model.dart';
+
+enum ScheduleStatus { pending, denied, approved }
 
 class ScheduleModel {
   ItineraryModel itinerary;
+  TouristModel touristModel;
   DateTime date;
-  String status;
+  ScheduleStatus scheduleStatus;
 
-  ScheduleModel(this.itinerary, this.date, this.status);
+  ScheduleModel(
+      this.itinerary, this.touristModel, this.date, this.scheduleStatus);
 }
-
-List<ScheduleModel> scheduleList = scheduleDB
-    .map((item) => ScheduleModel(item['itinerary'] as ItineraryModel,
-        item['date'] as DateTime, item['status'].toString()))
-    .toList();
 
 var scheduleDB = [
   {
