@@ -1,52 +1,53 @@
+import 'dart:io';
+
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
-import 'package:app/src/Models/itinerary_spot_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
-import 'package:app/src/Models/spot_model.dart';
 
 abstract class GuideServerConnectionInterface {
-  Future<void> createGuide(GuideModel guideModel) async {
-    throw UnsupportedError("");
-  }
-
+  // retornar dados do guia
   Future<GuideModel> getGuideData() async {
     throw UnsupportedError("");
   }
 
-  Future<void> updateGuideData() async {
+  // trocar foto de perfil
+  Future<void> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
-  Future<void> createSpot(SpotModel spotModel) async {
+  // trocar senha
+  Future<void> updateProfilePassword(
+      String oldPassword, String newPassword) async {
     throw UnsupportedError("");
   }
 
+  // criar roteiro
   Future<void> createItinerary(ItineraryModel itineraryModel) async {
     throw UnsupportedError("");
   }
 
-  Future<ItineraryModel> getItineraryData() async {
-    throw UnsupportedError("");
-  }
-
+  // retornar lista de roteiros do guia
   Future<List<ItineraryModel>> getGuideItineraries() async {
     throw UnsupportedError("");
   }
 
-  Future<void> createItinerarySpot(
-      ItinerarySpotModel itinerarySpotModel) async {
+  // deletar roteiro do guia
+  Future<void> deleteItinerary(ItineraryModel itineraryModel) async {
     throw UnsupportedError("");
   }
 
-  Future<List<ItinerarySpotModel>> getItinerarySpots() async {
-    throw UnsupportedError("");
-  }
-
+  // retornar lista de agendamentos do guia
   Future<List<ScheduleModel>> getSchedules() async {
     throw UnsupportedError("");
   }
 
-  Future<void> setScheduleApprovation() async {
+  // aprovar o agendamento
+  Future<void> approveSchedule(ScheduleModel scheduleModel) async {
+    throw UnsupportedError("");
+  }
+
+  // cancelar o agendamento
+  Future<void> cancelSchedule(ScheduleModel scheduleModel) async {
     throw UnsupportedError("");
   }
 }
