@@ -1,59 +1,66 @@
+import 'dart:io';
+
+import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
-import 'package:app/src/Models/itinerary_spot_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 
-abstract class TouristServerConnectionInterface {
-  Future<void> createTourist(TouristModel touristModel) async {
-    throw UnsupportedError("");
-  }
+enum ItineraryType { SelfGuide, Guide, Host }
 
+class SearchFilter {
+  List<String> categories;
+  String searchText;
+
+  SearchFilter(this.searchText, this.categories);
+}
+
+abstract class TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
     throw UnsupportedError("");
   }
 
-  Future<void> updateTouristData() async {
+  // trocar foto de perfil
+  Future<void> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
-  Future<SpotModel> getSpotData() async {
+  // trocar senha
+  Future<void> updateProfilePassword(
+      String oldPassword, String newPassword) async {
     throw UnsupportedError("");
   }
 
-  Future<List<SpotModel>> getFavorites() async {
+  // retornar lista dos destinos em alta
+  Future<List<SpotModel>> getSpots() async {
     throw UnsupportedError("");
   }
 
-  Future<ItineraryModel> getItineraryData() async {
+  // retornar lista de roteiros por tipo de guiamento
+  Future<List<ItineraryModel>> getItinerariesByType(
+      ItineraryType itineraryType, int index, int length) async {
     throw UnsupportedError("");
   }
 
-  Future<List<ItineraryModel>> getItinerariesByType(type) async {
+  // retornar lista de roteiros por guia
+  Future<List<ItineraryModel>> getGuideItineraries(
+      GuideModel guideModel) async {
     throw UnsupportedError("");
   }
 
-  Future<List<ItineraryModel>> getGuideItineraries() async {
+  // criar novo roteiro
+  Future<void> requestSchedule(ScheduleModel scheduleModel) async {
     throw UnsupportedError("");
   }
 
-  Future<List<ItinerarySpotModel>> getItinerarySpots() async {
-    throw UnsupportedError("");
-  }
-
-  Future<void> createSchedule(ScheduleModel scheduleModel) async {
-    throw UnsupportedError("");
-  }
-
+  // retonar lista de agendamentos do turista
   Future<List<ScheduleModel>> getSchedules() async {
     throw UnsupportedError("");
   }
 
-  Future<List<SpotModel>> searchSpots(searchText) async {
-    throw UnsupportedError("");
-  }
-
-  Future<List<ItineraryModel>> searchItineraries(searchText) async {
+  // retornar lista de pesquisa do usuário (destinos e roteiros)
+  // retornar ItineraryModel e SpotModel
+  Future<List<Object>> searchResults(SearchFilter searchFilter) async {
     throw UnsupportedError("");
   }
 }
