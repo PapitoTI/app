@@ -1,8 +1,11 @@
+import 'dart:io';
+import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/login/loginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 class InitialPage extends StatefulWidget {
-  const InitialPage({Key? key}) : super(key: key);
-
   @override
   _InitialPageState createState() => _InitialPageState();
 }
@@ -19,7 +22,7 @@ class _InitialPageState extends State<InitialPage> {
               image: AssetImage("assets/images/Ceu.jpg"),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                  Color.fromRGBO(36, 117, 252, 20), BlendMode.colorBurn)),
+                  Color.fromRGBO(36, 117, 252, 20), BlendMode.modulate)),
         ),
         child: SafeArea(
           child: Stack(
@@ -139,7 +142,26 @@ class _InitialPageState extends State<InitialPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-                        )
+                        ),
+                        SizedBox(height: 30),
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          padding: EdgeInsets.only(right: 15),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                elevation: 0,
+                                primary: Palette.cinzaClaroTransparente),
+                            onPressed: () async {
+                              var dir = await getTemporaryDirectory();
+                              var f = File(dir.path + "Tutorial");
+                              f.writeAsStringSync("xpto");
+                              Get.to(() => LoginPage());
+                            },
+                            child: const Text('Cadastrar agora'),
+                          ),
+                        ),
                       ],
                     ),
                   ),
