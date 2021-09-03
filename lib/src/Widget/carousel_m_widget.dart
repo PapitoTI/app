@@ -12,5 +12,5 @@ Widget carouselMWidget() => Container(
           controller: _pageController,
           scrollDirection: Axis.horizontal,
           children:
-              List.generate(favoritos.length, (int index) => cardGWidget())),
+              List.generate(0, (int index) => cardGWidget())),
     );

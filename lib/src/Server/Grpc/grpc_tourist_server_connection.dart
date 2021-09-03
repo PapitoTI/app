@@ -6,17 +6,15 @@ import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Generated/tourist.pbgrpc.dart';
 
 class GrpcTouristServerConnection extends TouristServerConnectionInterface {
-  final ClientChannel _channel;
   final TouristServiceClient _client;
-  final String _userName;
-  final String _cookie;
+  final CallOptions _callOptions;
 
-  GrpcTouristServerConnection(this._channel, this._client, this._userName, this._cookie);
+  GrpcTouristServerConnection(this._client, userName, cookie) :
+    _callOptions = CallOptions(metadata: { "userName": userName, "cookie": cookie }, timeout: Duration(seconds: 5));
 
   @override
   Future<List<FavoritosModel>> getFavorites() async {
-
-
+    _client.favorites(FavoriteRequest(), options: _callOptions);
     return List<FavoritosModel>.empty();
   }
   @override

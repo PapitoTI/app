@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:ui';
 
 import 'package:app/src/Config/palette.dart';
@@ -12,7 +13,7 @@ Widget cardGWidget() => Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.6),
         image: DecorationImage(
-            fit: BoxFit.cover, image: NetworkImage(favoritos[0].img)),
+            fit: BoxFit.cover, image: NetworkImage(null)),
       ),
       child: Stack(
         children: [
@@ -35,7 +36,7 @@ Widget cardGWidget() => Container(
                       ),
                       SizedBox(width: 9),
                       Text(
-                        favoritos[0].tipo,
+                        null,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                       )
@@ -72,7 +73,7 @@ Widget cardGWidget() => Container(
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              favoritos[0].nome,
+                              null,
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -87,7 +88,7 @@ Widget cardGWidget() => Container(
                                 color: Palette.cinza,
                               ),
                               Text(
-                                favoritos[0].local,
+                                null,
                                 style: TextStyle(
                                     color: Palette.cinza, fontSize: 15),
                               ),
