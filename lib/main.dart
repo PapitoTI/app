@@ -1,15 +1,10 @@
-//import 'package:app/src/Pages/home_base/view.dart';
 import 'dart:io';
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/Cadastrar/choice.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/loginPage.dart';
-//import 'package:app/src/Pages/tourist_home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-
-//import 'src/Pages/login/loginPage.dart';
 
 void main() {
   runApp(MyApp());

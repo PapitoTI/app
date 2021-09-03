@@ -37,6 +37,7 @@ class ChoicePage extends StatelessWidget {
                     child: Text(
                       'Tipo do perfil',
                       style: TextStyle(
+                        decoration: TextDecoration.none,
                         color: Palette.branco,
                         fontSize: 26,
                       ),
@@ -74,6 +75,7 @@ class ChoicePage extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 8.0, right: 8),
                             child: Text("Guia",
                                 style: TextStyle(
+                                  decoration: TextDecoration.none,
                                   color: Palette.branco,
                                   fontSize: 26,
                                 )),
@@ -112,6 +114,7 @@ class ChoicePage extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Text("Turista",
                                 style: TextStyle(
+                                  decoration: TextDecoration.none,
                                   color: Palette.branco,
                                   fontSize: 26,
                                 )),
