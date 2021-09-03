@@ -3,9 +3,9 @@ class GuideModel {
   String name;
   String email;
   String phone;
-  String password;
   String certificate;
+  String accountBalance;
 
-  GuideModel(this.imageURL, this.name, this.email, this.phone, this.password,
-      this.certificate);
+  GuideModel(this.imageURL, this.name, this.email, this.phone, this.certificate,
+      this.accountBalance);
 }
