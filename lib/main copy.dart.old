@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/loginPage.dart';
@@ -51,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                               snapshot.data!.path + "Tutorial") ==
                           FileSystemEntityType.notFound
                       ? InitialPage()
-                      : LoginPage();
+                      : LoginPage(_builder);
                 }
                 return ListView();
               }),

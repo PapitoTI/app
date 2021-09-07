@@ -5,8 +5,7 @@ import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
-
-enum ItineraryType { SelfGuide, Guide, Host }
+import 'package:app/src/Server/tourist_server_connection_interface.dart';
 
 var spotsDB = [
   {
@@ -91,14 +90,7 @@ var spotsDB = [
   }
 ];
 
-class SearchFilter {
-  List<String> categories;
-  String searchText;
-
-  SearchFilter(this.searchText, this.categories);
-}
-
-class TouristServerConnection {
+class TouristServerConnection extends TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
     TouristModel touristModel = TouristModel('assets/images/felipe_turista.jpg',
         'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
@@ -137,11 +129,6 @@ class TouristServerConnection {
 
   // retornar lista de destinos favoritos
   Future<List<SpotModel>> getFavoriteSpots() async {
-    throw UnsupportedError("");
-  }
-
-  // retornar lista de destinos não-favoritos
-  Future<List<SpotModel>> getUnfavoriteSpots() async {
     throw UnsupportedError("");
   }
 

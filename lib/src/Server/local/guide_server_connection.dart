@@ -6,6 +6,7 @@ import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
+import 'package:app/src/Server/guide_server_connection_interface.dart';
 import 'package:app/src/Server/local/tourist_server_connection.dart';
 import 'package:flutter/material.dart';
 
@@ -116,7 +117,7 @@ ItineraryModel itineraryModel1 = ItineraryModel(
 ScheduleModel scheduleModel1 = ScheduleModel(
     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
 
-class GuideServerConnection {
+class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
   @override
   Future<GuideModel> getGuideData() async {
