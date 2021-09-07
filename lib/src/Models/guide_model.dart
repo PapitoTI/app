@@ -1,11 +1,11 @@
 class GuideModel {
-  String imageURL;
+  String imageUrl;
   String name;
   String email;
   String phone;
   String certificate;
   String accountBalance;
 
-  GuideModel(this.imageURL, this.name, this.email, this.phone, this.certificate,
+  GuideModel(this.imageUrl, this.name, this.email, this.phone, this.certificate,
       this.accountBalance);
 }

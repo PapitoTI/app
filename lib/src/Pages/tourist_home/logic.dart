@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 
-import 'state.dart';
-
 class TouristHomeLogic extends GetxController {
-  final state = TouristHomeState();
+  String spotName = 'spotName';
+  String spotAddress = 'spotAddress';
+  String spotImagesList = 'assets/images/erro.jpg';
+  bool isFavorite = true;
 }

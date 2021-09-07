@@ -1,5 +1,1 @@
-class TouristHomeState {
-  TouristHomeState() {
-    ///Initialize variables
-  }
-}
+class TouristHomeState {}

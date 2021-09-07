@@ -1,5 +1,7 @@
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/teste/view.dart';
+import 'package:app/src/Pages/guide_home/view.dart';
+import 'package:app/src/Pages/spot/view.dart';
+import 'package:app/src/Pages/teste3/view.dart';
 import 'package:app/src/Pages/tourist_home/view.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,9 +34,24 @@ class _HomeBasePageState extends State<HomeBasePage> {
             title: Text('PageName'),
           ),
           body: Stack(fit: StackFit.expand, children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/wallpaper.jpeg'),
+                      fit: BoxFit.cover)),
+              child: Container(
+                decoration:
+                    BoxDecoration(color: Color.fromRGBO(20, 20, 20, 100)),
+              ),
+            ),
             IndexedStack(
               index: controller.tabIndex,
-              children: [TestePage(), TouristHomePage()],
+              children: [
+                GuideHomePage(),
+                TouristHomePage(),
+                SpotPage(),
+                Teste3Page(),
+              ],
             ),
           ]),
           bottomNavigationBar: FloatingNavbar(

@@ -9,7 +9,7 @@ class ItineraryModel {
   List<TimeOfDay> spotDuration;
   String description;
   String category;
-  List<DateTime> weekdays;
+  List<int> weekdays;
   List<ExtraSpot> itineraryAddsList;
   double price;
 
@@ -38,7 +38,7 @@ ItineraryModel itinerary = itineraryDB as ItineraryModel;
 var itineraryDB = [
   {
     'name': 'Roteiro A',
-    'spotsList': spotsList,
+    'spotsList': '',
     'spotsDuration': [
       TimeOfDay(hour: 04, minute: 00),
     ],
