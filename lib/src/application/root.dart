@@ -1,6 +1,6 @@
 import 'package:app/src/Pages/Cadastrar/choice.dart';
 import 'package:app/src/Pages/login/loginPage.dart';
-import 'package:app/src/application/controller.dart';
+import 'package:app/src/application/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
