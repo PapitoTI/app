@@ -1,8 +1,8 @@
 import 'package:app/src/Config/palette.dart';
 
-import 'package:app/src/Pages/login/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:validatorless/validatorless.dart';
 
 class CadastroGuia extends StatelessWidget {
   @override
@@ -59,11 +59,8 @@ class CadastroGuia extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
-                            /*validator: (String? value) {
-                                return (value != null && value.contains('@'))
-                                    ? "Email deve conter @ para ser valido"
-                                    : null;
-                              },*/
+                            validator:
+                                Validatorless.required("Nome obrigatorio"),
                             decoration: InputDecoration(
                               labelText: "NOME",
                               labelStyle: TextStyle(color: Palette.branco),
@@ -90,11 +87,10 @@ class CadastroGuia extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
-                            /*validator: (String? value) {
-                                return (value != null && value.contains('@'))
-                                    ? "Email deve conter @ para ser valido"
-                                    : null;
-                              },*/
+                            validator: Validatorless.multiple([
+                              Validatorless.required("E-mail obrigatório"),
+                              Validatorless.email("E-mail inválido")
+                            ]),
                             decoration: InputDecoration(
                               labelText: "E-MAIL",
                               labelStyle: TextStyle(color: Palette.branco),
@@ -120,11 +116,10 @@ class CadastroGuia extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
-                            /*validator: (String? value) {
-                                return (value != null && value.contains('@'))
-                                    ? "Email deve conter @ para ser valido"
-                                    : null;
-                              },*/
+                            validator: Validatorless.multiple([
+                              Validatorless.required("E-mail obrigatório"),
+                              //Validators.check(valuePW, message)
+                            ]),
                             decoration: InputDecoration(
                               labelText: "CONFIRMAÇÃO DO E-MAIL:",
                               labelStyle: TextStyle(color: Palette.branco),
@@ -276,7 +271,8 @@ class CadastroGuia extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: () => Get.to(LoginPage()),
+                                    onPressed: () {},
+                                    //onPressed: () => Get.to(LoginPage()),
                                     child: Text('Já sou cadastrado')),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(

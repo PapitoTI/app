@@ -1,173 +1,174 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/choice.dart';
+import 'package:app/src/Pages/login/validators.dart';
+import 'package:app/src/application/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:validatorless/validatorless.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends GetWidget<LoginController> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //gato para tirar erro do Render---
-      // resizeToAvoidBottomInset: false,
-      //----------------------------------
-      body: Container(
-        //width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/Ceu.jpg"),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                  Color.fromRGBO(36, 117, 252, 20), BlendMode.modulate)),
-        ),
-        //Tirei o Safe Area
-        child: Container(
-          margin: EdgeInsets.only(top: 100),
-          child: Column(children: [
-            //LogoR aqui vvvvv diminuir tamanho
-
-            Image.asset(
-              'assets/images/LogoR.png',
-              width: 176,
-              height: 57,
-              fit: BoxFit.fitWidth,
-            ),
-            SizedBox(height: 40),
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(
-                left: 36,
-                bottom: 20,
+        body: Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/images/Ceu.jpg"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Color.fromRGBO(36, 117, 252, 20), BlendMode.modulate)),
+      ),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+              child: Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-              child: Text(
-                "Login",
-                style: TextStyle(fontSize: 28, color: Colors.white),
+              Image.asset(
+                'assets/images/LogoR.png',
+                width: 176,
+                height: 57,
+                fit: BoxFit.fitWidth,
               ),
-            ),
-            SingleChildScrollView(
-              child: Container(
+              SizedBox(height: 80),
+              Container(
+                alignment: Alignment.topLeft,
+                margin: EdgeInsets.only(
+                  left: 36,
+                  bottom: 20,
+                ),
+                child: Text(
+                  "Login",
+                  style: TextStyle(fontSize: 28, color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white.withOpacity(.18)),
                 margin: EdgeInsets.only(left: 16, right: 16),
                 width: context.width,
                 height: 280,
-                //height: context.height,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Form(
-                      autovalidateMode: AutovalidateMode.always,
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: 15,
-                              top: 20,
-                              left: 15,
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          validator: Validatorless.multiple([
+                            Validatorless.required("E-mail obrigatório"),
+                            Validatorless.email("E-mail inválido")
+                          ]),
+                          controller: emailController,
+                          style: TextStyle(color: Palette.branco),
+                          decoration: InputDecoration(
+                            labelText: "E-MAIL",
+                            labelStyle: TextStyle(color: Palette.branco),
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(color: Colors.red),
                             ),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "E-MAIL:",
-                              style: TextStyle(color: Colors.white),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(color: Colors.white38),
                             ),
-                          ),
-                          TextFormField(
-                            validator: (String? value) {
-                              return (value != null && value.contains('@'))
-                                  ? "E-mail inválido"
-                                  : null;
-                            },
-                            decoration: InputDecoration(
-                              hintText: "TESTE@TESTE.COM",
-                              hintStyle: TextStyle(color: Colors.white),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.white38),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.red),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              prefixIcon:
-                                  Icon(Icons.email, color: Colors.white),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(color: Colors.white),
                             ),
-                            keyboardType: TextInputType.emailAddress,
+                            prefixIcon: Icon(Icons.email, color: Colors.white),
                           ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: 5,
-                              top: 5,
-                              left: 15,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: passwordController,
+                          validator: Validatorless.multiple([
+                            Validatorless.required("Senha obrigatório"),
+                            /*Validators.check(
+                                passwordController, "Senha diferente")*/
+                          ]),
+                          style: TextStyle(color: Palette.branco),
+                          decoration: InputDecoration(
+                            labelText: "SENHA",
+                            labelStyle: TextStyle(color: Palette.branco),
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(color: Colors.red),
                             ),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Senha:",
-                              style: TextStyle(color: Colors.white),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(color: Colors.white38),
                             ),
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.white38),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.red),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              prefixIcon: Icon(Icons.lock, color: Colors.white),
-                              /*suffixIcon: IconButton(
-                                onPressed(){};
-                      
-                              ),*/
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(color: Colors.white),
                             ),
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
+                            prefixIcon: Icon(Icons.lock, color: Colors.white),
                           ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          ConstrainedBox(
-                            constraints:
-                                BoxConstraints.tightFor(width: context.width),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    onPressed: () => Get.to(ChoicePage()),
-                                    child: Text("Cadastrar")),
-                                ElevatedButton(
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        ConstrainedBox(
+                          constraints:
+                              BoxConstraints.tightFor(width: context.width),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                  onPressed: () => Get.to(ChoicePage()),
+                                  child: Text("Cadastrar")),
+                              ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(50)),
                                       elevation: 0,
                                       primary: Palette.cinzaClaroTransparente),
-                                  onPressed: () {},
-                                  child: Text("Login"),
-                                ),
-                              ],
-                            ),
+                                  onPressed: () {
+                                    var formValid =
+                                        _formKey.currentState?.validate() ??
+                                            false;
+                                    if (formValid) {
+                                      controller.loginUser(emailController.text,
+                                          passwordController.text);
+                                    }
+                                  },
+                                  child: Text("Login")),
+                            ],
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ]),
+            ],
+          )),
         ),
       ),
-    );
+    ));
   }
 }
