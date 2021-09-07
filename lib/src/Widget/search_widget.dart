@@ -5,7 +5,7 @@ Widget pesquisaWidget() {
   return FloatingSearchBar(
     hint: 'Onde vamos ...',
     openAxisAlignment: 0.0,
-    maxWidth: 600,
+    width: 600,
     axisAlignment: 0.0,
     scrollPadding: EdgeInsets.only(top: 16, bottom: 20),
     elevation: 4.0,
@@ -13,7 +13,6 @@ Widget pesquisaWidget() {
     onQueryChanged: (query) {
       //Your methods will be here
     },
-    showDrawerHamburger: false,
     transitionCurve: Curves.easeInOut,
     transitionDuration: Duration(milliseconds: 500),
     transition: CircularFloatingSearchBarTransition(),

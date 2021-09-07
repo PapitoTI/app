@@ -1,159 +1,89 @@
+import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class CardPWidget extends StatelessWidget {
-  const CardPWidget({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const CardPWidget(
+      {Key? key, this.image, this.title, this.description, this.info})
+      : super(key: key);
+
+  final image;
+  final title;
+  final description;
+  final info;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 327,
+      width: 350,
       height: 84,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Palette.cinzaTransparente),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: 327,
-            height: 84,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Color(0x2dffffff),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 285,
-                  top: 42,
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: Color(0x3dffffff),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 12,
-                                height: 12,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: FlutterLogo(size: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Container(
+              height: 65,
+              width: 65,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      image,
                     ),
-                  ),
-                ),
-                Positioned(
-                  left: 92,
-                  top: 45,
-                  child: Opacity(
-                    opacity: 0.60,
-                    child: Text(
-                      this.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 113,
-                  top: 20,
-                  child: Text(
-                    this.title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 92,
-                  top: 24,
-                  child: Container(
-                    width: 15,
-                    height: 11.25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: FlutterLogo(size: 11.25),
-                  ),
-                ),
-                Positioned(
-                  left: 9,
-                  top: 9,
-                  child: Container(
-                    width: 66,
-                    height: 74,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              width: 53,
-                              height: 53,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                              child: FlutterLogo(size: 53),
-                            ),
-                          ),
-                        ),
-                        Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              width: 66,
-                              height: 66,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(13),
-                              ),
-                              child: FlutterLogo(size: 66),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 284,
-                  top: 9,
-                  child: Opacity(
-                    opacity: 0.30,
-                    child: Text(
-                      "2.8 mi",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  )),
             ),
           ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      description,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      '2km',
+                      style: TextStyle(color: Palette.branco),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: OrionButtonWidget(
+                        icon: Icon(
+                      Icons.arrow_forward,
+                      color: Palette.branco,
+                    )),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../card_p_widget.dart';
 import 'utils.dart';
 
 class CustomTableCalendar extends StatefulWidget {
