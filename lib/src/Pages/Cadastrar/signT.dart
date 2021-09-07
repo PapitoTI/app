@@ -243,7 +243,8 @@ class CadastroTurista extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: () => Get.to(LoginPage()),
+                                    onPressed: () {},
+                                    // onPressed: () => Get.to(LoginPage()),
                                     child: Text('Já sou cadastrado')),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(

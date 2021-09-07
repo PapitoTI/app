@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
+import 'package:app/src/Server/guide_server_connection_interface.dart';
 
-class GuideServerConnection {
+class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
   @override
   Future<GuideModel> getGuideData() async {

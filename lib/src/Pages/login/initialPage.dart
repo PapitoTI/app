@@ -157,7 +157,7 @@ class _InitialPageState extends State<InitialPage> {
                               var dir = await getTemporaryDirectory();
                               var f = File(dir.path + "Tutorial");
                               f.writeAsStringSync("xpto");
-                              Get.to(() => LoginPage());
+                              //Get.to(() => LoginPage());
                             },
                             child: const Text('Cadastrar agora'),
                           ),
