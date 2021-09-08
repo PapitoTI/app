@@ -1,7 +1,7 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/choice.dart';
-import 'package:app/src/Pages/login/validators.dart';
-import 'package:app/src/application/login_controller.dart';
+//import 'package:app/src/Pages/login/validators.dart';
+import 'package:app/src/Pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:validatorless/validatorless.dart';

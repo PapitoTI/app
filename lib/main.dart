@@ -4,6 +4,7 @@ import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/loginPage.dart';
 import 'package:app/src/Server/server_connection_builder_interface.dart';
+import 'package:app/src/Pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,7 +26,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final ServerConnectionBuilderInterface _builder;
-  _MyAppState(this._builder);
+  _MyAppState(this._builder) {
+    Get.lazyPut<LoginController>(
+        () => LoginController(ServerConnectionBuilder()));
+  }
 
   @override
   Widget build(BuildContext context) {
