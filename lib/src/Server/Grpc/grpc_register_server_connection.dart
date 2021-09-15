@@ -10,7 +10,7 @@ class GrpcRegisterServerConnection extends RegisterServerConnectionInterface {
       : _callOptions = CallOptions(timeout: Duration(seconds: 5));
 
   Future<int> registerTourist(
-      String email, String password, String name) async {
+      String email, String password, String name, String phone) async {
     var result = await _client.registerTourist(
         RegisterTouristRequest(email: email, password: password, name: name),
         options: _callOptions);

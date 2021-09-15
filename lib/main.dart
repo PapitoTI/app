@@ -12,25 +12,19 @@ import 'package:path_provider/path_provider.dart';
 import 'src/Server/local/server_connection_builder.dart';
 
 void main() {
-  var builder = ServerConnectionBuilder();
-  runApp(MyApp(builder));
+  ServerConnectionBuilderInterface builder = ServerConnectionBuilder();
+  Get.lazyPut<LoginController>(() => LoginController());
+
+  Get.put(builder, tag: "builder");
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final ServerConnectionBuilderInterface _builder;
-  MyApp(this._builder);
-
   @override
-  _MyAppState createState() => _MyAppState(_builder);
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final ServerConnectionBuilderInterface _builder;
-  _MyAppState(this._builder) {
-    Get.lazyPut<LoginController>(
-        () => LoginController(ServerConnectionBuilder()));
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
