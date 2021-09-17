@@ -1,5 +1,4 @@
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/login/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

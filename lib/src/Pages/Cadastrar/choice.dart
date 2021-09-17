@@ -1,11 +1,11 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/signG.dart';
+
 import 'package:app/src/Pages/Cadastrar/signT.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChoicePage extends StatelessWidget {
-  //const ChoicePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
