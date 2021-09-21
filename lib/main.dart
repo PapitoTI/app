@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/Cadastrar/choice.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
-import 'package:app/src/Pages/login/loginPage.dart';
+import 'package:app/src/Pages/login/login_tourist.dart';
 import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:app/src/Pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                               snapshot.data!.path + "Tutorial") ==
                           FileSystemEntityType.notFound
                       ? InitialPage()
-                      : LoginPage();
+                      : ChoicePage();
                 }
                 return ListView();
               }),

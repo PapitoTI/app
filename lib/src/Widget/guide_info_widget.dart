@@ -1,3 +1,5 @@
+import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Server/local/guide_server_connection.dart';
 import 'package:flutter/material.dart';
 
 Widget infoGuiaWidget() => Container(
@@ -13,7 +15,7 @@ Widget infoGuiaWidget() => Container(
             height: 72,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color(0x2dffffff),
+              color: Palette.cinzaTransparente,
             ),
             child: Stack(
               children: [
@@ -23,24 +25,28 @@ Widget infoGuiaWidget() => Container(
                   child: Container(
                     width: 62,
                     height: 62,
-                    child: FlutterLogo(size: 62),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                              image: AssetImage(guideModel.imageUrl),
+                              fit: BoxFit.cover)),
+                    ),
                   ),
                 ),
                 Positioned(
-                  left: 98,
-                  top: 12,
-                  child: Text(
-                    "Fulano  de Tal           Guia",
-                  ),
-                ),
+                    left: 98,
+                    top: 12,
+                    child: Text(
+                      guideModel.name,
+                      style: TextStyle(color: Palette.branco, fontSize: 20),
+                    )),
                 Positioned(
                   left: 98,
                   top: 49,
                   child: Text(
                     "🌟 4.8 • 2 anos na plataforma",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Palette.branco),
                   ),
                 ),
               ],
