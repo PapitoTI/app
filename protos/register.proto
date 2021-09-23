@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrionGrpc";
+
+package register;
+
+message RegisterTouristRequest {
+	string Email = 1;
+	string Password = 2;
+	string Name = 3;
+	string Phone = 4;
+}
+
+message RegisterGuideRequest {
+	string Email = 1;
+	string Password = 2;
+	string Name = 3;
+	string Phone = 4;
+	string Certificate = 5;
+}
+
+message RegisterResponse {
+	
+}
+
+service RegisterService {
+	rpc RegisterTourist(RegisterTouristRequest) returns(RegisterResponse);
+	rpc RegisterGuide(RegisterGuideRequest) returns(RegisterResponse);
+}

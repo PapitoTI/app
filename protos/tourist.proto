@@ -1,17 +1,34 @@
 syntax = "proto3";
 
+import "Protos/common.proto";
+
 option csharp_namespace = "OrionGrpc";
 
 package tourist;
 
-message LoginRequest {
-	string email = 1;
-	string password = 2;
+enum TourType {
+    SelfGuide = 0;
+    Guide = 1;
+    Host = 2;
 }
 
-message LoginResponse {
-	int32 result = 1;
-	string cookie = 2;
+message Spot {
+    string Name = 1;
+    string Category = 2;
+    string Description = 3;
+    repeated string SpotImages = 4;
+}
+
+message Tour {
+    string GuideEmail = 1;
+    string Name = 2;
+    repeated Spot SpotsList = 3;
+    double Duration = 4;
+    string Description = 5;
+    string Category = 6;
+    repeated string Weekdays = 7;
+    repeated Spot ExtraSpots = 8;
+    double Price = 9;
 }
 
 message Favorite {
@@ -19,14 +36,48 @@ message Favorite {
 }
 
 message FavoriteRequest {
-
+    
 }
 
 message FavoriteResponse {
-	repeated Favorite values = 1;
+    repeated Favorite values = 1;
+}
+
+message TouristInformationRequest {
+
+}
+
+message TouristInformationResponse {
+    string ProfileImageUrl = 1;
+    string Name = 2;
+    string Email = 3;
+	string Phone = 4;
+}
+
+message FavoriteSpotsRequest {
+    
+}
+
+message FavoriteSpotsResponse {
+    repeated Spot Spots = 1;
+}
+
+message SearchToursRequest {
+	TourType Type = 1;
+    int32 First = 2;
+    int32 Length = 3;
+}
+
+message SearchToursResponse {
+    
 }
 
 service TouristService {
-	rpc Login(LoginRequest) returns(LoginResponse);
-	rpc Favorites(FavoriteRequest) returns(FavoriteResponse);
+    rpc Login(common.LoginRequest) returns(common.LoginResponse);
+    rpc Information(TouristInformationRequest) returns(TouristInformationResponse);
+    rpc Favorites(FavoriteRequest) returns(FavoriteResponse);
+    rpc UpdatePicture(common.UpdatePictureRequest) returns(common.UpdatePictureResponse);
+    rpc UpdatePassword(common.UpdatePasswordRequest) returns(common.UpdatePasswordResponse);
+    rpc FavoriteSpots(FavoriteSpotsRequest) returns(FavoriteSpotsResponse);
+    rpc SearchTours(SearchToursRequest) returns(SearchToursResponse);
 }
