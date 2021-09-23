@@ -8,7 +8,7 @@ class LoginRoot extends GetWidget<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return (Get.find<LoginController>().user != null)
+      return (Get.find<LoginController>().tourist != null)
           ? HomeBasePage()
           : LoginPage();
     });

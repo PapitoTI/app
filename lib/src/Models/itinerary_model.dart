@@ -2,6 +2,8 @@ import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:flutter/material.dart';
 
+enum ItineraryType { SelfGuide, Guide, Host }
+
 class ItineraryModel {
   GuideModel guideModel;
   String name;
@@ -9,9 +11,10 @@ class ItineraryModel {
   List<TimeOfDay> spotDuration;
   String description;
   String category;
-  List<int> weekdays;
+  List<bool> weekdays;
   List<ExtraSpot> itineraryAddsList;
   double price;
+  ItineraryType itineraryType;
 
   ItineraryModel(
       this.guideModel,
@@ -22,7 +25,8 @@ class ItineraryModel {
       this.category,
       this.weekdays,
       this.itineraryAddsList,
-      this.price);
+      this.price,
+      this.itineraryType);
 }
 
 class ExtraSpot {

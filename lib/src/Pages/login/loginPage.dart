@@ -152,7 +152,8 @@ class LoginPage extends GetWidget<LoginController> {
                                         _formKey.currentState?.validate() ??
                                             false;
                                     if (formValid) {
-                                      controller.loginUser(emailController.text,
+                                      controller.loginTourist(
+                                          emailController.text,
                                           passwordController.text);
                                     }
                                   },

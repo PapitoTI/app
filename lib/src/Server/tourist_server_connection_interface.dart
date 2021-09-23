@@ -6,8 +6,6 @@ import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 
-enum ItineraryType { SelfGuide, Guide, Host }
-
 class SearchFilter {
   List<String> categories;
   String searchText;
@@ -38,7 +36,7 @@ abstract class TouristServerConnectionInterface {
 
   // retornar lista de roteiros por tipo de guiamento
   Future<List<ItineraryModel>> getItinerariesByType(
-      ItineraryType itineraryType, int index, int length) async {
+      ItineraryType itineraryType) async {
     throw UnsupportedError("");
   }
 

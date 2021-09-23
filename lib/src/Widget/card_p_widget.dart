@@ -45,6 +45,7 @@ class CardPWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
@@ -52,7 +53,7 @@ class CardPWidget extends StatelessWidget {
                     ),
                     Text(
                       description,
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 12, color: Palette.cinzaClaro),
                     ),
                   ],
                 ),
@@ -69,7 +70,7 @@ class CardPWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
                       '2km',
-                      style: TextStyle(color: Palette.branco),
+                      style: TextStyle(color: Palette.cinzaClaro),
                     ),
                   ),
                   Padding(

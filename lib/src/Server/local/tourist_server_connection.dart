@@ -7,6 +7,8 @@ import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
 
+import 'guide_server_connection.dart';
+
 var spotsDB = [
   {
     'name': 'MASP',
@@ -135,8 +137,10 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista de roteiros por tipo de guiamento
   @override
   Future<List<ItineraryModel>> getItinerariesByType(
-      ItineraryType itineraryType, int index, int length) async {
-    throw UnsupportedError("");
+      ItineraryType itineraryType) async {
+    List<ItineraryModel> guideItinerary = [itineraryModel1];
+
+    return guideItinerary;
   }
 
   // retornar lista de roteiros por guia
