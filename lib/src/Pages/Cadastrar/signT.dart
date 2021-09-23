@@ -1,5 +1,5 @@
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/login/loginPage.dart';
+import 'package:app/src/Pages/login/login_tourist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -243,8 +243,7 @@ class CadastroTurista extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: () {},
-                                    // onPressed: () => Get.to(LoginPage()),
+                                    onPressed: () => Get.to(LoginTouristPage()),
                                     child: Text('Já sou cadastrado')),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(

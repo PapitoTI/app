@@ -1,11 +1,12 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/signG.dart';
-import 'package:app/src/Pages/Cadastrar/signT.dart';
+import 'package:app/src/Pages/login/login_guide.dart';
+
+import 'package:app/src/Pages/login/login_tourist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChoicePage extends StatelessWidget {
-  //const ChoicePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +49,7 @@ class ChoicePage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20.0),
                   child: GestureDetector(
                     //Get.to
-                    onTap: () => Get.to(() => CadastroGuia()),
+                    onTap: () => Get.to(() => LoginGuidePage()),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -89,7 +90,7 @@ class ChoicePage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20.0),
                   child: GestureDetector(
                     //Get.to
-                    onTap: () => Get.to(() => CadastroTurista()),
+                    onTap: () => Get.to(() => LoginTouristPage()),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),

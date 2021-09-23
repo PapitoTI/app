@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/login/loginPage.dart';
+import 'package:app/src/Pages/Cadastrar/choice.dart';
+import 'package:app/src/Pages/login/login_tourist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -158,7 +159,7 @@ class _InitialPageState extends State<InitialPage> {
                               var dir = await getTemporaryDirectory();
                               var f = File(dir.path + "Tutorial");
                               f.writeAsStringSync("xpto");
-                              Get.to(() => LoginPage());
+                              Get.to(() => ChoicePage());
                             },
                             child: const Text('Cadastrar agora'),
                           ),

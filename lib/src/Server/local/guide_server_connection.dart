@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:core';
 import 'dart:io';
 
@@ -19,7 +20,8 @@ GuideModel guideModel = GuideModel(
     'fefsouza10@gmail.com',
     '+5511968638792',
     'assets/images/certificado.jpg',
-    '100,00');
+    '100,00'
+        '');
 
 SpotModel spotModel1 = SpotModel(
     'MASP',
