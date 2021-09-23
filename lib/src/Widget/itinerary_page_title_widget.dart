@@ -1,12 +1,17 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:flutter/material.dart';
 
-class SpotPageTitleWidget extends StatelessWidget {
-  const SpotPageTitleWidget(
-      {Key? key, required this.title, required this.category})
+class ItineraryPageTitleWidget extends StatelessWidget {
+  const ItineraryPageTitleWidget(
+      {Key? key,
+      required this.title,
+      required this.category,
+      required this.duration})
       : super(key: key);
+
   final String title;
   final String category;
+  final duration;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +24,21 @@ class SpotPageTitleWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 30),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Text(
+                    'duration',
+                    style: TextStyle(color: Palette.cinzaClaro),
+                  )
+                ],
+              ),
             ),
             Container(
               height: 35,

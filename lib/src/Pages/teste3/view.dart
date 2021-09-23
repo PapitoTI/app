@@ -1,5 +1,5 @@
 import 'package:app/src/Widget/search_widget/view.dart';
-import 'package:app/src/Widget/timeline_widget2.dart';
+import 'package:app/src/Widget/timeline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +25,7 @@ class _Teste3PageState extends State<Teste3Page> {
             Column(
               children: [
                 Expanded(flex: 4, child: SearchWidgetPage()),
-                Expanded(flex: 20, child: TimelineWidget2())
+                Expanded(flex: 20, child: TimelineWidget())
               ],
             )
           ],

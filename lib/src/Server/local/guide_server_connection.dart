@@ -41,9 +41,9 @@ SpotModel spotModel2 = SpotModel(
     'Monumento',
     'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
     [
-      'assets/images/masp1.jpg',
-      'assets/images/masp2.jpg',
-      'assets/images/masp3.jpg'
+      'assets/images/ibirapuera1.jpg',
+      'assets/images/ibirapuera2.jpg',
+      'assets/images/ibirapuera3.jpg'
     ],
     true);
 
@@ -76,12 +76,9 @@ List<TimeOfDay> spotDuration = [
   TimeOfDay(hour: 2, minute: 30),
   TimeOfDay(hour: 3, minute: 45),
   TimeOfDay(hour: 1, minute: 15),
-  TimeOfDay(hour: 4, minute: 50),
-  TimeOfDay(hour: 0, minute: 15),
-  TimeOfDay(hour: 1, minute: 35),
 ];
 
-List<int> weekdays = [DateTime.monday, DateTime.thursday, DateTime.wednesday];
+List<bool> weekdays = [false, true, true, true, true, true, false];
 
 List<ExtraSpot> itineraryAddsList = [
   ExtraSpot('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
@@ -114,10 +111,13 @@ ItineraryModel itineraryModel1 = ItineraryModel(
     'Rolê',
     weekdays,
     itineraryAddsList,
-    20.00);
+    300.00,
+    ItineraryType.Guide);
 
 ScheduleModel scheduleModel1 = ScheduleModel(
     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+
+List<ItineraryModel> guideItinerariesList = [itineraryModel1];
 
 class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
@@ -150,15 +150,19 @@ class GuideServerConnection extends GuideServerConnectionInterface {
   // criar roteiro
   @override
   Future<void> createItinerary(ItineraryModel itineraryModel) async {
-    throw UnsupportedError("");
+    guideItinerariesList.add(itineraryModel);
+  }
+
+  //editar roteiro do guia
+  @override
+  Future<void> updateItinerary(ItineraryModel itineraryModel) async {
+    print('alterado!');
   }
 
   // retornar lista de roteiros do guia
   @override
   Future<List<ItineraryModel>> getGuideItineraries() async {
-    List<ItineraryModel> guideItinerary = [itineraryModel1];
-
-    return guideItinerary;
+    return guideItinerariesList;
   }
 
   // deletar roteiro do guia

@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/choice.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
-import 'package:app/src/Pages/login/login_tourist.dart';
-import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:app/src/Pages/login/login_controller.dart';
+import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -29,15 +28,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [Locale('pt', 'BR')],
       title: 'Orion',
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            primary: Palette.branco,
-          ),
-        ),
-      ),
+      theme: ThemeData.dark(),
       getPages: [
         GetPage(
           name: '/',

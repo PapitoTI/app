@@ -31,6 +31,11 @@ abstract class GuideServerConnectionInterface {
     throw UnsupportedError("");
   }
 
+  //editar roteiro do guia
+  Future<void> updateItinerary(ItineraryModel itineraryModel) async {
+    throw UnsupportedError("");
+  }
+
   // deletar roteiro do guia
   Future<void> deleteItinerary(ItineraryModel itineraryModel) async {
     throw UnsupportedError("");

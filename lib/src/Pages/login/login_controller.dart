@@ -1,5 +1,4 @@
-import 'package:app/src/Pages/Pagamentos/pay.dart';
-import 'package:app/src/Pages/PerfilG/pGuia.dart';
+import 'package:app/src/Pages/home_base/view.dart';
 import 'package:app/src/Server/credentials.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
 import 'package:app/src/Server/server_connection_builder_interface.dart';
@@ -12,7 +11,7 @@ class LoginController extends GetxController {
   Rx<TouristServerConnectionInterface?> _userT =
       Rx<TouristServerConnectionInterface?>(null);
 
-  TouristServerConnectionInterface? get user => _userT.value;
+  TouristServerConnectionInterface? get userT => _userT.value;
 
   Rx<GuideServerConnectionInterface?> _userG =
       Rx<GuideServerConnectionInterface?>(null);
@@ -23,16 +22,14 @@ class LoginController extends GetxController {
     try {
       _userT.value =
           await _builder.connectTourist(Credentials(email, password));
-      //Get.to(HomeBasePage());
-      Get.to(PerfilGuiaPage());
+      Get.to(HomeBasePage(), arguments: _userT.value);
     } catch (e) {}
   }
 
   void loginGUser(String email, String password) async {
     try {
       _userG.value = await _builder.connectGuide(Credentials(email, password));
-      //Get.to(HomeBasePage());
-      Get.to(Payment());
+      Get.to(HomeBasePage(), arguments: _userG.value);
     } catch (e) {}
   }
 }
