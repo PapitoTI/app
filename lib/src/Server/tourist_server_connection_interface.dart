@@ -8,20 +8,13 @@ import 'package:app/src/Models/tourist_model.dart';
 
 enum ItineraryType { SelfGuide, Guide, Host }
 
-class SearchFilter {
-  List<String> categories;
-  String searchText;
-
-  SearchFilter(this.searchText, this.categories);
-}
-
 abstract class TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
     throw UnsupportedError("");
   }
 
   // trocar foto de perfil
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
@@ -60,7 +53,7 @@ abstract class TouristServerConnectionInterface {
 
   // retornar lista de pesquisa do usuário (destinos e roteiros)
   // retornar ItineraryModel e SpotModel
-  Future<List<Object>> searchResults(SearchFilter searchFilter) async {
+  Future<List<Object>> searchResults(List<String> categories, String searchText) async {
     throw UnsupportedError("");
   }
 }

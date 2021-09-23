@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "Protos/common.proto";
+
+option csharp_namespace = "OrionGrpc";
+
+package guide;
+
+message GuideInformationRequest {
+	
+}
+
+message GuideInformationResponse {
+	string ProfileImageUrl = 1;
+	string Name = 2;
+	string Email = 3;
+	string Phone = 4;
+	string Certificate = 5;
+	double AccountBalance = 6;
+}
+
+service GuideService {
+	rpc Login(common.LoginRequest) returns(common.LoginResponse);
+	rpc Information(GuideInformationRequest) returns(GuideInformationResponse);
+	rpc UpdatePicture(common.UpdatePictureRequest) returns(common.UpdatePictureResponse);
+	rpc UpdatePassword(common.UpdatePasswordRequest) returns(common.UpdatePasswordResponse);
+}

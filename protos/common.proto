@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrionGrpc";
+
+package common;
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string cookie = 1;
+}
+
+message UpdatePictureRequest {
+    bytes imageBytes = 1;
+}
+
+message UpdatePictureResponse {
+    string pictureUrl = 1;
+}
+
+message UpdatePasswordRequest {
+    string oldPassword = 1;
+    string newPassword = 2;
+}
+
+message UpdatePasswordResponse {
+    
+}
