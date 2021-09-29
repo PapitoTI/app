@@ -102,7 +102,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
 
   // trocar foto de perfil
   @override
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
@@ -136,8 +136,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
 
   // retornar lista de roteiros por tipo de guiamento
   @override
-  Future<List<ItineraryModel>> getItinerariesByType(
-      ItineraryType itineraryType) async {
+  Future<List<ItineraryModel>> getItinerariesByType(itineraryType) async {
     List<ItineraryModel> guideItinerary = [itineraryModel1];
 
     return guideItinerary;
@@ -165,7 +164,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista de pesquisa do usuário (destinos e roteiros)
   // retornar ItineraryModel e SpotModel
   @override
-  Future<List<Object>> searchResults(SearchFilter searchFilter) async {
+  Future<List<Object>> searchResults(List<String> categories, String searchText) async {
     throw UnsupportedError("");
   }
 }

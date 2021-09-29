@@ -6,12 +6,7 @@ import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 
-class SearchFilter {
-  List<String> categories;
-  String searchText;
-
-  SearchFilter(this.searchText, this.categories);
-}
+enum ItineraryType { SelfGuide, Guide, Host }
 
 abstract class TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
@@ -19,7 +14,7 @@ abstract class TouristServerConnectionInterface {
   }
 
   // trocar foto de perfil
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
@@ -46,7 +41,7 @@ abstract class TouristServerConnectionInterface {
     throw UnsupportedError("");
   }
 
-  // criar novo roteiro
+  // reservar roteiro
   Future<void> requestSchedule(ScheduleModel scheduleModel) async {
     throw UnsupportedError("");
   }
@@ -58,7 +53,7 @@ abstract class TouristServerConnectionInterface {
 
   // retornar lista de pesquisa do usuário (destinos e roteiros)
   // retornar ItineraryModel e SpotModel
-  Future<List<Object>> searchResults(SearchFilter searchFilter) async {
+  Future<List<Object>> searchResults(List<String> categories, String searchText) async {
     throw UnsupportedError("");
   }
 }
