@@ -42,13 +42,13 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista dos destinos em alta
   @override
   Future<List<SpotModel>> getSpots() async {
-    var result = await _client.hotSpots(HotSpotsRequest());
+    var result = await _client.hotSpots(HotSpotsRequest(), options: _callOptions);
     return result.spots.map((e) => SpotModel(e.name, e.address, e.category, e.description, e.imageUrls, false)).toList();
   }
 
   // retornar lista de roteiros por tipo de guiamento
   @override
-  Future<List<ItineraryModel>> getItinerariesByType(itineraryType) async {
+  Future<List<ItineraryModel>> getItinerariesByType(ItineraryType itineraryType) async {
     throw UnsupportedError("");
   }
 

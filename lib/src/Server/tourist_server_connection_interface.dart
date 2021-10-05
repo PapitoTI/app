@@ -6,8 +6,6 @@ import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 
-enum ItineraryType { SelfGuide, Guide, Host }
-
 abstract class TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
     throw UnsupportedError("");

@@ -5,6 +5,8 @@ import 'package:app/src/Generated/Protos/guide.pbgrpc.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
+import 'package:app/src/Models/spot_model.dart';
+import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 
 import '../guide_server_connection_interface.dart';
@@ -15,7 +17,7 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
   final CallOptions _callOptions;
 
   GrpcGuideServerConnection(this._client, userName, cookie) :
-        _callOptions = CallOptions(metadata: { "userName": userName, "cookie": cookie }, timeout: Duration(seconds: 5));
+        _callOptions = CallOptions(metadata: { "userName": userName, "cookie": cookie }, timeout: Duration(seconds: 50));
 
   // retornar dados do guia
   @override
@@ -40,20 +42,48 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
 
   // criar roteiro
   @override
-  Future<void> createItinerary(ItineraryModel itineraryModel) async {
-    throw UnsupportedError("");
+  Future<void> createItinerary(ItineraryModel it) async {
+    await _client.createTour(Tour(
+      name: it.name,
+      category: it.category,
+      description: it.description,
+      durationsInSeconds: it.spotDuration.map((e) => 60 * 60 * e.hour + e.minute * 60),
+      // extraSpots: it.itineraryAddsList.map((e) => ExtraSpot()),
+      price: it.price,
+      spots: it.spotsList.map((e) => new Spot(
+        description: e.description,
+        category: e.category,
+        name: e.name,
+        address: e.address,
+        imageUrls: e.spotImagesList
+      )),
+      weekdays: it.weekdays
+    ), options: _callOptions);
   }
 
   // retornar lista de roteiros do guia
   @override
   Future<List<ItineraryModel>> getGuideItineraries() async {
-    throw UnsupportedError("");
+    var tours = await _client.tours(Empty());
+    var data = await getGuideData();
+    return tours.tours.map((e) => ItineraryModel(
+      data,
+      e.name,
+      e.spots.map((e) => SpotModel(e.name, e.address, e.category, e.description, e.imageUrls, false)).toList(),
+      e.durationsInSeconds.map((e) => TimeOfDay(hour: 60 * (e / 60).round(), minute: e % 60)).toList(),
+      e.description,
+      e.category,
+      e.weekdays,
+      [],
+      e.price,
+      ItineraryType.Guide
+    )).toList();
   }
 
-  // deletar roteiro do guia
+  // deletar roteir0o do guia
   @override
-  Future<void> deleteItinerary(ItineraryModel itineraryModel) async {
-    throw UnsupportedError("");
+  Future<void> deleteItinerary(ItineraryModel it) async {
+    await _client.removeTour(RemoveTourRequest(tourName: it.name));
   }
 
   // retornar lista de agendamentos do guia
