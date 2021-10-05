@@ -18,6 +18,14 @@ abstract class TouristServerConnectionInterface {
     throw UnsupportedError("");
   }
 
+  Future<String> getImageUrl() async {
+    throw UnsupportedError("");
+  }
+
+  Future<List<String>> getImagesUrlList() async {
+    throw UnsupportedError("");
+  }
+
   // trocar foto de perfil
   Future<void> updateProfilePicture(File file) async {
     throw UnsupportedError("");

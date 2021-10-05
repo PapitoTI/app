@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:core';
 import 'dart:io';
 
@@ -100,7 +99,7 @@ var itinerariesDB = [
   }
 ];
 
-DateTime dateItinerary = DateTime(2021, 9, 11, 14, 0);
+DateTime dateItinerary = DateTime.utc(2021, 10, 11, 16, 00);
 
 ItineraryModel itineraryModel1 = ItineraryModel(
     guideModel,
@@ -116,6 +115,22 @@ ItineraryModel itineraryModel1 = ItineraryModel(
 
 ScheduleModel scheduleModel1 = ScheduleModel(
     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel2 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel3 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel4 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+ScheduleModel scheduleModel5 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+
+List<ScheduleModel> scheduleList = [
+  scheduleModel1,
+  scheduleModel2,
+  scheduleModel3,
+  scheduleModel4,
+  scheduleModel5
+];
 
 List<ItineraryModel> guideItinerariesList = [itineraryModel1];
 
@@ -174,20 +189,18 @@ class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar lista de agendamentos do guia
   @override
   Future<List<ScheduleModel>> getSchedules() async {
-    List<ScheduleModel> schedule = [scheduleModel1];
-
-    return schedule;
+    return scheduleList;
   }
 
   // aprovar o agendamento
   @override
   Future<void> approveSchedule(ScheduleModel scheduleModel) async {
-    throw UnsupportedError("");
+    scheduleModel.scheduleStatus = ScheduleStatus.approved;
   }
 
   // cancelar o agendamento
   @override
   Future<void> cancelSchedule(ScheduleModel scheduleModel) async {
-    throw UnsupportedError("");
+    scheduleModel.scheduleStatus = ScheduleStatus.denied;
   }
 }

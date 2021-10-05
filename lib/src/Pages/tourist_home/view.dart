@@ -3,6 +3,7 @@ import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/spot/view.dart';
+import 'package:app/src/Pages/tourist_schedule/view.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
@@ -48,21 +49,25 @@ class _TouristHomePageState extends State<TouristHomePage> {
                             'assets/images/orion.png',
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Palette.cinzaClaroTransparente,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.calendar_today),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Agenda'),
-                                ),
-                              ],
+                        GestureDetector(
+                          onTap: (() => {Get.to(() => TouristSchedulePage())}),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Palette.cinzaClaroTransparente,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(Icons.calendar_today),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('Agenda'),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

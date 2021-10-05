@@ -31,12 +31,6 @@ class _HomeBasePageState extends State<HomeBasePage> {
           return Scaffold(
             extendBodyBehindAppBar: true,
             extendBody: true,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              backgroundColor: Color(0x44000000),
-              title: Text('Home'),
-            ),
             body: Stack(fit: StackFit.expand, children: [
               Container(
                 decoration: BoxDecoration(

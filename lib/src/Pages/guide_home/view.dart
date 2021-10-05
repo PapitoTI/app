@@ -2,10 +2,12 @@ import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
+import 'package:app/src/Pages/calendar/view.dart';
 import 'package:app/src/Pages/create_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
+import 'package:app/src/Pages/pending_schedules/view.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
@@ -50,22 +52,25 @@ class _GuideHomePageState extends State<GuideHomePage> {
                               'assets/images/orion.png',
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Palette.cinzaClaroTransparente,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Icon(Icons.calendar_today),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Agenda'),
-                                  ),
-                                ],
+                          GestureDetector(
+                            onTap: (() => {Get.to(() => CalendarPage())}),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Palette.cinzaClaroTransparente,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(Icons.calendar_today),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('Agenda'),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -164,8 +169,12 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                 itemCount: snapshot.data?.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  if (snapshot.data?[index].scheduleStatus ==
-                                      ScheduleStatus.pending) {
+                                  var _filteredArray = snapshot.data
+                                      ?.where((element) =>
+                                          element.scheduleStatus.toString() ==
+                                          'pending')
+                                      .toList();
+                                  if (_filteredArray!.length == 0) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: CardPWidget(
@@ -191,8 +200,12 @@ class _GuideHomePageState extends State<GuideHomePage> {
                         alignment: Alignment.centerRight,
                         child: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 8, 0),
-                            child: OrionButtonWidget(
-                              text: 'Mais',
+                            child: GestureDetector(
+                              onTap: (() =>
+                                  {Get.to(() => PendingSchedulesPage())}),
+                              child: OrionButtonWidget(
+                                text: 'Mais',
+                              ),
                             ))),
                     Padding(
                       padding: const EdgeInsets.all(15.0),

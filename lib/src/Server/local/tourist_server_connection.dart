@@ -6,8 +6,131 @@ import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
+import 'package:flutter/material.dart';
 
-import 'guide_server_connection.dart';
+TouristModel touristModel = TouristModel('assets/images/felipe_turista.jpg',
+    'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
+
+GuideModel guideModel = GuideModel(
+    'assets/images/felipe_guia.jpg',
+    'Felipe Ferreira de Souza',
+    'fefsouza10@gmail.com',
+    '+5511968638792',
+    'assets/images/certificado.jpg',
+    '100,00'
+        '');
+
+SpotModel spotModel1 = SpotModel(
+    'MASP',
+    'Avenida Paulista, São Paulo',
+    'Monumento',
+    'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
+    [
+      'assets/images/masp1.jpg',
+      'assets/images/masp2.jpg',
+      'assets/images/masp3.jpg'
+    ],
+    true);
+
+SpotModel spotModel2 = SpotModel(
+    'Parque Ibirapuera',
+    'Avenida Paulista, São Paulo',
+    'Monumento',
+    'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
+    [
+      'assets/images/ibirapuera1.jpg',
+      'assets/images/ibirapuera2.jpg',
+      'assets/images/ibirapuera3.jpg'
+    ],
+    true);
+
+SpotModel spotModel3 = SpotModel(
+    'Catedral da Sé',
+    'Sé, São Paulo',
+    'Monumento',
+    'A Catedral da Sé é a igreja mais conhecida de São Paulo. Independente da religião a visita é imperdível.Com sua imponente construção marca também o centro da cidade, na Praça da Sé. A sua arquitetura é de brilhar os olhos! Cercada por vitrais, mosaicos e obras de arte sacra, possui capacidade para 8.000 pessoas, sendo considerada a maior da América do Sul.',
+    [
+      'assets/images/catedralse1.jpg',
+      'assets/images/catedralse2.jpg',
+      'assets/images/catedralse3.jpg'
+    ],
+    true);
+
+List<SpotModel> spotList = [spotModel1, spotModel2, spotModel3];
+
+var guidesDB = [
+  {
+    'imageUrl': 'assets/images/felipe_guia.jpg',
+    'name': 'Felipe Ferreira de Souza',
+    'email': 'fefsouza10@gmail.com',
+    'phone': '+5511968638792',
+    'certificate': 'assets/images/certificado.jpg',
+    'accountBalance': '100,00'
+  }
+];
+
+List<TimeOfDay> spotDuration = [
+  TimeOfDay(hour: 2, minute: 30),
+  TimeOfDay(hour: 3, minute: 45),
+  TimeOfDay(hour: 1, minute: 15),
+];
+
+List<bool> weekdays = [false, true, true, true, true, true, false];
+
+List<ExtraSpot> itineraryAddsList = [
+  ExtraSpot('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
+  ExtraSpot('Serviço Y', 'Faça aquilo e aproveite mais sua viagem!', 20.00)
+];
+
+var itinerariesDB = [
+  {
+    'guideModel': guideModel,
+    'name': 'Rolê no MASP',
+    'spotsList': spotsDB,
+    'spotDuration': spotDuration,
+    'description':
+        'Este roteiro passa por vários lugares de São Paulo, aproveite!',
+    'category': 'Rolê',
+    'weekdays': weekdays,
+    'itineraryAddsList': itineraryAddsList,
+    'price': 120.00
+  }
+];
+
+DateTime dateItinerary = DateTime.utc(2021, 10, 11, 16, 00);
+
+ItineraryModel itineraryModel1 = ItineraryModel(
+    guideModel,
+    'Rolê em SP',
+    spotList,
+    spotDuration,
+    'Este roteiro passa por vários lugares de São Paulo, aproveite!',
+    'Rolê',
+    weekdays,
+    itineraryAddsList,
+    300.00,
+    ItineraryType.Guide);
+
+ScheduleModel scheduleModel1 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel2 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel3 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel4 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+ScheduleModel scheduleModel5 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+
+List<ScheduleModel> scheduleList = [
+  scheduleModel1,
+  scheduleModel2,
+  scheduleModel3,
+  scheduleModel4,
+  scheduleModel5
+];
+
+List<ItineraryModel> guideItinerariesList = [itineraryModel1];
 
 var spotsDB = [
   {
@@ -92,12 +215,40 @@ var spotsDB = [
   }
 ];
 
+var imageUrl1 =
+    'https://c4.wallpaperflare.com/wallpaper/500/442/354/outrun-vaporwave-hd-wallpaper-preview.jpg';
+var imageUrl2 = 'https://wallpaperaccess.com/full/797185.png';
+var imageUrl3 = 'https://wallpaperaccess.com/full/797185.png';
+var imageUrl4 =
+    'https://img.freepik.com/free-vector/colorful-palm-silhouettes-background_23-2148541792.jpg?size=626&ext=jpg';
+var imageUrl5 =
+    'showmetech.com.br/wp-content/uploads//2020/12/nebula-4k-1024x576.jpg';
+
+List<String> imagesUrlList = [
+  imageUrl1,
+  imageUrl2,
+  imageUrl3,
+  imageUrl4,
+  imageUrl5
+];
+
 class TouristServerConnection extends TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
-    TouristModel touristModel = TouristModel('assets/images/felipe_turista.jpg',
+    final image = await getImageUrl();
+    TouristModel touristModel = TouristModel(image.toString(),
         'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
 
     return touristModel;
+  }
+
+  @override
+  Future<String> getImageUrl() async {
+    return imageUrl1;
+  }
+
+  @override
+  Future<List<String>> getImagesUrlList() async {
+    return imagesUrlList;
   }
 
   // trocar foto de perfil
@@ -159,7 +310,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retonar lista de agendamentos do turista
   @override
   Future<List<ScheduleModel>> getSchedules() async {
-    throw UnsupportedError("");
+    return scheduleList;
   }
 
   // retornar lista de pesquisa do usuário (destinos e roteiros)
