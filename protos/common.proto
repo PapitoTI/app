@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrionGrpc";
+
+package common;
+
+message LoginRequest {
+    string Email = 1;
+    string Password = 2;
+}
+
+message LoginResponse {
+    string Cookie = 1;
+}
+
+message UpdatePictureRequest {
+    bytes ImageBytes = 1;
+}
+
+message UpdatePictureResponse {
+    string PictureUrl = 1;
+}
+
+message UpdatePasswordRequest {
+    string OldPassword = 1;
+    string NewPassword = 2;
+}
+
+message Spot {
+    string Name = 1;
+    string Address = 2;
+    string Category = 3;
+    string Description = 4;
+    repeated string ImageUrls = 5;
+}
+
+message ExtraSpot {
+    string Name = 1;
+    string Description = 2;
+    double Price = 3;
+}
+
+message Tour {
+	string GuideEmail = 1;
+	string Name = 2;
+	repeated Spot Spots = 3;
+    repeated int32 DurationsInSeconds = 4;
+	string Description = 5;
+	string Category = 6;
+	repeated bool Weekdays = 7;
+	repeated ExtraSpot ExtraSpots = 8;
+	double Price = 9;
+}
+
+message Empty {
+
+}

@@ -11,7 +11,7 @@ abstract class GuideServerConnectionInterface {
   }
 
   // trocar foto de perfil
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
