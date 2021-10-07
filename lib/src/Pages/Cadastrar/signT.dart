@@ -169,7 +169,7 @@ class CadastroTurista extends StatelessWidget {
                                   Icon(Icons.phone, color: Colors.white),
                               /*suffixIcon: IconButton(
                                   onPressed(){};
-                        
+
                                 ),*/
                             ),
                             keyboardType: TextInputType.phone,
@@ -198,7 +198,7 @@ class CadastroTurista extends StatelessWidget {
                               prefixIcon: Icon(Icons.lock, color: Colors.white),
                               /*suffixIcon: IconButton(
                                   onPressed(){};
-                        
+
                                 ),*/
                             ),
                             keyboardType: TextInputType.visiblePassword,
@@ -227,7 +227,7 @@ class CadastroTurista extends StatelessWidget {
                               prefixIcon: Icon(Icons.lock, color: Colors.white),
                               /*suffixIcon: IconButton(
                                   onPressed(){};
-                        
+
                                 ),*/
                             ),
                             keyboardType: TextInputType.visiblePassword,

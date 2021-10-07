@@ -1,6 +1,6 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/choice.dart';
-import 'package:app/src/Pages/Cadastrar/signT.dart';
+import 'package:app/src/Pages/Cadastrar/signG.dart';
 //import 'package:app/src/Pages/login/validators.dart';
 import 'package:app/src/Pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -142,7 +142,7 @@ class LoginGuidePage extends GetWidget<LoginController> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () => Get.to(CadastroTurista()),
+                                  onPressed: () => Get.to(CadastroGuia()),
                                   child: Text("Cadastrar")),
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(

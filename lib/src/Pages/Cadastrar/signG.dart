@@ -1,10 +1,9 @@
 import 'package:app/src/Config/palette.dart';
-
 import 'package:app/src/Pages/Cadastrar/register_guide.dart';
 import 'package:app/src/Pages/login/login_guide.dart';
+import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:validatorless/validatorless.dart';
 
 class CadastroGuia extends StatefulWidget {
   @override
@@ -21,6 +20,8 @@ class _CadastroGuiaState extends State<CadastroGuia> {
   final TextEditingController phoneController = TextEditingController();
 
   final TextEditingController certificateController = TextEditingController();
+
+  final ServerConnectionBuilderInterface _builder = Get.find(tag: "builder");
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +195,7 @@ class _CadastroGuiaState extends State<CadastroGuia> {
                               controller: passwordController,
                               style: TextStyle(color: Palette.branco),
                               decoration: InputDecoration(
-                                labelText: "E-MAIL",
+                                labelText: "Senha",
                                 labelStyle: TextStyle(color: Palette.branco),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.auto,
@@ -237,9 +238,12 @@ class _CadastroGuiaState extends State<CadastroGuia> {
                                             elevation: 0,
                                             primary:
                                                 Palette.cinzaClaroTransparente),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           try {
-                                            controller.registerGuide(
+                                            var register = await _builder
+                                                .connectRegister();
+
+                                            await register.registerGuide(
                                                 emailController.text,
                                                 passwordController.text,
                                                 nameController.text,

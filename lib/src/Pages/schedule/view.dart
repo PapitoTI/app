@@ -50,7 +50,8 @@ class _SchedulePageState extends State<SchedulePage> {
                     padding: const EdgeInsets.only(
                         left: 8.0, right: 8.0, bottom: 8.0),
                     child: UserCardWidget(
-                      imageUrl: _schedule.touristModel.imageUrl,
+                      imageUrl: home.session
+                          .getImage(_schedule.touristModel.imageUrl),
                       name: _schedule.touristModel.name,
                     ),
                   ),

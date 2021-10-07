@@ -1,6 +1,5 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/spot_model.dart';
-import 'package:app/src/Widget/user_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -64,11 +63,11 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            child: UserAvatarWidget(
-                                              height: 70,
-                                              width: 70,
-                                              image: 'image',
-                                            ),
+                                            // child: UserAvatarWidget(
+                                            //   height: 70,
+                                            //   width: 70,
+                                            //   image: 'image',
+                                            // ),
                                           ),
                                         ),
                                       ],

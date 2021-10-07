@@ -126,7 +126,8 @@ class _SpotPageState extends State<SpotPage> {
                                   description:
                                       '${snapshot.data?[index].spotsList.length} locais',
                                   image: snapshot.data?[index].spotsList[0]
-                                      .spotImagesList[0],
+                                          .spotImagesList[0] ??
+                                      '',
                                 ),
                               );
                             }),

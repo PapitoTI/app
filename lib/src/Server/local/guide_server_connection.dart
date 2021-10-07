@@ -149,6 +149,11 @@ class GuideServerConnection extends GuideServerConnectionInterface {
     return guideModel;
   }
 
+  @override
+  Image getImage(String url) {
+    return Image.asset(url);
+  }
+
   // trocar foto de perfil
   @override
   Future<String> updateProfilePicture(File file) async {

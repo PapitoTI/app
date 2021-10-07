@@ -3,10 +3,15 @@ import 'dart:io';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
+import 'package:flutter/material.dart';
 
 abstract class GuideServerConnectionInterface {
   // retornar dados do guia
   Future<GuideModel> getGuideData() async {
+    throw UnsupportedError("");
+  }
+
+  Image getImage(String url) {
     throw UnsupportedError("");
   }
 

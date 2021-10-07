@@ -54,7 +54,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
                   padding:
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                   child: UserCardWidget(
-                    imageUrl: _itinerary.guideModel.imageUrl,
+                    imageUrl:
+                        home.session.getImage(_itinerary.guideModel.imageUrl),
                     name: _itinerary.guideModel.name,
                   ),
                 ),

@@ -135,7 +135,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                         description:
                                             '${snapshot.data?[index].itinerary.spotsList.length} locais',
                                         image: snapshot.data?[index].itinerary
-                                            .spotsList[0].spotImagesList[0],
+                                            .spotsList[0].spotImagesList[0] ?? '',
                                       ),
                                     );
                                   } else {
@@ -182,8 +182,12 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                             .data?[index].itinerary.name,
                                         description:
                                             '${snapshot.data?[index].itinerary.spotsList.length} locais',
-                                        image: snapshot.data?[index].itinerary
-                                            .spotsList[0].spotImagesList[0],
+                                        image: snapshot
+                                                .data?[index]
+                                                .itinerary
+                                                .spotsList[0]
+                                                .spotImagesList[0] ??
+                                            '',
                                       ),
                                     );
                                   } else {

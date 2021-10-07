@@ -234,21 +234,15 @@ List<String> imagesUrlList = [
 
 class TouristServerConnection extends TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
-    final image = await getImageUrl();
-    TouristModel touristModel = TouristModel(image.toString(),
+    TouristModel touristModel = TouristModel('assets/images/becobatman1.jpg',
         'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
 
     return touristModel;
   }
 
   @override
-  Future<String> getImageUrl() async {
-    return imageUrl1;
-  }
-
-  @override
-  Future<List<String>> getImagesUrlList() async {
-    return imagesUrlList;
+  Image getImage(String url) {
+    return Image.asset(url);
   }
 
   // trocar foto de perfil
@@ -315,7 +309,8 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista de pesquisa do usuário (destinos e roteiros)
   // retornar ItineraryModel e SpotModel
   @override
-  Future<List<Object>> searchResults(List<String> categories, String searchText) async {
+  Future<List<Object>> searchResults(
+      List<String> categories, String searchText) async {
     throw UnsupportedError("");
   }
 }
