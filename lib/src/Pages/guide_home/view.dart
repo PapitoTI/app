@@ -193,9 +193,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                 itemCount: 1,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  print(_filteredArray);
                                   if (_filteredArray!.length != 0) {
-                                    print(homeBaseLogic.session);
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: GetBuilder<ItineraryLogic>(

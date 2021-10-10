@@ -12,19 +12,22 @@ import 'package:flutter/material.dart';
 
 void main() async {
   var builder = GrpcServerConnectionBuilder("192.168.0.2", 50051);
-  var chup = await builder.connectGuide(Credentials("isadora.pimto@hotmail.com", "pimto"));
+  var chup = await builder
+      .connectGuide(Credentials("isadora.pimto@hotmail.com", "pimto"));
   await chup.createItinerary(new ItineraryModel(
       await chup.getGuideData(),
       "Passeio",
-      [new SpotModel("name", "address", "category", "description", ["spotImagesList"], false)],
-      [TimeOfDay.now()],
+      [
+        new SpotModel("name", "address", "category", "description",
+            ["spotImagesList"], false)
+      ],
+      [Duration(hours: 0)],
       "description",
       "category",
       [true, true, true, true, true, true, true],
       [],
       666,
-      ItineraryType.Guide
-  ));
+      ItineraryType.Guide));
 
   //runApp(LoginApp(builder));
   // runApp(RegisterApp(await builder.connectRegister()));

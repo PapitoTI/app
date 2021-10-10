@@ -1,3 +1,4 @@
+import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
@@ -16,6 +17,7 @@ class TimelineWidgetPage extends StatefulWidget {
 
 class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
   final logic = Get.put(TimelineWidgetLogic());
+  final ItineraryLogic itineraryLogic = Get.find<ItineraryLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                       style: TextStyle(fontSize: 22),
                     ),
                   ),
-                  GetBuilder<ItineraryLogic>(builder: (logic) {
+                  GetBuilder<ItineraryLogic>(builder: (itinerary) {
                     return GetBuilder<TimelineWidgetLogic>(builder: (timeline) {
                       return ListView.builder(
                           scrollDirection: Axis.vertical,
@@ -74,63 +76,70 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                                         ),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Flexible(
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0),
-                                                          child: Text(timeline
-                                                              .spotsList[index]
-                                                              .name),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Flexible(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                            '${logic.itinerary.spotDuration[index].format(context)}'),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    height: 35,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color:
-                                                            Palette.cinzaClaro),
-                                                    child: Center(
-                                                        child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Row(
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Column(
                                                         children: [
-                                                          Text(timeline
-                                                              .spotsList[index]
-                                                              .category),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 8.0),
+                                                            child: Text(timeline
+                                                                .spotsList[
+                                                                    index]
+                                                                .name),
+                                                          ),
                                                         ],
                                                       ),
-                                                    )),
-                                                  )
-                                                ],
-                                              )
+                                                    ),
+                                                    Flexible(
+                                                      child: Column(
+                                                        children: [
+                                                          Text(durationToHours(
+                                                              itinerary
+                                                                  .itinerary
+                                                                  .spotDuration[
+                                                                      index]
+                                                                  .inMinutes)),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      height: 35,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          color: Palette
+                                                              .cinzaClaro),
+                                                      child: Center(
+                                                          child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(timeline
+                                                                .spotsList[
+                                                                    index]
+                                                                .category),
+                                                          ],
+                                                        ),
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         )
@@ -140,24 +149,7 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                             );
                           });
                     });
-                  })
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Align(
-                  //         alignment: Alignment.topRight,
-                  //         child: ElevatedButton(
-                  //             onPressed: (() =>
-                  //                 {_controller.timelineNameDB.removeLast()}),
-                  //             child: Text('Remover local'))),
-                  //     Align(
-                  //         alignment: Alignment.topRight,
-                  //         child: ElevatedButton(
-                  //             onPressed: (() =>
-                  //                 {_controller.timelineNameDB.add('Local')}),
-                  //             child: Text('Adicionar local'))),
-                  //   ],
-                  // )
+                  }),
                 ],
               ),
             ),

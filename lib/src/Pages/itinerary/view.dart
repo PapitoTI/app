@@ -1,6 +1,8 @@
+import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/edit_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
+import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
@@ -20,7 +22,7 @@ class ItineraryPage extends StatefulWidget {
 
 class _ItineraryPageState extends State<ItineraryPage> {
   // final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();0
-
+  final ItineraryLogic itineraryLogic = Get.find<ItineraryLogic>();
   var _itinerary = Get.arguments;
 
   @override
@@ -63,7 +65,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
                   child: ItineraryPageTitleWidget(
                     title: _itinerary.name,
                     category: _itinerary.category,
-                    duration: '_itinerary.totalTime',
+                    duration: durationToHours(calculateTotalDurationToMinutes(
+                        _itinerary.spotDuration)),
                   ),
                 ),
                 Padding(
@@ -91,6 +94,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                   child: ItineraryInfoWidget(
                     price: _itinerary.price.toStringAsFixed(2),
+                    duration: itineraryLogic.totalTime,
                   ),
                 ),
                 Padding(

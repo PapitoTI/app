@@ -65,8 +65,7 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
             name: it.name,
             category: it.category,
             description: it.description,
-            durationsInSeconds:
-                it.spotDuration.map((e) => 60 * 60 * e.hour + e.minute * 60),
+            durationsInSeconds: it.spotDuration.map((e) => e.inSeconds),
             // extraSpots: it.itineraryAddsList.map((e) => ExtraSpot()),
             price: it.price,
             spots: it.spotsList.map((e) => new Spot(
@@ -94,7 +93,7 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
                 .toList(),
             e.durationsInSeconds
                 .map((e) =>
-                    TimeOfDay(hour: 60 * (e / 60).round(), minute: e % 60))
+                    Duration(hours: 60 * (e / 60).round(), minutes: e % 60))
                 .toList(),
             e.description,
             e.category,

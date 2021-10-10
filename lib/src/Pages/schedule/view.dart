@@ -1,3 +1,4 @@
+import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
@@ -44,7 +45,8 @@ class _SchedulePageState extends State<SchedulePage> {
                   child: ItineraryPageTitleWidget(
                     title: _schedule.itinerary.name,
                     category: _schedule.itinerary.category,
-                    duration: '_schedule.totalTime',
+                    duration: durationToHours(calculateTotalDurationToMinutes(
+                        _schedule.itinerary.spotDuration)),
                   ),
                 ),
                 if (home.session is GuideServerConnectionInterface)
@@ -82,6 +84,10 @@ class _SchedulePageState extends State<SchedulePage> {
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                   child: ItineraryInfoWidget(
                     price: _schedule.itinerary.price.toStringAsFixed(2),
+                    duration: durationToHours(
+                      calculateTotalDurationToMinutes(
+                          _schedule.itinerary.spotDuration),
+                    ),
                   ),
                 ),
                 Padding(

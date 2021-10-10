@@ -1,3 +1,4 @@
+import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
@@ -6,6 +7,7 @@ import 'package:app/src/Widget/card_g_editable_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/title_widget.dart';
 import 'package:app/src/Widget/user_avatar_widget.dart';
+import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,20 +29,13 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
   var _editItinerary = Get.arguments;
 
   Future<void> _show(index) async {
-    final TimeOfDay? result = await showTimePicker(
+    final Duration? result = await showDurationPicker(
       context: context,
       initialTime: _editItinerary.spotDuration[index],
-      initialEntryMode: TimePickerEntryMode.dial,
     );
     if (result != null) {
-      var resultHour = result.hour.toString().length < 2
-          ? ('0' + result.hour.toString())
-          : result.hour.toString();
-      var resultMinute = result.minute.toString().length < 2
-          ? ('0' + result.minute.toString())
-          : result.minute.toString();
-      _selectedTime[index] = TimeOfDay.fromDateTime(
-          DateTime.parse('0000-00-00 $resultHour:$resultMinute'));
+      _selectedTime[index] = result;
+      print(result);
       logic.update();
     }
   }
@@ -53,7 +48,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
         String itineraryTitle = _editItinerary.name;
         String itineraryDescription = _editItinerary.description;
         List<bool> itineraryWeekdays = _editItinerary.weekdays;
-        List<TimeOfDay> itineraryDuration = _editItinerary.spotDuration;
+        List<Duration> itineraryDuration = _editItinerary.spotDuration;
         var itineraryPrice = _editItinerary.price;
         return Scaffold(
           body: SafeArea(
@@ -134,8 +129,6 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                 ),
                               ),
                               GetBuilder<ItineraryLogic>(builder: (logic) {
-                                List<TimeOfDay> itineraryDuration =
-                                    logic.itinerary.spotDuration;
                                 return ListView.builder(
                                     scrollDirection: Axis.vertical,
                                     physics:
@@ -227,7 +220,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                                                               _show(index)
                                                                             }),
                                                                         child: Text(
-                                                                            _selectedTime[index].format(context)),
+                                                                            durationToHours(_selectedTime[index].inMinutes)),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -272,23 +265,6 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                       );
                                     });
                               })
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Align(
-                              //         alignment: Alignment.topRight,
-                              //         child: ElevatedButton(
-                              //             onPressed: (() =>
-                              //                 {_controller.timelineNameDB.removeLast()}),
-                              //             child: Text('Remover local'))),
-                              //     Align(
-                              //         alignment: Alignment.topRight,
-                              //         child: ElevatedButton(
-                              //             onPressed: (() =>
-                              //                 {_controller.timelineNameDB.add('Local')}),
-                              //             child: Text('Adicionar local'))),
-                              //   ],
-                              // )
                             ],
                           ),
                         ),
@@ -368,7 +344,8 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                               border: InputBorder.none),
                                           style: TextStyle(fontSize: 30),
                                           initialValue: _editItinerary.price
-                                              .toStringAsFixed(2),
+                                              .toStringAsFixed(2)
+                                              .replaceAll('.', ','),
                                           onChanged: (price) {
                                             var priceToDouble = double.tryParse(
                                                     price.toString())! +

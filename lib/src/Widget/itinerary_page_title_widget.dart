@@ -40,7 +40,7 @@ class ItineraryPageTitleWidget extends StatelessWidget {
                           style: TextStyle(fontSize: 30),
                         ),
                         Text(
-                          'duration',
+                          '${duration.substring(0, 2).replaceAll(new RegExp(r'^0+(?=.)'), '')}h de duração prevista',
                           style: TextStyle(color: Palette.cinzaClaro),
                         )
                       ],
