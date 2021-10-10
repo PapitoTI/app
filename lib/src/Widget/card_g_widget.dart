@@ -20,14 +20,15 @@ class CardGWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
+      var img = home.session.getImage(spotImagesList);
       return Container(
         width: 250,
         height: 275,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(image: img.image, fit: BoxFit.cover)),
         child: Column(
           children: [
-            Container(
-              child: home.session.getImage(spotImagesList),
-            ),
             Row(
               children: [
                 Expanded(

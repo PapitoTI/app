@@ -1,13 +1,17 @@
+import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/edit_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
 import 'package:app/src/Widget/itinerary_info_widget.dart';
 import 'package:app/src/Widget/itinerary_page_title_widget.dart';
 import 'package:app/src/Widget/timeline_widget/view.dart';
+import 'package:app/src/Widget/title_widget.dart';
 import 'package:app/src/Widget/user_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:weekday_selector/weekday_selector.dart';
 
 class ItineraryPage extends StatefulWidget {
   @override
@@ -15,33 +19,45 @@ class ItineraryPage extends StatefulWidget {
 }
 
 class _ItineraryPageState extends State<ItineraryPage> {
-  // final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();
+  // final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();0
 
   var _itinerary = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
+      home.itinerary = _itinerary;
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Roteiro'),
-        ),
         body: SafeArea(
             child: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                if (home.session is GuideServerConnectionInterface)
-                  Container(
-                    child: Align(
-                        alignment: Alignment.topRight,
-                        child: ElevatedButton(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BackButtonWidget(title: 'Roteiro'),
+                      if (home.session is GuideServerConnectionInterface)
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Palette.cinzaTransparente,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
                             onPressed: (() => {
                                   Get.to(() => EditItineraryPage(),
-                                      arguments: _itinerary)
+                                      arguments: home.itinerary)
                                 }),
-                            child: Text('Editar'))),
+                          ),
+                        )
+                    ],
                   ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ItineraryPageTitleWidget(
@@ -80,6 +96,26 @@ class _ItineraryPageState extends State<ItineraryPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                   child: TimelineWidgetPage(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Palette.cinzaTransparente,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Column(
+                      children: [
+                        TitleWidget(text: 'Dias de atuação:'),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: WeekdaySelector(
+                              firstDayOfWeek: 0,
+                              onChanged: null,
+                              values: _itinerary.weekdays),
+                        )
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),

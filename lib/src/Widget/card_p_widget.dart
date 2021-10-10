@@ -17,7 +17,7 @@ class CardPWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
-      print(image);
+      var img = home.session.getImage(image);
       return Container(
         width: 350,
         height: 84,
@@ -32,7 +32,10 @@ class CardPWidget extends StatelessWidget {
               child: Container(
                 height: 65,
                 width: 65,
-                child: home.session.getImage(image),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image:
+                        DecorationImage(image: img.image, fit: BoxFit.cover)),
               ),
             ),
             Expanded(

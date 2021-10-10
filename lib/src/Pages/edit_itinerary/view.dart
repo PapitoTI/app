@@ -1,6 +1,7 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_g_editable_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/title_widget.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:weekday_selector/weekday_selector.dart';
 
 import 'logic.dart';
 
@@ -54,13 +56,14 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
         List<TimeOfDay> itineraryDuration = _editItinerary.spotDuration;
         var itineraryPrice = _editItinerary.price;
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Editar roteiro'),
-          ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: BackButtonWidget(title: 'Editar roteiro'),
+                  ),
                   TitleWidget(text: 'Nome do roteiro:'),
                   Row(
                     children: [
@@ -317,14 +320,14 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                       ),
                     ],
                   ),
-                  // TitleWidget(text: 'Dias de atuação:'),
-                  // WeekdaySelector(
-                  //   firstDayOfWeek: 0,
-                  //   onChanged: (int day) {
-                  //     logic.updateWeekdaySelector(day);
-                  //   },
-                  //   values: logic.itinerary.weekdays,
-                  // ),
+                  TitleWidget(text: 'Dias de atuação:'),
+                  WeekdaySelector(
+                    firstDayOfWeek: 0,
+                    onChanged: (int day) {
+                      logic.updateWeekdaySelector(day);
+                    },
+                    values: logic.itinerary.weekdays,
+                  ),
                   TitleWidget(text: 'Preço:'),
                   Row(
                     children: [

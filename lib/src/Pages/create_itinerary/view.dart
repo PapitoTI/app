@@ -2,6 +2,7 @@ import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/add_spots/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Server/local/guide_server_connection.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_g_editable_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/title_widget.dart';
@@ -52,13 +53,14 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
         double? itineraryPrice;
         String? itineraryCategory;
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Criar roteiro'),
-          ),
           body: SafeArea(
               child: SingleChildScrollView(
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BackButtonWidget(title: 'Criar roteiro'),
+                ),
                 TitleWidget(text: 'Nome do roteiro:'),
                 Row(
                   children: [

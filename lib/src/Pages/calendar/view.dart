@@ -1,5 +1,7 @@
+import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/pending_schedules/view.dart';
 import 'package:app/src/Widget/CustomTableCalendar/custom_table_calendar_widget.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,21 +19,30 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.calendar_today_rounded,
-              color: Colors.white,
-            ),
-            onPressed: (() => {Get.to(() => PendingSchedulesPage())}),
-          )
-        ],
-        title: Text('Agenda'),
-      ),
       body: SafeArea(
           child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BackButtonWidget(title: 'Agenda'),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Palette.cinzaTransparente,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.calendar_today_rounded,
+                      color: Colors.white,
+                    ),
+                    onPressed: (() => {Get.to(() => PendingSchedulesPage())}),
+                  ),
+                )
+              ],
+            ),
+          ),
           Expanded(child: CustomTableCalendar()),
         ],
       )),

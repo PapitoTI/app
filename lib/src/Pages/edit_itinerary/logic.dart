@@ -33,7 +33,7 @@ class EditItineraryLogic extends GetxController {
     itinerary.spotDuration = itineraryDuration;
     itineraryLogic.insertItinerary(itinerary);
     await homeBaseLogic.session.updateItinerary(itinerary);
-    update();
+    homeBaseLogic.update();
     Get.back();
   }
 

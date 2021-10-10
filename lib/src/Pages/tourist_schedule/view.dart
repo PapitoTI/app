@@ -3,6 +3,7 @@ import 'package:app/src/Models/tourist_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/schedule/view.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/tourist_schedule_card_p_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,14 @@ class TouristSchedulePage extends StatelessWidget {
           if (snapshot.hasData) {
             var tourist = snapshot.data;
             return Scaffold(
-              appBar: AppBar(
-                title: Text('Agenda'),
-              ),
               body: SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: BackButtonWidget(title: 'Agenda'),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Align(

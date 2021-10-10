@@ -1,3 +1,4 @@
+import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Widget/user_avatar_widget.dart';
@@ -25,7 +26,7 @@ class ItineraryInfoWidget extends StatelessWidget {
                   UserAvatarWidget(
                     height: 80,
                     width: 80,
-                    image: Image.asset('assets/images/SP.jpg'),
+                    image: Image.asset(priceTag),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
