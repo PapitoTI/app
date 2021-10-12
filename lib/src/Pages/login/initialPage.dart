@@ -161,7 +161,7 @@ class _InitialPageState extends State<InitialPage> {
                               f.writeAsStringSync("xpto");
                               Get.to(() => ChoicePage());
                             },
-                            child: const Text('Cadastrar agora'),
+                            child: const Text('Escolha seu perfil'),
                           ),
                         ),
                       ],

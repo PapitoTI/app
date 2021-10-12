@@ -1,6 +1,8 @@
+import 'package:app/src/Pages/PerfilG/guide_profile.dart';
 import 'package:app/src/Pages/edit_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
 import 'package:app/src/Widget/itinerary_info_widget.dart';
 import 'package:app/src/Widget/itinerary_page_title_widget.dart';
@@ -23,14 +25,15 @@ class _ItineraryPageState extends State<ItineraryPage> {
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Roteiro'),
-        ),
         body: SafeArea(
             child: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
+                Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [BackButtonWidget(title: "Roteiro")],
+                ),
                 if (home.session is GuideServerConnectionInterface)
                   Container(
                     child: Align(
@@ -53,9 +56,15 @@ class _ItineraryPageState extends State<ItineraryPage> {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
-                  child: UserCardWidget(
-                    imageUrl: _itinerary.guideModel.imageUrl,
-                    name: _itinerary.guideModel.name,
+                  child: GestureDetector(
+                    onTap: (() => {
+                          Get.to(() => GuideProfile(),
+                              arguments: _itinerary.guideModel)
+                        }),
+                    child: UserCardWidget(
+                      imageUrl: _itinerary.guideModel.imageUrl,
+                      name: _itinerary.guideModel.name,
+                    ),
                   ),
                 ),
                 Padding(
