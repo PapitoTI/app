@@ -74,7 +74,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
                         UserAvatarWidget(
                           height: 80,
                           width: 80,
-                          image: tourist.imageUrl,
+                          image: _builder.getImage(tourist.imageUrl),
                         )
                       ],
                     ),

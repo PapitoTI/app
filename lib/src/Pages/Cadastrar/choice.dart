@@ -1,12 +1,12 @@
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/Cadastrar/signG.dart';
+import 'package:app/src/Pages/login/login_controller.dart';
 import 'package:app/src/Pages/login/login_guide.dart';
-
 import 'package:app/src/Pages/login/login_tourist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChoicePage extends StatelessWidget {
+  final loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Container(

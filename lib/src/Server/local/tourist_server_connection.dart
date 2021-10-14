@@ -69,10 +69,10 @@ var guidesDB = [
   }
 ];
 
-List<TimeOfDay> spotDuration = [
-  TimeOfDay(hour: 2, minute: 30),
-  TimeOfDay(hour: 3, minute: 45),
-  TimeOfDay(hour: 1, minute: 15),
+List<Duration> spotDuration = [
+  Duration(hours: 2, minutes: 30),
+  Duration(hours: 3, minutes: 45),
+  Duration(hours: 1, minutes: 15),
 ];
 
 List<bool> weekdays = [false, true, true, true, true, true, false];
@@ -234,26 +234,20 @@ List<String> imagesUrlList = [
 
 class TouristServerConnection extends TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
-    final image = await getImageUrl();
-    TouristModel touristModel = TouristModel(image.toString(),
+    TouristModel touristModel = TouristModel('assets/images/becobatman1.jpg',
         'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
 
     return touristModel;
   }
 
   @override
-  Future<String> getImageUrl() async {
-    return imageUrl1;
-  }
-
-  @override
-  Future<List<String>> getImagesUrlList() async {
-    return imagesUrlList;
+  Image getImage(String url) {
+    return Image.asset(url);
   }
 
   // trocar foto de perfil
   @override
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
@@ -287,8 +281,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
 
   // retornar lista de roteiros por tipo de guiamento
   @override
-  Future<List<ItineraryModel>> getItinerariesByType(
-      ItineraryType itineraryType) async {
+  Future<List<ItineraryModel>> getItinerariesByType(itineraryType) async {
     List<ItineraryModel> guideItinerary = [itineraryModel1];
 
     return guideItinerary;
@@ -316,7 +309,8 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista de pesquisa do usuário (destinos e roteiros)
   // retornar ItineraryModel e SpotModel
   @override
-  Future<List<Object>> searchResults(SearchFilter searchFilter) async {
+  Future<List<Object>> searchResults(
+      List<String> categories, String searchText) async {
     throw UnsupportedError("");
   }
 }

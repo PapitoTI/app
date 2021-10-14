@@ -9,13 +9,13 @@ import '../register_server_connection_interface.dart';
 class ServerConnectionBuilder extends ServerConnectionBuilderInterface {
   Future<TouristServerConnection> connectTourist(
       Credentials credentials) async {
-    if (credentials.userName == "pedro@gmail.com" &&
+    if (credentials.email == "pedro@gmail.com" &&
         credentials.password == "123") return TouristServerConnection();
     throw Exception("Você digitou a senha errada");
   }
 
   Future<GuideServerConnection> connectGuide(Credentials credentials) async {
-    if (credentials.userName == "pedro@gmail.com" &&
+    if (credentials.email == "pedro@gmail.com" &&
         credentials.password == "123") return GuideServerConnection();
     throw Exception("Você digitou a senha errada");
   }

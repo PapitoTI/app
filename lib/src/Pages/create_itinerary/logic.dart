@@ -37,7 +37,7 @@ class CreateItineraryLogic extends GetxController {
     update();
   }
 
-  void updateSpotsDuration(List<TimeOfDay> list) {
+  void updateSpotsDuration(List<Duration> list) {
     itinerary.spotDuration = list;
     update();
   }

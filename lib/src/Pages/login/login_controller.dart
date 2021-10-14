@@ -23,13 +23,17 @@ class LoginController extends GetxController {
       _userT.value =
           await _builder.connectTourist(Credentials(email, password));
       Get.to(HomeBasePage(), arguments: _userT.value);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   void loginGUser(String email, String password) async {
     try {
       _userG.value = await _builder.connectGuide(Credentials(email, password));
       Get.to(HomeBasePage(), arguments: _userG.value);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 }

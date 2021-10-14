@@ -1,8 +1,8 @@
 class Credentials {
-  String userName;
+  String email;
   String password;
-  Credentials(this.userName, this.password){
-    assert(userName.isNotEmpty && password.isNotEmpty);
+  Credentials(this.email, this.password){
+    assert(email.isNotEmpty && password.isNotEmpty);
   }
 }
 

@@ -7,7 +7,7 @@ class UserCardWidget extends StatelessWidget {
       : super(key: key);
 
   final name;
-  final imageUrl;
+  final Image imageUrl;
 
   @override
   Widget build(BuildContext context) {

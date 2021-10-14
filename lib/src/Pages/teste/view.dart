@@ -1,6 +1,4 @@
-import 'package:app/src/Models/favoritos_model.dart';
 import 'package:app/src/Server/local/tourist_server_connection.dart';
-import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,10 +49,10 @@ class _TestePageState extends State<TestePage> {
                                     itemBuilder: (ctx, index) {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: CardPWidget(
-                                          title:
-                                              '${snapshot.data as List<FavoritosModel>}',
-                                        ),
+                                        // child: CardPWidget(
+                                        //   title:
+                                        //       '${snapshot.data as List<FavoritosModel>}',
+                                        // ),
                                       );
                                     }));
                           }

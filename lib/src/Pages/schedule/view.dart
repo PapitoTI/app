@@ -1,7 +1,9 @@
+import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
 import 'package:app/src/Widget/itinerary_info_widget.dart';
 import 'package:app/src/Widget/itinerary_page_title_widget.dart';
@@ -29,9 +31,6 @@ class _SchedulePageState extends State<SchedulePage> {
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Roteiro Agendado'),
-        ),
         body: SafeArea(
             child: SingleChildScrollView(
           child: Center(
@@ -39,10 +38,15 @@ class _SchedulePageState extends State<SchedulePage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
+                  child: BackButtonWidget(title: 'Roteiro agendado'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ItineraryPageTitleWidget(
                     title: _schedule.itinerary.name,
                     category: _schedule.itinerary.category,
-                    duration: '_schedule.totalTime',
+                    duration: durationToHours(calculateTotalDurationToMinutes(
+                        _schedule.itinerary.spotDuration)),
                   ),
                 ),
                 if (home.session is GuideServerConnectionInterface)
@@ -50,7 +54,8 @@ class _SchedulePageState extends State<SchedulePage> {
                     padding: const EdgeInsets.only(
                         left: 8.0, right: 8.0, bottom: 8.0),
                     child: UserCardWidget(
-                      imageUrl: _schedule.touristModel.imageUrl,
+                      imageUrl: home.session
+                          .getImage(_schedule.touristModel.imageUrl),
                       name: _schedule.touristModel.name,
                     ),
                   ),
@@ -79,6 +84,10 @@ class _SchedulePageState extends State<SchedulePage> {
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                   child: ItineraryInfoWidget(
                     price: _schedule.itinerary.price.toStringAsFixed(2),
+                    duration: durationToHours(
+                      calculateTotalDurationToMinutes(
+                          _schedule.itinerary.spotDuration),
+                    ),
                   ),
                 ),
                 Padding(

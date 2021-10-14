@@ -10,7 +10,7 @@ class UserAvatarWidget extends StatelessWidget {
 
   final double height;
   final double width;
-  final String image;
+  final Image image;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,7 @@ class UserAvatarWidget extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          image:
-              DecorationImage(fit: BoxFit.cover, image: NetworkImage(image))),
+          image: DecorationImage(fit: BoxFit.cover, image: image.image)),
     );
   }
 }

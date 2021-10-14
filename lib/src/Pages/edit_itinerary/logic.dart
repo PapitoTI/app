@@ -1,7 +1,6 @@
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditItineraryLogic extends GetxController {
@@ -25,7 +24,7 @@ class EditItineraryLogic extends GetxController {
       String itineraryDescription,
       List<bool> itineraryWeekdays,
       var itineraryPrice,
-      List<TimeOfDay> itineraryDuration) async {
+      List<Duration> itineraryDuration) async {
     itinerary.name = itineraryName;
     itinerary.description = itineraryDescription;
     itinerary.weekdays = itineraryWeekdays;
@@ -33,7 +32,7 @@ class EditItineraryLogic extends GetxController {
     itinerary.spotDuration = itineraryDuration;
     itineraryLogic.insertItinerary(itinerary);
     await homeBaseLogic.session.updateItinerary(itinerary);
-    update();
+    homeBaseLogic.update();
     Get.back();
   }
 
@@ -43,7 +42,7 @@ class EditItineraryLogic extends GetxController {
     update();
   }
 
-  void updateSpotsDuration(List<TimeOfDay> list) {
+  void updateSpotsDuration(List<Duration> list) {
     itinerary.spotDuration = list;
     update();
   }

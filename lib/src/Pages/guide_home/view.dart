@@ -8,6 +8,7 @@ import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
 import 'package:app/src/Pages/pending_schedules/view.dart';
+import 'package:app/src/Pages/schedule/view.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
@@ -122,21 +123,39 @@ class _GuideHomePageState extends State<GuideHomePage> {
                             height: 100,
                             child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data?.length,
+                                itemCount: 1,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
                                   if (snapshot.data?[index].scheduleStatus ==
                                       ScheduleStatus.approved) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: CardPWidget(
-                                        title: snapshot
-                                            .data?[index].itinerary.name,
-                                        description:
-                                            '${snapshot.data?[index].itinerary.spotsList.length} locais',
-                                        image: snapshot.data?[index].itinerary
-                                            .spotsList[0].spotImagesList[0],
-                                      ),
+                                      child: GetBuilder<ItineraryLogic>(
+                                          builder: (itinerary) {
+                                        return GestureDetector(
+                                          onTap: (() => {
+                                                itinerary.insertItinerary(
+                                                    snapshot.data?[index]
+                                                            .itinerary
+                                                        as ItineraryModel),
+                                                Get.to(() => SchedulePage(),
+                                                    arguments: homeBaseLogic
+                                                        .schedules[index])
+                                              }),
+                                          child: CardPWidget(
+                                            title: snapshot
+                                                .data?[index].itinerary.name,
+                                            description:
+                                                '${snapshot.data?[index].itinerary.spotsList.length} locais',
+                                            image: snapshot
+                                                    .data?[index]
+                                                    .itinerary
+                                                    .spotsList[0]
+                                                    .spotImagesList[0] ??
+                                                '',
+                                          ),
+                                        );
+                                      }),
                                     );
                                   } else {
                                     return Text('Sem compromissos agendados!');
@@ -161,30 +180,48 @@ class _GuideHomePageState extends State<GuideHomePage> {
                       future: homeBaseLogic.session.getSchedules(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
+                          var _filteredArray = snapshot.data
+                              ?.where((element) =>
+                                  element.scheduleStatus.toString() ==
+                                  'ScheduleStatus.pending')
+                              .toList();
                           return Container(
                             width: 350,
                             height: 100,
                             child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data?.length,
+                                itemCount: 1,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  var _filteredArray = snapshot.data
-                                      ?.where((element) =>
-                                          element.scheduleStatus.toString() ==
-                                          'pending')
-                                      .toList();
-                                  if (_filteredArray!.length == 0) {
+                                  if (_filteredArray!.length != 0) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: CardPWidget(
-                                        title: snapshot
-                                            .data?[index].itinerary.name,
-                                        description:
-                                            '${snapshot.data?[index].itinerary.spotsList.length} locais',
-                                        image: snapshot.data?[index].itinerary
-                                            .spotsList[0].spotImagesList[0],
-                                      ),
+                                      child: GetBuilder<ItineraryLogic>(
+                                          builder: (itinerary) {
+                                        return GestureDetector(
+                                          onTap: (() => {
+                                                itinerary.insertItinerary(
+                                                    snapshot.data?[index]
+                                                            .itinerary
+                                                        as ItineraryModel),
+                                                Get.to(() => SchedulePage(),
+                                                    arguments: homeBaseLogic
+                                                        .schedules[index])
+                                              }),
+                                          child: CardPWidget(
+                                            title: snapshot
+                                                .data?[index].itinerary.name,
+                                            description:
+                                                '${snapshot.data?[index].itinerary.spotsList.length} locais',
+                                            image: snapshot
+                                                    .data?[index]
+                                                    .itinerary
+                                                    .spotsList[0]
+                                                    .spotImagesList[0] ??
+                                                '',
+                                          ),
+                                        );
+                                      }),
                                     );
                                   } else {
                                     return Text('Sem compromissos pendentes!');

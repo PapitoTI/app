@@ -37,14 +37,12 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
   @override
   void initState() {
     super.initState();
-    homeBaseLogic.getSchedulesFromInterface();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   List<ScheduleModel> _getEventsForDay(DateTime date) {
     var schedules = homeBaseLogic.schedules;
-    print(homeBaseLogic.schedules);
     var dayScheduleList = schedules
         .where((item) =>
             (item.date.day.toString() +
@@ -129,9 +127,10 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
                   eventLoader: _getEventsForDay,
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   headerStyle: HeaderStyle(
+                      formatButtonVisible: false,
+                      titleCentered: true,
                       headerMargin: EdgeInsets.all(8),
                       titleTextStyle: TextStyle(color: Colors.white),
-                      formatButtonTextStyle: TextStyle(color: Colors.white),
                       decoration: BoxDecoration(
                         color: Palette.cinzaTransparente,
                         borderRadius: BorderRadius.circular(20),
@@ -162,6 +161,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
                     holidayDecoration:
                         BoxDecoration(color: Palette.cinzaTransparente),
                     defaultTextStyle: TextStyle(color: Colors.white),
+                    markersMaxCount: 1,
                     markerDecoration: BoxDecoration(
                         color: Palette.branco,
                         borderRadius: BorderRadius.circular(10)),
@@ -169,13 +169,6 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
                   ),
                   onDaySelected: _onDaySelected,
                   onRangeSelected: _onRangeSelected,
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
                   onPageChanged: (focusedDay) {
                     _focusedDay = focusedDay;
                   },
@@ -190,19 +183,19 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
             valueListenable: _selectedEvents,
             builder: (context, value, _) {
               return ListView.builder(
-                itemCount: homeBaseLogic.schedules
+                itemCount: value
                     .where((element) =>
                         element.scheduleStatus.toString() ==
                         'ScheduleStatus.approved')
                     .toList()
                     .length,
                 itemBuilder: (context, index) {
-                  var _filteredArray = homeBaseLogic.schedules
+                  var _filteredArray = value
                       .where((element) =>
                           element.scheduleStatus.toString() ==
                           'ScheduleStatus.approved')
                       .toList();
-                  if (!(_filteredArray!.length == 0)) {
+                  if (!(_filteredArray.length == 0)) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GetBuilder<ItineraryLogic>(builder: (itinerary) {

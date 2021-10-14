@@ -71,10 +71,10 @@ var guidesDB = [
   }
 ];
 
-List<TimeOfDay> spotDuration = [
-  TimeOfDay(hour: 2, minute: 30),
-  TimeOfDay(hour: 3, minute: 45),
-  TimeOfDay(hour: 1, minute: 15),
+List<Duration> spotDuration = [
+  Duration(hours: 2, minutes: 30),
+  Duration(hours: 3, minutes: 45),
+  Duration(hours: 1, minutes: 15),
 ];
 
 List<bool> weekdays = [false, true, true, true, true, true, false];
@@ -149,9 +149,14 @@ class GuideServerConnection extends GuideServerConnectionInterface {
     return guideModel;
   }
 
+  @override
+  Image getImage(String url) {
+    return Image.asset(url);
+  }
+
   // trocar foto de perfil
   @override
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
