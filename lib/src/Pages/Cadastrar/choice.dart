@@ -1,5 +1,6 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/signG.dart';
+import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/login_guide.dart';
 
 import 'package:app/src/Pages/login/login_tourist.dart';
@@ -91,6 +92,7 @@ class ChoicePage extends StatelessWidget {
                   child: GestureDetector(
                     //Get.to
                     onTap: () => Get.to(() => LoginTouristPage()),
+
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
