@@ -1,4 +1,5 @@
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/login/login_tourist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -168,7 +169,7 @@ class CadastroTurista extends StatelessWidget {
                                   Icon(Icons.phone, color: Colors.white),
                               /*suffixIcon: IconButton(
                                   onPressed(){};
-                        
+
                                 ),*/
                             ),
                             keyboardType: TextInputType.phone,
@@ -197,7 +198,7 @@ class CadastroTurista extends StatelessWidget {
                               prefixIcon: Icon(Icons.lock, color: Colors.white),
                               /*suffixIcon: IconButton(
                                   onPressed(){};
-                        
+
                                 ),*/
                             ),
                             keyboardType: TextInputType.visiblePassword,
@@ -226,7 +227,7 @@ class CadastroTurista extends StatelessWidget {
                               prefixIcon: Icon(Icons.lock, color: Colors.white),
                               /*suffixIcon: IconButton(
                                   onPressed(){};
-                        
+
                                 ),*/
                             ),
                             keyboardType: TextInputType.visiblePassword,
@@ -242,8 +243,7 @@ class CadastroTurista extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: () {},
-                                    // onPressed: () => Get.to(LoginPage()),
+                                    onPressed: () => Get.to(LoginTouristPage()),
                                     child: Text('Já sou cadastrado')),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(

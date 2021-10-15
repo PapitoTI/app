@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 class UserAvatarWidget extends StatelessWidget {
   const UserAvatarWidget(
-      {Key? key, required this.height, required this.width, this.image})
+      {Key? key,
+      required this.height,
+      required this.width,
+      required this.image})
       : super(key: key);
 
   final double height;
   final double width;
-  final image;
+  final Image image;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +19,7 @@ class UserAvatarWidget extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage(
-              image,
-            ),
-          )),
+          image: DecorationImage(fit: BoxFit.cover, image: image.image)),
     );
   }
 }

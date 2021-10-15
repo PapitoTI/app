@@ -1,12 +1,13 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/choice.dart';
+import 'package:app/src/Pages/Cadastrar/signT.dart';
 //import 'package:app/src/Pages/login/validators.dart';
 import 'package:app/src/Pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:validatorless/validatorless.dart';
 
-class LoginPage extends GetWidget<LoginController> {
+class LoginTouristPage extends GetWidget<LoginController> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -32,11 +33,14 @@ class LoginPage extends GetWidget<LoginController> {
               SizedBox(
                 height: 20,
               ),
-              Image.asset(
-                'assets/images/LogoR.png',
-                width: 176,
-                height: 57,
-                fit: BoxFit.fitWidth,
+              GestureDetector(
+                onTap: () => Get.to(ChoicePage()),
+                child: Image.asset(
+                  'assets/images/LogoR.png',
+                  width: 176,
+                  height: 57,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               SizedBox(height: 80),
               Container(
@@ -46,7 +50,7 @@ class LoginPage extends GetWidget<LoginController> {
                   bottom: 20,
                 ),
                 child: Text(
-                  "Login",
+                  "Login Turista",
                   style: TextStyle(fontSize: 28, color: Colors.white),
                 ),
               ),
@@ -138,7 +142,7 @@ class LoginPage extends GetWidget<LoginController> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () => Get.to(ChoicePage()),
+                                  onPressed: () => Get.to(CadastroTurista()),
                                   child: Text("Cadastrar")),
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -152,7 +156,8 @@ class LoginPage extends GetWidget<LoginController> {
                                         _formKey.currentState?.validate() ??
                                             false;
                                     if (formValid) {
-                                      controller.loginUser(emailController.text,
+                                      controller.loginTUser(
+                                          emailController.text,
                                           passwordController.text);
                                     }
                                   },

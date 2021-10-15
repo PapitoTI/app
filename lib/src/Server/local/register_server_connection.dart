@@ -8,7 +8,11 @@ class RegisterServerConnection extends RegisterServerConnectionInterface {
 
   Future<int> registerGuide(String email, String password, String name,
       String phone, String certificate) async {
-    print("certp");
+    try {
+      print("certp");
+    } catch (e) {
+      print("certp");
+    }
     return 0;
   }
 }

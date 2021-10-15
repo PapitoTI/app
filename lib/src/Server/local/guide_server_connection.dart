@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:core';
 import 'dart:io';
 
@@ -20,7 +19,8 @@ GuideModel guideModel = GuideModel(
     'fefsouza10@gmail.com',
     '+5511968638792',
     'assets/images/certificado.jpg',
-    '100,00');
+    '100,00'
+        '');
 
 SpotModel spotModel1 = SpotModel(
     'MASP',
@@ -40,9 +40,9 @@ SpotModel spotModel2 = SpotModel(
     'Monumento',
     'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
     [
-      'assets/images/masp1.jpg',
-      'assets/images/masp2.jpg',
-      'assets/images/masp3.jpg'
+      'assets/images/ibirapuera1.jpg',
+      'assets/images/ibirapuera2.jpg',
+      'assets/images/ibirapuera3.jpg'
     ],
     true);
 
@@ -71,16 +71,13 @@ var guidesDB = [
   }
 ];
 
-List<TimeOfDay> spotDuration = [
-  TimeOfDay(hour: 2, minute: 30),
-  TimeOfDay(hour: 3, minute: 45),
-  TimeOfDay(hour: 1, minute: 15),
-  TimeOfDay(hour: 4, minute: 50),
-  TimeOfDay(hour: 0, minute: 15),
-  TimeOfDay(hour: 1, minute: 35),
+List<Duration> spotDuration = [
+  Duration(hours: 2, minutes: 30),
+  Duration(hours: 3, minutes: 45),
+  Duration(hours: 1, minutes: 15),
 ];
 
-List<int> weekdays = [DateTime.monday, DateTime.thursday, DateTime.wednesday];
+List<bool> weekdays = [false, true, true, true, true, true, false];
 
 List<ExtraSpot> itineraryAddsList = [
   ExtraSpot('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
@@ -102,7 +99,7 @@ var itinerariesDB = [
   }
 ];
 
-DateTime dateItinerary = DateTime(2021, 9, 11, 14, 0);
+DateTime dateItinerary = DateTime.utc(2021, 10, 11, 16, 00);
 
 ItineraryModel itineraryModel1 = ItineraryModel(
     guideModel,
@@ -113,10 +110,29 @@ ItineraryModel itineraryModel1 = ItineraryModel(
     'Rolê',
     weekdays,
     itineraryAddsList,
-    20.00);
+    300.00,
+    ItineraryType.Guide);
 
 ScheduleModel scheduleModel1 = ScheduleModel(
     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel2 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel3 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+ScheduleModel scheduleModel4 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+ScheduleModel scheduleModel5 = ScheduleModel(
+    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+
+List<ScheduleModel> scheduleList = [
+  scheduleModel1,
+  scheduleModel2,
+  scheduleModel3,
+  scheduleModel4,
+  scheduleModel5
+];
+
+List<ItineraryModel> guideItinerariesList = [itineraryModel1];
 
 class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
@@ -133,9 +149,14 @@ class GuideServerConnection extends GuideServerConnectionInterface {
     return guideModel;
   }
 
+  @override
+  Image getImage(String url) {
+    return Image.asset(url);
+  }
+
   // trocar foto de perfil
   @override
-  Future<void> updateProfilePicture(File file) async {
+  Future<String> updateProfilePicture(File file) async {
     throw UnsupportedError("");
   }
 
@@ -149,15 +170,19 @@ class GuideServerConnection extends GuideServerConnectionInterface {
   // criar roteiro
   @override
   Future<void> createItinerary(ItineraryModel itineraryModel) async {
-    throw UnsupportedError("");
+    guideItinerariesList.add(itineraryModel);
+  }
+
+  //editar roteiro do guia
+  @override
+  Future<void> updateItinerary(ItineraryModel itineraryModel) async {
+    print('alterado!');
   }
 
   // retornar lista de roteiros do guia
   @override
   Future<List<ItineraryModel>> getGuideItineraries() async {
-    List<ItineraryModel> guideItinerary = [itineraryModel1];
-
-    return guideItinerary;
+    return guideItinerariesList;
   }
 
   // deletar roteiro do guia
@@ -169,20 +194,18 @@ class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar lista de agendamentos do guia
   @override
   Future<List<ScheduleModel>> getSchedules() async {
-    List<ScheduleModel> schedule = [scheduleModel1];
-
-    return schedule;
+    return scheduleList;
   }
 
   // aprovar o agendamento
   @override
   Future<void> approveSchedule(ScheduleModel scheduleModel) async {
-    throw UnsupportedError("");
+    scheduleModel.scheduleStatus = ScheduleStatus.approved;
   }
 
   // cancelar o agendamento
   @override
   Future<void> cancelSchedule(ScheduleModel scheduleModel) async {
-    throw UnsupportedError("");
+    scheduleModel.scheduleStatus = ScheduleStatus.denied;
   }
 }

@@ -1,8 +1,10 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
+import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/spot/view.dart';
-import 'package:app/src/Server/local/tourist_server_connection.dart';
+import 'package:app/src/Pages/tourist_schedule/view.dart';
+import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/user_avatar_widget.dart';
@@ -17,15 +19,16 @@ class TouristHomePage extends StatefulWidget {
 }
 
 class _TouristHomePageState extends State<TouristHomePage> {
-  final TouristHomeLogic logic = Get.put(TouristHomeLogic());
-  TouristServerConnection touristServerConnection = TouristServerConnection();
+  final TouristHomeLogic logic = Get.put(TouristHomeLogic(_builder));
   var tourist;
   var spotsList;
+
+  static TouristServerConnectionInterface _builder = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TouristModel>(
-      future: touristServerConnection.getTouristData(),
+      future: logic.getTouristData(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           tourist = snapshot.data;
@@ -46,28 +49,32 @@ class _TouristHomePageState extends State<TouristHomePage> {
                             'assets/images/orion.png',
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Palette.cinzaClaroTransparente,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.calendar_today),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Agenda'),
-                                ),
-                              ],
+                        GestureDetector(
+                          onTap: (() => {Get.to(() => TouristSchedulePage())}),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Palette.cinzaClaroTransparente,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(Icons.calendar_today),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('Agenda'),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         UserAvatarWidget(
                           height: 80,
                           width: 80,
-                          image: tourist.imageUrl,
+                          image: _builder.getImage(tourist.imageUrl),
                         )
                       ],
                     ),
@@ -91,7 +98,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
                         )),
                   ),
                   FutureBuilder<List<SpotModel>>(
-                    future: touristServerConnection.getSpots(),
+                    future: logic.getSpots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Container(
@@ -103,17 +110,24 @@ class _TouristHomePageState extends State<TouristHomePage> {
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: (() => {Get.to(SpotPage())}),
-                                    child: CardGWidget(
-                                        spotName: snapshot.data?[index].name,
-                                        spotAddress:
-                                            snapshot.data?[index].address,
-                                        spotImagesList: snapshot
-                                            .data?[index].spotImagesList[0],
-                                        isFavorite:
-                                            snapshot.data?[index].isFavorite),
-                                  ),
+                                  child: GetBuilder<HomeBaseLogic>(
+                                      builder: (home) {
+                                    return GestureDetector(
+                                      onTap: (() => {
+                                            Get.to(() => SpotPage(),
+                                                arguments:
+                                                    snapshot.data?[index])
+                                          }),
+                                      child: CardGWidget(
+                                          spotName: snapshot.data?[index].name,
+                                          spotAddress:
+                                              snapshot.data?[index].address,
+                                          spotImagesList: snapshot
+                                              .data?[index].spotImagesList[0],
+                                          isFavorite:
+                                              snapshot.data?[index].isFavorite),
+                                    );
+                                  }),
                                 );
                               }),
                         );
@@ -132,24 +146,35 @@ class _TouristHomePageState extends State<TouristHomePage> {
                         )),
                   ),
                   FutureBuilder<List<SpotModel>>(
-                    future: touristServerConnection.getSpots(),
+                    future: logic.getSpots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         spotsList = snapshot.data;
                         return Container(
-                          width: 350,
-                          height: 1000,
                           child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
                               itemCount: snapshot.data?.length,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: CardPWidget(
-                                    title: spotsList[index].name,
-                                    description: spotsList[index].address,
-                                    image: spotsList[index].spotImagesList[0],
-                                  ),
+                                  child: GetBuilder<HomeBaseLogic>(
+                                      builder: (home) {
+                                    return GestureDetector(
+                                      onTap: (() => {
+                                            Get.to(() => SpotPage(),
+                                                arguments:
+                                                    snapshot.data?[index])
+                                          }),
+                                      child: CardPWidget(
+                                        title: spotsList[index].name,
+                                        description: spotsList[index].address,
+                                        image:
+                                            spotsList[index].spotImagesList[0],
+                                      ),
+                                    );
+                                  }),
                                 );
                               }),
                         );

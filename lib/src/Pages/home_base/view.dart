@@ -1,8 +1,12 @@
+import 'dart:ui';
+
+import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/empty_page/view.dart';
 import 'package:app/src/Pages/guide_home/view.dart';
-import 'package:app/src/Pages/spot/view.dart';
-import 'package:app/src/Pages/teste3/view.dart';
 import 'package:app/src/Pages/tourist_home/view.dart';
+import 'package:app/src/Server/guide_server_connection_interface.dart';
+import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +22,14 @@ class HomeBasePage extends StatefulWidget {
 }
 
 class _HomeBasePageState extends State<HomeBasePage> {
-  final HomeBaseLogic logic = Get.put(HomeBaseLogic());
+  final HomeBaseLogic logic = Get.put(HomeBaseLogic(Get.arguments));
   final HomeBaseState state = Get.find<HomeBaseLogic>().state;
+
+  @override
+  void initState() {
+    super.initState();
+    logic.getSchedulesFromInterface();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,31 +38,29 @@ class _HomeBasePageState extends State<HomeBasePage> {
         return Scaffold(
           extendBodyBehindAppBar: true,
           extendBody: true,
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Color(0x44000000),
-            title: Text('PageName'),
-          ),
           body: Stack(fit: StackFit.expand, children: [
             Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/images/wallpaper.jpeg'),
-                      fit: BoxFit.cover)),
-              child: Container(
-                decoration:
-                    BoxDecoration(color: Color.fromRGBO(20, 20, 20, 100)),
+                      image: AssetImage(APP_WALLPAPER), fit: BoxFit.cover)),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+                child: Container(
+                  decoration:
+                      BoxDecoration(color: Color.fromRGBO(20, 20, 20, 100)),
+                ),
               ),
             ),
-            IndexedStack(
-              index: controller.tabIndex,
-              children: [
-                GuideHomePage(),
-                TouristHomePage(),
-                SpotPage(),
-                Teste3Page(),
-              ],
-            ),
+            if (controller.session is GuideServerConnectionInterface)
+              IndexedStack(
+                index: controller.tabIndex,
+                children: [GuideHomePage(), EmptyPagePage(), EmptyPagePage()],
+              ),
+            if (controller.session is TouristServerConnectionInterface)
+              IndexedStack(
+                index: controller.tabIndex,
+                children: [TouristHomePage(), EmptyPagePage(), EmptyPagePage()],
+              ),
           ]),
           bottomNavigationBar: FloatingNavbar(
             borderRadius: 20.0,
@@ -69,15 +77,13 @@ class _HomeBasePageState extends State<HomeBasePage> {
                 title: 'Home',
               ),
               FloatingNavbarItem(
-                  icon: FontAwesomeIcons.newspaper, title: 'News'),
-              FloatingNavbarItem(
-                icon: FontAwesomeIcons.spotify,
-                title: 'Home',
+                icon: FontAwesomeIcons.comments,
+                title: 'Chat',
               ),
               FloatingNavbarItem(
-                icon: FontAwesomeIcons.galacticRepublic,
-                title: 'Home',
-              )
+                icon: FontAwesomeIcons.user,
+                title: 'Perfil',
+              ),
             ],
           ),
         );

@@ -1,10 +1,17 @@
+import 'dart:ui';
+
+import 'package:app/src/Config/images.dart';
+import 'package:app/src/Models/itinerary_model.dart';
+import 'package:app/src/Pages/itinerary/logic.dart';
+import 'package:app/src/Pages/itinerary/view.dart';
+import 'package:app/src/Pages/tourist_home/logic.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
+import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
 import 'package:app/src/Widget/spot_images_slider_widget.dart';
 import 'package:app/src/Widget/spot_page_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'logic.dart';
 
 class SpotPage extends StatefulWidget {
   @override
@@ -12,94 +19,161 @@ class SpotPage extends StatefulWidget {
 }
 
 class _SpotPageState extends State<SpotPage> {
-  final SpotLogic logic = Get.put(SpotLogic());
+  final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();
+  final ItineraryLogic itineraryLogic = Get.put(ItineraryLogic());
+
+  var _spot = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:
-                  SpotPageTitleWidget(title: 'title', categoria: 'categoria'),
+    return Scaffold(
+        body: Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(APP_WALLPAPER), fit: BoxFit.cover)),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+            child: Container(
+              decoration: BoxDecoration(color: Color.fromRGBO(20, 20, 20, 100)),
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
-              child: DescriptionWidget(),
-            ),
-            SpotImagesSlider(),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Conheça este destino',
-                    style: TextStyle(fontSize: 16),
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ))),
-                      onPressed: null,
-                      child: Row(
-                        children: [
-                          Icon(Icons.attach_money),
-                          Text('Roteiro'),
-                        ],
-                      )),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ))),
-                      onPressed: null,
-                      child: Row(
-                        children: [
-                          Icon(Icons.attach_money),
-                          Text('Guia'),
-                        ],
-                      )),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ))),
-                      onPressed: null,
-                      child: Row(
-                        children: [
-                          Icon(Icons.attach_money),
-                          Text('Anfitrião'),
-                        ],
-                      )),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BackButtonWidget(title: 'Destino'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SpotPageTitleWidget(
+                      title: _spot.name, category: _spot.category),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                  child: DescriptionWidget(description: _spot.description),
+                ),
+                SpotImagesSlider(
+                  spotImagesList: _spot.spotImagesList,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Conheça este destino',
+                        style: TextStyle(fontSize: 16),
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ))),
+                          onPressed: null,
+                          child: Row(
+                            children: [
+                              Icon(Icons.map),
+                              Text('Roteiro'),
+                            ],
+                          )),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ))),
+                          onPressed: null,
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_on),
+                              Text('Guia'),
+                            ],
+                          )),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ))),
+                          onPressed: null,
+                          child: Row(
+                            children: [
+                              Icon(Icons.emoji_people),
+                              Text('Anfitrião'),
+                            ],
+                          )),
+                    ],
+                  ),
+                ),
+                FutureBuilder<List<ItineraryModel>>(
+                  future:
+                      touristLogic.getItinerariesByType(ItineraryType.Guide),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child:
+                                  GetBuilder<ItineraryLogic>(builder: (logic) {
+                                return GestureDetector(
+                                  onTap: (() => {
+                                        logic.insertItinerary(
+                                            snapshot.data![index]),
+                                        Get.to(() => ItineraryPage(),
+                                            arguments: snapshot.data?[index])
+                                      }),
+                                  child: CardPWidget(
+                                    title: snapshot.data?[index].name,
+                                    description:
+                                        '${snapshot.data?[index].spotsList.length} locais',
+                                    image: snapshot.data?[index].spotsList[0]
+                                            .spotImagesList[0] ??
+                                        '',
+                                  ),
+                                );
+                              }),
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     ));
   }
 
-  @override
-  void dispose() {
-    Get.delete<SpotLogic>();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     Get.delete<SpotLogic>();
+//     super.dispose();
+//   }
 }
