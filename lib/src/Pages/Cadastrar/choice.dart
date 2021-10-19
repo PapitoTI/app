@@ -1,9 +1,12 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/signG.dart';
+import 'package:app/src/Pages/Wallet/wallet_page.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/login_guide.dart';
 
 import 'package:app/src/Pages/login/login_tourist.dart';
+import 'package:app/src/Pages/menu/menu.dart';
+import 'package:app/src/Pages/search_page/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,6 +54,7 @@ class ChoicePage extends StatelessWidget {
                   child: GestureDetector(
                     //Get.to
                     onTap: () => Get.to(() => LoginGuidePage()),
+
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -91,8 +95,9 @@ class ChoicePage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20.0),
                   child: GestureDetector(
                     //Get.to
-                    onTap: () => Get.to(() => LoginTouristPage()),
-
+                    //onTap: () => Get.to(() => LoginTouristPage()),
+                    //                  onTap: () => Get.to(() => SearchPage()),
+                    onTap: () => Get.to(() => WalletPage()),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
