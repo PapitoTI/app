@@ -1,3 +1,4 @@
+import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
@@ -13,6 +14,7 @@ import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/timeline_widget/logic.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,9 +51,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                           CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.transparent,
-                            child: Image.asset(
-                              'assets/images/orion.png',
-                            ),
+                            child: Image.asset(ORION_LOGO),
                           ),
                           GestureDetector(
                             onTap: (() => {Get.to(() => CalendarPage())}),
@@ -134,13 +134,16 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                           builder: (itinerary) {
                                         return GestureDetector(
                                           onTap: (() => {
+                                                homeBaseLogic.itinerary =
+                                                    snapshot
+                                                        .data?[index].itinerary,
                                                 itinerary.insertItinerary(
                                                     snapshot.data?[index]
                                                             .itinerary
                                                         as ItineraryModel),
                                                 Get.to(() => SchedulePage(),
-                                                    arguments: homeBaseLogic
-                                                        .schedules[index])
+                                                    arguments:
+                                                        snapshot.data?[index])
                                               }),
                                           child: CardPWidget(
                                             title: snapshot
@@ -200,25 +203,23 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                           builder: (itinerary) {
                                         return GestureDetector(
                                           onTap: (() => {
-                                                itinerary.insertItinerary(
-                                                    snapshot.data?[index]
-                                                            .itinerary
-                                                        as ItineraryModel),
+                                                homeBaseLogic.itinerary =
+                                                    _filteredArray[index]
+                                                        .itinerary,
                                                 Get.to(() => SchedulePage(),
-                                                    arguments: homeBaseLogic
-                                                        .schedules[index])
+                                                    arguments:
+                                                        _filteredArray[index])
                                               }),
                                           child: CardPWidget(
-                                            title: snapshot
-                                                .data?[index].itinerary.name,
+                                            title: _filteredArray[index]
+                                                .itinerary
+                                                .name,
                                             description:
-                                                '${snapshot.data?[index].itinerary.spotsList.length} locais',
-                                            image: snapshot
-                                                    .data?[index]
-                                                    .itinerary
-                                                    .spotsList[0]
-                                                    .spotImagesList[0] ??
-                                                '',
+                                                '${_filteredArray[index].itinerary.spotsList.length} locais',
+                                            image: _filteredArray[index]
+                                                .itinerary
+                                                .spotsList[0]
+                                                .spotImagesList[0],
                                           ),
                                         );
                                       }),

@@ -99,13 +99,20 @@ var itinerariesDB = [
   }
 ];
 
-DateTime dateItinerary = DateTime.utc(2021, 10, 11, 16, 00);
+DateTime dateItinerary = DateTime.utc(2021, 10, 22, 10, 00);
+
+ItinerarySession session1 = ItinerarySession(TimeOfDay(hour: 10, minute: 00));
+ItinerarySession session2 = ItinerarySession(TimeOfDay(hour: 16, minute: 00));
+ItinerarySession session3 = ItinerarySession(TimeOfDay(hour: 21, minute: 00));
+
+List<ItinerarySession> sessionsList = [session1, session2, session3];
 
 ItineraryModel itineraryModel1 = ItineraryModel(
     guideModel,
     'Rolê em SP',
     spotList,
     spotDuration,
+    sessionsList,
     'Este roteiro passa por vários lugares de São Paulo, aproveite!',
     'Rolê',
     weekdays,

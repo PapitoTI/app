@@ -1,16 +1,19 @@
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Pages/add_spots/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
-import 'package:app/src/Server/local/guide_server_connection.dart';
+import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_g_editable_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/title_widget.dart';
 import 'package:app/src/Widget/user_avatar_widget.dart';
 import 'package:duration_picker/duration_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:weekday_selector/weekday_selector.dart';
 
 import 'logic.dart';
 
@@ -21,31 +24,54 @@ class CreateItineraryPage extends StatefulWidget {
 
 class _CreateItineraryPageState extends State<CreateItineraryPage> {
   final logic = Get.put(CreateItineraryLogic());
-  var _selectedTime;
+  final itineraryLogic = Get.find<ItineraryLogic>();
+  var _selectedDuration;
+  List<TimeOfDay> _selectedTime = [TimeOfDay(hour: 00, minute: 00)];
 
-  Future<void> _show(index) async {
+  Future<void> _showDurationPicker(index) async {
     final Duration? result = await showDurationPicker(
       context: context,
       initialTime: logic.itinerary.spotDuration[index],
     );
     if (result != null) {
-      _selectedTime[index] = result;
+      _selectedDuration[index] = result;
       print(result);
+      logic.update();
+    }
+  }
+
+  Future<void> _showTimePicker(index) async {
+    final TimeOfDay? result = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: 0, minute: 0),
+      initialEntryMode: TimePickerEntryMode.dial,
+    );
+    if (result != null) {
+      var resultHour = result.hour.toString().length < 2
+          ? ('0' + result.hour.toString())
+          : result.hour.toString();
+      var resultMinute = result.minute.toString().length < 2
+          ? ('0' + result.minute.toString())
+          : result.minute.toString();
+      _selectedTime[index] = TimeOfDay.fromDateTime(
+          DateTime.parse('0000-00-00 $resultHour:$resultMinute'));
+      itineraryLogic.itinerary.sessionsList[index].start = _selectedTime[index];
       logic.update();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _selectedTime = logic.itinerary.spotDuration.obs;
+    _selectedDuration = logic.itinerary.spotDuration.obs;
     return GetBuilder<HomeBaseLogic>(builder: (home) {
       return GetBuilder<CreateItineraryLogic>(builder: (create) {
         String? itineraryTitle;
         String? itineraryDescription;
         List<bool>? itineraryWeekdays;
-        List<TimeOfDay>? itineraryDuration;
+        List<Duration>? itineraryDuration;
         double? itineraryPrice;
         String? itineraryCategory;
+        List<ItinerarySession>? itinerarySessions;
         return Scaffold(
           body: SafeArea(
               child: SingleChildScrollView(
@@ -161,13 +187,7 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                                                     .itinerary.spotsList.length,
                                                 itemBuilder: (ctx, index) {
                                                   return TimelineTile(
-                                                    indicatorStyle:
-                                                        IndicatorStyle(
-                                                            width: 15),
-                                                    beforeLineStyle:
-                                                        const LineStyle(
-                                                      thickness: 2,
-                                                    ),
+                                                    hasIndicator: false,
                                                     endChild: Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -230,9 +250,9 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                                                                                   padding: const EdgeInsets.all(8.0),
                                                                                   child: GestureDetector(
                                                                                     onTap: (() => {
-                                                                                          _show(index)
+                                                                                          _showTimePicker(index)
                                                                                         }),
-                                                                                    child: Text(_selectedTime[index].format(context)),
+                                                                                    child: Text(_selectedDuration[index].format(context)),
                                                                                   ),
                                                                                 ),
                                                                               ],
@@ -344,6 +364,194 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                     ),
                   ],
                 ),
+                TitleWidget(text: 'Dias de atuação:'),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Palette.cinzaTransparente,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    children: [
+                      WeekdaySelector(
+                        firstDayOfWeek: 0,
+                        onChanged: (int day) {
+                          logic.updateWeekdaySelector(day);
+                        },
+                        values: logic.itinerary.weekdays,
+                      ),
+                    ],
+                  ),
+                ),
+                TitleWidget(text: 'Sessões disponíveis:'),
+                Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                            color: Palette.cinzaTransparente,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Sessões disponíveis',
+                                style: TextStyle(fontSize: 22),
+                              ),
+                            ),
+                            GetBuilder<ItineraryLogic>(
+                                builder: (itineraryLogic) {
+                              return ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _selectedTime.length,
+                                  itemBuilder: (ctx, index) {
+                                    return TimelineTile(
+                                      indicatorStyle: IndicatorStyle(width: 0),
+                                      beforeLineStyle: const LineStyle(
+                                        color: Palette.cinzaClaroTransparente,
+                                        thickness: 0,
+                                      ),
+                                      endChild: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          8.0),
+                                                                  child: Text(
+                                                                      'Ínicio:'),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Flexible(
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: Palette
+                                                                      .cinza,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                              child: Column(
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child:
+                                                                        GestureDetector(
+                                                                      onTap:
+                                                                          (() =>
+                                                                              {
+                                                                                _showTimePicker(index)
+                                                                              }),
+                                                                      child: Text(_selectedTime[
+                                                                              index]
+                                                                          .format(
+                                                                              context)),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Center(
+                                                              child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Text('Fim:'),
+                                                              ],
+                                                            ),
+                                                          )),
+                                                          Flexible(
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: Palette
+                                                                      .cinza,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                              child: Column(
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: Text(_selectedTime[
+                                                                            index]
+                                                                        .format(
+                                                                            context)),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                    );
+                                  });
+                            }),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                    alignment: Alignment.topRight,
+                                    child: ElevatedButton(
+                                        onPressed: (() => {
+                                              _selectedTime.removeLast(),
+                                              logic.update()
+                                            }),
+                                        child: Text('Remover sessão'))),
+                                Align(
+                                    alignment: Alignment.topRight,
+                                    child: ElevatedButton(
+                                        onPressed: (() => {
+                                              _selectedTime.add(TimeOfDay(
+                                                  hour: 00, minute: 00)),
+                                              logic.update()
+                                            }),
+                                        child: Text('Adicionar sessão'))),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 TitleWidget(text: 'Preço:'),
                 Row(
                   children: [
@@ -420,14 +628,15 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                           borderRadius: BorderRadius.circular(20.0),
                         ))),
                         onPressed: (() => {
-                              itineraryDuration = _selectedTime,
+                              itineraryDuration = _selectedDuration,
                               create.saveItinerary(
                                   itineraryTitle!,
                                   itineraryDescription!,
                                   itineraryCategory!,
-                                  weekdays,
+                                  itineraryWeekdays!,
                                   itineraryPrice!,
-                                  itineraryDuration!)
+                                  itineraryDuration!,
+                                  itinerarySessions!)
                             }),
                         child: Column(
                           children: [Text('Salvar')],
