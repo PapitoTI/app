@@ -1,11 +1,20 @@
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Server/local/guide_server_connection.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CreateItineraryLogic extends GetxController {
   ItineraryModel itinerary = ItineraryModel(
-      guideModel, '', [], [], '', '', [], [], 0.00, ItineraryType.Guide);
+      guideModel,
+      '',
+      [],
+      [],
+      sessionsList,
+      '',
+      '',
+      [false, false, false, false, false, false, false],
+      [],
+      0.00,
+      ItineraryType.Guide);
 
   GuideServerConnection connection = GuideServerConnection();
 
@@ -15,12 +24,14 @@ class CreateItineraryLogic extends GetxController {
       String itineraryCategory,
       List<bool> itineraryWeekdays,
       double itineraryPrice,
-      List<TimeOfDay> itineraryDuration) {
+      List<Duration> itineraryDuration,
+      List<ItinerarySession> sessionsList) {
     ItineraryModel itineraryModel = ItineraryModel(
         guideModel,
         itineraryName,
         spotList,
         spotDuration,
+        sessionsList,
         itineraryDescription,
         itineraryCategory,
         weekdays,

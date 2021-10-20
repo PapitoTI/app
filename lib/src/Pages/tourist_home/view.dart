@@ -1,3 +1,4 @@
+import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
@@ -46,7 +47,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
                           radius: 40,
                           backgroundColor: Colors.transparent,
                           child: Image.asset(
-                            'assets/images/orion.png',
+                            ORION_LOGO,
                           ),
                         ),
                         GestureDetector(

@@ -1,6 +1,9 @@
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
+import 'package:app/src/Pages/itinerary/logic.dart';
+import 'package:app/src/Pages/schedule/view.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/schedule_card_p_widget.dart';
@@ -61,15 +64,30 @@ class PendingSchedulesPage extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  ScheduleCardPWidget(
-                                    title: _filteredArray[index].itinerary.name,
-                                    description:
-                                        '${_filteredArray[index].itinerary.spotsList.length} locais',
-                                    image: _filteredArray[index]
-                                        .itinerary
-                                        .spotsList[0]
-                                        .spotImagesList[0],
-                                  ),
+                                  GetBuilder<ItineraryLogic>(
+                                      builder: (itineraryLogic) {
+                                    return GestureDetector(
+                                      onTap: (() => {
+                                            itineraryLogic.insertItinerary(
+                                                snapshot.data?[index].itinerary
+                                                    as ItineraryModel),
+                                            Get.to(() => SchedulePage(),
+                                                arguments:
+                                                    _filteredArray[index])
+                                          }),
+                                      child: ScheduleCardPWidget(
+                                        title: _filteredArray[index]
+                                            .itinerary
+                                            .name,
+                                        description:
+                                            '${_filteredArray[index].itinerary.spotsList.length} locais',
+                                        image: _filteredArray[index]
+                                            .itinerary
+                                            .spotsList[0]
+                                            .spotImagesList[0],
+                                      ),
+                                    );
+                                  }),
                                   Column(
                                     children: [
                                       GestureDetector(

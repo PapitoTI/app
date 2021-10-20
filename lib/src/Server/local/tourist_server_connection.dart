@@ -75,8 +75,6 @@ List<Duration> spotDuration = [
   Duration(hours: 1, minutes: 15),
 ];
 
-List<bool> weekdays = [false, true, true, true, true, true, false];
-
 List<ExtraSpot> itineraryAddsList = [
   ExtraSpot('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
   ExtraSpot('Serviço Y', 'Faça aquilo e aproveite mais sua viagem!', 20.00)
@@ -91,22 +89,29 @@ var itinerariesDB = [
     'description':
         'Este roteiro passa por vários lugares de São Paulo, aproveite!',
     'category': 'Rolê',
-    'weekdays': weekdays,
+    'weekdays': [false, true, true, true, true, true, false],
     'itineraryAddsList': itineraryAddsList,
     'price': 120.00
   }
 ];
 
-DateTime dateItinerary = DateTime.utc(2021, 10, 11, 16, 00);
+DateTime dateItinerary = DateTime.utc(2021, 10, 22, 10, 00);
+
+ItinerarySession session1 = ItinerarySession(TimeOfDay(hour: 10, minute: 00));
+ItinerarySession session2 = ItinerarySession(TimeOfDay(hour: 16, minute: 00));
+ItinerarySession session3 = ItinerarySession(TimeOfDay(hour: 21, minute: 00));
+
+List<ItinerarySession> sessionsList = [session1, session2, session3];
 
 ItineraryModel itineraryModel1 = ItineraryModel(
     guideModel,
     'Rolê em SP',
     spotList,
     spotDuration,
+    sessionsList,
     'Este roteiro passa por vários lugares de São Paulo, aproveite!',
     'Rolê',
-    weekdays,
+    [false, true, true, true, true, true, false],
     itineraryAddsList,
     300.00,
     ItineraryType.Guide);
@@ -282,7 +287,19 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista de roteiros por tipo de guiamento
   @override
   Future<List<ItineraryModel>> getItinerariesByType(itineraryType) async {
-    List<ItineraryModel> guideItinerary = [itineraryModel1];
+    ItineraryModel itineraryModel4841 = ItineraryModel(
+        guideModel,
+        'Rolê em SP',
+        spotList,
+        spotDuration,
+        sessionsList,
+        'Este roteiro passa por vários lugares de São Paulo, aproveite!',
+        'Rolê',
+        [false, true, true, true, true, true, false],
+        itineraryAddsList,
+        300.00,
+        ItineraryType.Guide);
+    List<ItineraryModel> guideItinerary = [itineraryModel4841];
 
     return guideItinerary;
   }

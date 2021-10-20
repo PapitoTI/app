@@ -10,15 +10,6 @@ class EditItineraryLogic extends GetxController {
 
   EditItineraryLogic(this.itinerary);
 
-  void editItinerary(ItineraryModel itineraryModel) {
-    itinerary = itineraryModel;
-    update();
-  }
-
-  // Future<void> updateItinerary() async {
-  //   var result = await
-  // }
-
   Future<void> saveItinerary(
       String itineraryName,
       String itineraryDescription,
