@@ -1,6 +1,7 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/signG.dart';
 import 'package:app/src/Pages/Wallet/wallet_page.dart';
+
 import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/login_guide.dart';
 
@@ -97,7 +98,7 @@ class ChoicePage extends StatelessWidget {
                     //Get.to
                     //onTap: () => Get.to(() => LoginTouristPage()),
                     //                  onTap: () => Get.to(() => SearchPage()),
-                    onTap: () => Get.to(() => WalletPage()),
+                    onTap: () => Get.to(() => Menu()),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
