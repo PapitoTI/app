@@ -3,6 +3,7 @@ import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
+import 'package:app/src/Pages/PerfilG/guide_profile.dart';
 import 'package:app/src/Pages/calendar/view.dart';
 import 'package:app/src/Pages/create_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
@@ -75,17 +76,22 @@ class _GuideHomePageState extends State<GuideHomePage> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    guide.imageUrl,
-                                  ),
-                                )),
+                          GestureDetector(
+                            onTap: () => Get.to(
+                              GuideProfile(),
+                            ),
+                            child: Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                      guide.imageUrl,
+                                    ),
+                                  )),
+                            ),
                           ),
                         ],
                       ),
