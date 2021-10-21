@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:app/src/Config/images.dart';
 import 'package:app/src/Models/itinerary_model.dart';
+import 'package:app/src/Pages/SelfGuide/self_guide.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
 import 'package:app/src/Pages/tourist_home/logic.dart';
@@ -83,7 +84,7 @@ class _SpotPageState extends State<SpotPage> {
                                   RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ))),
-                          onPressed: null,
+                          onPressed: (() => Get.to(SelfGuide())),
                           child: Row(
                             children: [
                               Icon(Icons.map),

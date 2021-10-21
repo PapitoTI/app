@@ -1,3 +1,4 @@
+import 'package:app/src/Pages/SelfGuide/self_guide.dart';
 import 'package:app/src/Pages/home_base/view.dart';
 import 'package:app/src/Server/credentials.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
