@@ -1,4 +1,5 @@
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/menu/version.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -38,7 +39,7 @@ class _MenuState extends State<Menu> {
               height: 10,
             ),
             Container(
-              width: 327,
+              width: 360,
               height: 189,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -56,6 +57,8 @@ class _MenuState extends State<Menu> {
                         borderRadius: BorderRadius.circular(10),
                         color: Palette.cinzaTransparente,
                       ),
+                      child:
+                          Image(image: AssetImage('assets/images/spot3.jpg')),
                     ),
                   ),
                   Text("Nome"),
@@ -72,6 +75,25 @@ class _MenuState extends State<Menu> {
                             borderRadius: BorderRadius.circular(10),
                             color: Palette.cinzaTransparente,
                           ),
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "20",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                ),
+                              ),
+                              // SizedBox(height: 8),
+                              Text(
+                                "Roteiros realizados",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          )),
                         ),
                         Container(
                           width: 95,
@@ -80,6 +102,25 @@ class _MenuState extends State<Menu> {
                             borderRadius: BorderRadius.circular(10),
                             color: Palette.cinzaTransparente,
                           ),
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "5",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                ),
+                              ),
+                              // SizedBox(height: 8),
+                              Text(
+                                "Nível",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          )),
                         ),
                       ],
                     ),
@@ -91,7 +132,7 @@ class _MenuState extends State<Menu> {
               height: 10,
             ),
             Container(
-              width: 327,
+              width: 360,
               height: 84,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -100,11 +141,14 @@ class _MenuState extends State<Menu> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
-                      FontAwesomeIcons.bookDead,
+                      FontAwesomeIcons.solidAddressCard,
                       size: 40,
+                    ),
+                    SizedBox(
+                      width: 30,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,15 +169,6 @@ class _MenuState extends State<Menu> {
                               fontSize: 14, color: Palette.cinzaClaro),
                         ),
                       ],
-                    ),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Palette.cinzaTransparente,
-                      ),
-                      child: Icon(FontAwesomeIcons.arrowRight),
                     ),
                   ],
                 ),
@@ -143,7 +178,7 @@ class _MenuState extends State<Menu> {
               height: 5,
             ),
             Container(
-              width: 327,
+              width: 360,
               height: 84,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -152,11 +187,14 @@ class _MenuState extends State<Menu> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
-                      FontAwesomeIcons.bookDead,
+                      FontAwesomeIcons.solidAddressBook,
                       size: 40,
+                    ),
+                    SizedBox(
+                      width: 30,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +203,7 @@ class _MenuState extends State<Menu> {
                           height: 15,
                         ),
                         Text(
-                          "Meus dados",
+                          "Minha agenda",
                           style: TextStyle(fontSize: 16),
                         ),
                         SizedBox(
@@ -177,15 +215,6 @@ class _MenuState extends State<Menu> {
                               fontSize: 14, color: Palette.cinzaClaro),
                         ),
                       ],
-                    ),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Palette.cinzaTransparente,
-                      ),
-                      child: Icon(FontAwesomeIcons.arrowRight),
                     ),
                   ],
                 ),
@@ -194,156 +223,49 @@ class _MenuState extends State<Menu> {
             SizedBox(
               height: 5,
             ),
-            Container(
-              width: 327,
-              height: 84,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Palette.cinzaTransparente,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.bookDead,
-                      size: 40,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Meus dados",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Altere suas informações \npessoais",
-                          style: TextStyle(
-                              fontSize: 14, color: Palette.cinzaClaro),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Palette.cinzaTransparente,
-                      ),
-                      child: Icon(FontAwesomeIcons.arrowRight),
-                    ),
-                  ],
+            GestureDetector(
+              onTap: () => Get.to(Version()),
+              child: Container(
+                width: 360,
+                height: 84,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Palette.cinzaTransparente,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              width: 327,
-              height: 84,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Palette.cinzaTransparente,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.bookDead,
-                      size: 40,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Meus dados",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Altere suas informações \npessoais",
-                          style: TextStyle(
-                              fontSize: 14, color: Palette.cinzaClaro),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Palette.cinzaTransparente,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.bug,
+                        size: 40,
                       ),
-                      child: Icon(FontAwesomeIcons.arrowRight),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              width: 327,
-              height: 84,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Palette.cinzaTransparente,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.bookDead,
-                      size: 40,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Meus dados",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Altere suas informações \npessoais",
-                          style: TextStyle(
-                              fontSize: 14, color: Palette.cinzaClaro),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Palette.cinzaTransparente,
+                      SizedBox(
+                        width: 30,
                       ),
-                      child: Icon(FontAwesomeIcons.arrowRight),
-                    ),
-                  ],
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Reporte",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Caso aja necessidade",
+                            style: TextStyle(
+                                fontSize: 14, color: Palette.cinzaClaro),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

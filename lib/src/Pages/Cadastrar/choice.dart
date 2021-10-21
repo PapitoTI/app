@@ -90,8 +90,6 @@ class ChoicePage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20.0),
                   child: GestureDetector(
                     onTap: () => Get.to(() => LoginTouristPage()),
-                    //                  onTap: () => Get.to(() => SearchPage()),
-                    // onTap: () => Get.to(() => WalletPage()),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
