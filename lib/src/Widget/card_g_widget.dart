@@ -9,13 +9,12 @@ class CardGWidget extends StatelessWidget {
       required this.spotName,
       required this.spotAddress,
       required this.spotImagesList,
-      this.isFavorite})
+      })
       : super(key: key);
 
   final spotName;
   final spotAddress;
   final spotImagesList;
-  final isFavorite;
 
   @override
   Widget build(BuildContext context) {

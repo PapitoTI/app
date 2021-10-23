@@ -4,4 +4,9 @@ class InitialPageInfo {
   final String descri;
 
   InitialPageInfo(this.imageAsset, this.title, this.descri);
+
+  InitialPageInfo.from(InitialPageInfo i)
+      : imageAsset = i.imageAsset,
+        title = i.title,
+        descri = i.descri;
 }

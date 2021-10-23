@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class SpotImagesSlider extends StatelessWidget {
-  final List<String> spotImagesList;
+  final List<Image> spotImagesList;
 
   const SpotImagesSlider({Key? key, required this.spotImagesList})
       : super(key: key);
@@ -23,9 +23,8 @@ class SpotImagesSlider extends StatelessWidget {
                 child: GestureDetector(
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                            image: AssetImage(item), fit: BoxFit.cover)),
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(image: item.image, fit: BoxFit.cover)),
                   ),
                 ),
               ))

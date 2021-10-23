@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:app/src/Config/images.dart';
 import 'package:app/src/Models/itinerary_model.dart';
+import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Pages/SelfGuide/self_guide.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
@@ -23,7 +24,7 @@ class _SpotPageState extends State<SpotPage> {
   final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();
   final ItineraryLogic itineraryLogic = Get.put(ItineraryLogic());
 
-  var _spot = Get.arguments;
+  SpotModel _spot = Get.arguments as SpotModel;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,9 @@ class _SpotPageState extends State<SpotPage> {
                   child: DescriptionWidget(description: _spot.description),
                 ),
                 SpotImagesSlider(
-                  spotImagesList: _spot.spotImagesList,
+                  spotImagesList: _spot.spotImagesList
+                      .map((e) => touristLogic.builder.getImage(e))
+                      .toList(),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -172,7 +175,6 @@ class _SpotPageState extends State<SpotPage> {
       ],
     ));
   }
-
 //   @override
 //   void dispose() {
 //     Get.delete<SpotLogic>();

@@ -1,7 +1,6 @@
 import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_g_editable_widget.dart';
@@ -32,7 +31,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
   Future<void> _showDurationPicker(index) async {
     final Duration? result = await showDurationPicker(
       context: context,
-      initialTime: logic.itinerary.spotDuration[index],
+      initialTime: logic.itineraryEditable.spotDuration[index],
     );
     if (result != null) {
       _selectedDuration[index] = result;
@@ -43,7 +42,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
   Future<void> _showTimePicker(index) async {
     final TimeOfDay? result = await showTimePicker(
       context: context,
-      initialTime: _selectedTime[index].start,
+      initialTime: _selectedTime[index],
       initialEntryMode: TimePickerEntryMode.dial,
     );
     if (result != null) {
@@ -53,7 +52,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
       var resultMinute = result.minute.toString().length < 2
           ? ('0' + result.minute.toString())
           : result.minute.toString();
-      _selectedTime[index].start = TimeOfDay.fromDateTime(
+      _selectedTime[index] = TimeOfDay.fromDateTime(
           DateTime.parse('0000-00-00 $resultHour:$resultMinute'));
       logic.update();
     }
@@ -63,7 +62,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
     var endDuration = TimeOfDay.fromDateTime(DateTime.parse('0000-00-00 $start')
         .add(Duration(
             minutes: calculateTotalDurationToMinutes(
-                logic.itinerary.spotDuration))));
+                logic.itineraryEditable.spotDuration))));
     return endDuration.format(context);
   }
 
@@ -75,10 +74,9 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
 
   @override
   Widget build(BuildContext context) {
-    _selectedDuration = logic.itinerary.spotDuration;
-    _selectedTime = logic.itinerary.sessionsList;
+    _selectedDuration = logic.itineraryEditable.spotDuration;
+    _selectedTime = logic.itineraryEditable.sessionsList;
     return GetBuilder<EditItineraryLogic>(builder: (edit) {
-      ItineraryModel itineraryEditable = logic.itinerary.clone();
       return Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -100,11 +98,11 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             onChanged: (name) {
-                              itineraryEditable.name = name;
+                              logic.itineraryEditable.name = name;
                             },
                             decoration:
                                 InputDecoration(border: InputBorder.none),
-                            initialValue: logic.itinerary.name,
+                            initialValue: logic.itineraryEditable.name,
                           ),
                         ),
                       ),
@@ -116,17 +114,18 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                   width: 1000,
                   height: 300,
                   child: ListView.builder(
-                      itemCount: logic.itinerary.spotsList.length,
+                      itemCount: logic.itineraryEditable.spotsList.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CardGEditableWidget(
-                                spotName: logic.itinerary.spotsList[index].name,
-                                spotAddress:
-                                    logic.itinerary.spotsList[index].address,
-                                spotImagesList: logic.itinerary.spotsList[index]
-                                    .spotImagesList[0],
+                                spotName: logic
+                                    .itineraryEditable.spotsList[index].name,
+                                spotAddress: logic
+                                    .itineraryEditable.spotsList[index].address,
+                                spotImagesList: logic.itineraryEditable
+                                    .spotsList[index].spotImagesList[0],
                                 index: index));
                       }),
                 ),
@@ -161,7 +160,8 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                   scrollDirection: Axis.vertical,
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: edit.itinerary.spotsList.length,
+                                  itemCount:
+                                      edit.itineraryEditable.spotsList.length,
                                   itemBuilder: (ctx, index) {
                                     return TimelineTile(
                                       indicatorStyle: IndicatorStyle(width: 15),
@@ -189,7 +189,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                                               image: home
                                                                   .session
                                                                   .getImage(edit
-                                                                      .itinerary
+                                                                      .itineraryEditable
                                                                       .spotsList[
                                                                           index]
                                                                       .spotImagesList[0]));
@@ -221,7 +221,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                                                       left:
                                                                           8.0),
                                                                   child: Text(edit
-                                                                      .itinerary
+                                                                      .itineraryEditable
                                                                       .spotsList[
                                                                           index]
                                                                       .name),
@@ -277,7 +277,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                                               child: Row(
                                                                 children: [
                                                                   Text(edit
-                                                                      .itinerary
+                                                                      .itineraryEditable
                                                                       .spotsList[
                                                                           index]
                                                                       .category),
@@ -317,9 +317,9 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                             maxLines: 35,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
-                            initialValue: logic.itinerary.description,
+                            initialValue: logic.itineraryEditable.description,
                             onChanged: (description) {
-                              itineraryEditable.description = description;
+                              logic.itineraryEditable.description = description;
                             },
                           ),
                         ),
@@ -338,13 +338,13 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                         firstDayOfWeek: 0,
                         onChanged: (int day) {
                           final index = day % 7;
-                          itineraryEditable.weekdays[index] =
-                              !itineraryEditable.weekdays[index];
-                          print(itineraryEditable.weekdays);
+                          logic.itineraryEditable.weekdays[index] =
+                              !logic.itineraryEditable.weekdays[index];
+                          print(logic.itineraryEditable.weekdays);
                           print(weekdays);
                           logic.update();
                         },
-                        values: itineraryEditable.weekdays,
+                        values: logic.itineraryEditable.weekdays,
                       ),
                     ],
                   ),
@@ -372,7 +372,8 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                   scrollDirection: Axis.vertical,
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: edit.itinerary.sessionsList.length,
+                                  itemCount: edit
+                                      .itineraryEditable.sessionsList.length,
                                   itemBuilder: (ctx, index) {
                                     return TimelineTile(
                                       indicatorStyle: IndicatorStyle(width: 0),
@@ -437,7 +438,6 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                                                               }),
                                                                       child: Text(_selectedTime[
                                                                               index]
-                                                                          .start
                                                                           .format(
                                                                               context)),
                                                                     ),
@@ -474,7 +474,6 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                                                             8.0),
                                                                     child: Text(calculateSessionEnd(_selectedTime[
                                                                             index]
-                                                                        .start
                                                                         .format(
                                                                             context))),
                                                                   ),
@@ -508,9 +507,8 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                     alignment: Alignment.topRight,
                                     child: ElevatedButton(
                                         onPressed: (() => {
-                                              _selectedTime.add(
-                                                  ItinerarySession(TimeOfDay(
-                                                      hour: 00, minute: 00))),
+                                              _selectedTime.add(TimeOfDay(
+                                                  hour: 00, minute: 00)),
                                               logic.update()
                                             }),
                                         child: Text('Adicionar sessão'))),
@@ -561,14 +559,15 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                         decoration: InputDecoration(
                                             border: InputBorder.none),
                                         style: TextStyle(fontSize: 30),
-                                        initialValue: logic.itinerary.price
+                                        initialValue: logic
+                                            .itineraryEditable.price
                                             .toStringAsFixed(2)
                                             .replaceAll('.', ','),
                                         onChanged: (price) {
                                           var priceToDouble = double.tryParse(
                                                   price.toString())! +
                                               0.00;
-                                          itineraryEditable.price =
+                                          logic.itineraryEditable.price =
                                               priceToDouble;
                                         },
                                       ),
@@ -602,15 +601,11 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                           borderRadius: BorderRadius.circular(20.0),
                         ))),
                         onPressed: (() => {
-                              itineraryEditable.spotDuration =
+                              logic.itineraryEditable.spotDuration =
                                   _selectedDuration,
-                              itineraryEditable.sessionsList = _selectedTime,
-                              edit.saveItinerary(
-                                  itineraryEditable.name,
-                                  itineraryEditable.description,
-                                  itineraryEditable.weekdays,
-                                  itineraryEditable.price,
-                                  itineraryEditable.spotDuration)
+                              logic.itineraryEditable.sessionsList =
+                                  _selectedTime,
+                              edit.saveItinerary()
                             }),
                         child: Column(
                           children: [Text('Salvar')],

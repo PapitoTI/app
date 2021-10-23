@@ -49,14 +49,16 @@ class GuideServerConnection extends GuideServerConnectionInterface {
 
   //editar roteiro do guia
   @override
-  Future<void> updateItinerary(ItineraryModel itineraryModel) async {
-    print('alterado!');
+  Future<void> updateItinerary(
+      String oldName, ItineraryModel itineraryModel) async {
+    guideItinerariesList.removeWhere((element) => element.name == oldName);
+    guideItinerariesList.add(itineraryModel);
   }
 
   // retornar lista de roteiros do guia
   @override
   Future<List<ItineraryModel>> getGuideItineraries() async {
-    return guideItinerariesList;
+    return guideItinerariesList.map((e) => e.clone()).toList();
   }
 
   // deletar roteiro do guia

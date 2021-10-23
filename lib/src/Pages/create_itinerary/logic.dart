@@ -1,6 +1,7 @@
 import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Server/local/guide_server_connection.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CreateItineraryLogic extends GetxController {
@@ -26,7 +27,7 @@ class CreateItineraryLogic extends GetxController {
       List<bool> itineraryWeekdays,
       double itineraryPrice,
       List<Duration> itineraryDuration,
-      List<ItinerarySession> sessionsList) {
+      List<TimeOfDay> sessionsList) {
     ItineraryModel itineraryModel = ItineraryModel(
         guideModel,
         itineraryName,

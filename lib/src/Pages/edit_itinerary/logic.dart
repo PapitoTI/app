@@ -6,23 +6,16 @@ import 'package:get/get.dart';
 class EditItineraryLogic extends GetxController {
   final HomeBaseLogic homeBaseLogic = Get.find<HomeBaseLogic>();
   final ItineraryLogic itineraryLogic = Get.find<ItineraryLogic>();
-  ItineraryModel itinerary;
+  ItineraryModel _itinerary;
+  ItineraryModel itineraryEditable;
 
-  EditItineraryLogic(this.itinerary);
+  EditItineraryLogic(this._itinerary) : itineraryEditable = _itinerary.clone();
 
-  Future<void> saveItinerary(
-      String itineraryName,
-      String itineraryDescription,
-      List<bool> itineraryWeekdays,
-      var itineraryPrice,
-      List<Duration> itineraryDuration) async {
-    itinerary.name = itineraryName;
-    itinerary.description = itineraryDescription;
-    itinerary.weekdays = itineraryWeekdays;
-    itinerary.price = itineraryPrice;
-    itinerary.spotDuration = itineraryDuration;
-    itineraryLogic.insertItinerary(itinerary);
-    await homeBaseLogic.session.updateItinerary(itinerary);
+  Future<void> saveItinerary() async {
+    // TODO: insertItinerary dando merda
+    itineraryLogic.insertItinerary(itineraryEditable);
+    await homeBaseLogic.session
+        .updateItinerary(_itinerary.name, itineraryEditable);
     homeBaseLogic.update();
     Get.back();
   }

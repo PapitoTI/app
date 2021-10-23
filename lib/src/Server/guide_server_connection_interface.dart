@@ -37,7 +37,8 @@ abstract class GuideServerConnectionInterface {
   }
 
   //editar roteiro do guia
-  Future<void> updateItinerary(ItineraryModel itineraryModel) async {
+  Future<void> updateItinerary(
+      String oldName, ItineraryModel itineraryModel) async {
     throw UnsupportedError("");
   }
 
