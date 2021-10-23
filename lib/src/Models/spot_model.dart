@@ -4,8 +4,9 @@ class SpotModel {
   String category;
   String description;
   List<String> spotImagesList;
-  bool isFavorite;
-
   SpotModel(this.name, this.address, this.category, this.description,
-      this.spotImagesList, this.isFavorite);
+      this.spotImagesList);
+
+  SpotModel clone() => SpotModel(this.name, this.address, this.category,
+      this.description, this.spotImagesList.toList());
 }

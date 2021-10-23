@@ -8,4 +8,7 @@ class GuideModel {
 
   GuideModel(this.imageUrl, this.name, this.email, this.phone, this.certificate,
       this.accountBalance);
+
+  GuideModel clone() => GuideModel(this.imageUrl, this.name, this.email,
+      this.phone, this.certificate, this.accountBalance);
 }

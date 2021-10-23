@@ -18,40 +18,40 @@ GuideModel guideModel = GuideModel(
         '');
 
 SpotModel spotModel1 = SpotModel(
-    'MASP',
-    'Avenida Paulista, São Paulo',
-    'Monumento',
-    'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
-    [
-      'assets/images/masp1.jpg',
-      'assets/images/masp2.jpg',
-      'assets/images/masp3.jpg'
-    ],
-    true);
+  'MASP',
+  'Avenida Paulista, São Paulo',
+  'Monumento',
+  'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
+  [
+    'assets/images/masp1.jpg',
+    'assets/images/masp2.jpg',
+    'assets/images/masp3.jpg'
+  ],
+);
 
 SpotModel spotModel2 = SpotModel(
-    'Parque Ibirapuera',
-    'Avenida Paulista, São Paulo',
-    'Monumento',
-    'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
-    [
-      'assets/images/ibirapuera1.jpg',
-      'assets/images/ibirapuera2.jpg',
-      'assets/images/ibirapuera3.jpg'
-    ],
-    true);
+  'Parque Ibirapuera',
+  'Avenida Paulista, São Paulo',
+  'Monumento',
+  'Museu de Arte de São Paulo Assis Chateaubriand (mais conhecido pelo acrônimo MASP) é uma das mais importantes instituições culturais brasileiras.[1] Localiza-se, desde 7 de novembro de 1968, na Avenida Paulista, cidade de São Paulo, em um edifício projetado pela arquiteta ítalo-brasileira Lina Bo Bardi para ser sua sede. Famoso pelo vão de mais de 70 metros que se estende sob quatro enormes pilares, concebido pelo engenheiro José Carlos de Figueiredo Ferraz,[2] o edifício é considerado um importante exemplar da arquitetura brutalista brasileira e um dos mais populares ícones da capital paulista, sendo tombado pelas três instâncias de proteção ao patrimônio: IPHAN, Condephaat e Conpresp.[3]',
+  [
+    'assets/images/ibirapuera1.jpg',
+    'assets/images/ibirapuera2.jpg',
+    'assets/images/ibirapuera3.jpg'
+  ],
+);
 
 SpotModel spotModel3 = SpotModel(
-    'Catedral da Sé',
-    'Sé, São Paulo',
-    'Monumento',
-    'A Catedral da Sé é a igreja mais conhecida de São Paulo. Independente da religião a visita é imperdível.Com sua imponente construção marca também o centro da cidade, na Praça da Sé. A sua arquitetura é de brilhar os olhos! Cercada por vitrais, mosaicos e obras de arte sacra, possui capacidade para 8.000 pessoas, sendo considerada a maior da América do Sul.',
-    [
-      'assets/images/catedralse1.jpg',
-      'assets/images/catedralse2.jpg',
-      'assets/images/catedralse3.jpg'
-    ],
-    true);
+  'Catedral da Sé',
+  'Sé, São Paulo',
+  'Monumento',
+  'A Catedral da Sé é a igreja mais conhecida de São Paulo. Independente da religião a visita é imperdível.Com sua imponente construção marca também o centro da cidade, na Praça da Sé. A sua arquitetura é de brilhar os olhos! Cercada por vitrais, mosaicos e obras de arte sacra, possui capacidade para 8.000 pessoas, sendo considerada a maior da América do Sul.',
+  [
+    'assets/images/catedralse1.jpg',
+    'assets/images/catedralse2.jpg',
+    'assets/images/catedralse3.jpg'
+  ],
+);
 
 List<SpotModel> spotList = [spotModel1, spotModel2, spotModel3];
 
@@ -74,9 +74,9 @@ List<Duration> spotDuration = [
 
 final List<bool> weekdays = [false, true, true, true, true, true, false];
 
-List<ExtraSpot> itineraryAddsList = [
-  ExtraSpot('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
-  ExtraSpot('Serviço Y', 'Faça aquilo e aproveite mais sua viagem!', 20.00)
+List<ExtraSpotModel> itineraryAddsList = [
+  ExtraSpotModel('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
+  ExtraSpotModel('Serviço Y', 'Faça aquilo e aproveite mais sua viagem!', 20.00)
 ];
 
 var itinerariesDB = [
@@ -97,11 +97,11 @@ var itinerariesDB = [
 DateTime dateItinerary = DateTime.utc(2021, 10, 25, 10, 00);
 DateTime dateItinerary2 = DateTime.utc(2021, 10, 25, 16, 00);
 
-ItinerarySession session1 = ItinerarySession(TimeOfDay(hour: 10, minute: 00));
-ItinerarySession session2 = ItinerarySession(TimeOfDay(hour: 16, minute: 00));
-ItinerarySession session3 = ItinerarySession(TimeOfDay(hour: 21, minute: 00));
+TimeOfDay session1 = TimeOfDay(hour: 10, minute: 00);
+TimeOfDay session2 = TimeOfDay(hour: 16, minute: 00);
+TimeOfDay session3 = TimeOfDay(hour: 21, minute: 00);
 
-List<ItinerarySession> sessionsList = [session1, session2, session3];
+List<TimeOfDay> sessionsList = [session1, session2, session3];
 
 ItineraryModel itineraryModel1 = ItineraryModel(
     guideModel,
@@ -143,7 +143,6 @@ var spotsDB = [
       'assets/images/masp2.jpg',
       'assets/images/masp3.jpg',
     ],
-    'isFavorite': true,
   },
   {
     'name': 'Parque Ibirapuera',
@@ -158,7 +157,6 @@ var spotsDB = [
       'assets/images/ibirapuera4.jpg',
       'assets/images/ibirapuera5.jpg',
     ],
-    'isFavorite': true,
   },
   {
     'name': 'Catedral da Sé',
@@ -171,7 +169,6 @@ var spotsDB = [
       'assets/images/catedralse2.jpg',
       'assets/images/catedralse3.jpg',
     ],
-    'isFavorite': true,
   },
   {
     'name': 'Cadillac Burger',
@@ -184,7 +181,6 @@ var spotsDB = [
       'assets/images/cadillacburger2.jpg',
       'assets/images/cadillacburger3.jpg',
     ],
-    'isFavorite': false,
   },
   {
     'name': 'Bairro Liberdade',
@@ -197,7 +193,6 @@ var spotsDB = [
       'assets/images/liberdade2.jpg',
       'assets/images/liberdade3.jpg',
     ],
-    'isFavorite': false,
   },
   {
     'name': 'Beco do Batman',
@@ -210,7 +205,6 @@ var spotsDB = [
       'assets/images/becobatman2.jpg',
       'assets/images/becobatman3.jpg',
     ],
-    'isFavorite': false,
   }
 ];
 

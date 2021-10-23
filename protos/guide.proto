@@ -6,10 +6,6 @@ option csharp_namespace = "OrionGrpc";
 
 package guide;
 
-message GuideInformationRequest {
-	
-}
-
 message GuideInformationResponse {
 	string ProfileImageUrl = 1;
 	string Name = 2;
@@ -27,12 +23,17 @@ message RemoveTourRequest{
 	string TourName = 1;
 }
 
+message ListSchedulesResponse {
+	repeated common.Schedule Schedules = 1;
+}
+
 service GuideService {
 	rpc Login(common.LoginRequest) returns(common.LoginResponse);
-	rpc Information(GuideInformationRequest) returns(GuideInformationResponse);
+	rpc Information(common.Empty) returns(GuideInformationResponse);
 	rpc UpdatePicture(common.UpdatePictureRequest) returns(common.UpdatePictureResponse);
 	rpc UpdatePassword(common.UpdatePasswordRequest) returns(common.Empty);
 	rpc CreateTour(common.Tour) returns(common.Empty);
 	rpc Tours(common.Empty) returns(ToursResponse);
 	rpc RemoveTour(RemoveTourRequest) returns(common.Empty);
+	rpc ListSchedules(common.Empty) returns(ListSchedulesResponse);
 }

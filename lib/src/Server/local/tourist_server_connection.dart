@@ -44,8 +44,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
             item['address'].toString(),
             item['category'].toString(),
             item['description'].toString(),
-            item['spotImagesList'] as List<String>,
-            item['isFavorite'] as bool))
+            item['spotImagesList'] as List<String>))
         .toList();
 
     return spotsList;

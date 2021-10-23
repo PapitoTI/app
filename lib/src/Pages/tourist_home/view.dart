@@ -85,7 +85,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
                     child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Boa noite, ${tourist.name.substring(0, idx).trim()}!',
+                          'Boa noite, ${tourist.name}!',
                           style: TextStyle(fontSize: 26),
                         )),
                   ),
@@ -116,17 +116,13 @@ class _TouristHomePageState extends State<TouristHomePage> {
                                     return GestureDetector(
                                       onTap: (() => {
                                             Get.to(() => SpotPage(),
-                                                arguments:
-                                                    snapshot.data?[index])
+                                              arguments: snapshot.data?[index])
                                           }),
                                       child: CardGWidget(
-                                          spotName: snapshot.data?[index].name,
-                                          spotAddress:
-                                              snapshot.data?[index].address,
-                                          spotImagesList: snapshot
-                                              .data?[index].spotImagesList[0],
-                                          isFavorite:
-                                              snapshot.data?[index].isFavorite),
+                                        spotName: snapshot.data?[index].name,
+                                        spotAddress: snapshot.data?[index].address,
+                                        spotImagesList: snapshot.data?[index].spotImagesList[0],
+                                      ),
                                     );
                                   }),
                                 );

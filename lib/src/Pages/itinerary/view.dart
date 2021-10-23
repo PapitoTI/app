@@ -41,7 +41,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
   Future<void> _showTimePicker(index) async {
     final TimeOfDay? result = await showTimePicker(
       context: context,
-      initialTime: _selectedTime[index].start,
+      initialTime: _selectedTime[index],
       initialEntryMode: TimePickerEntryMode.dial,
     );
     if (result != null) {
@@ -51,7 +51,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
       var resultMinute = result.minute.toString().length < 2
           ? ('0' + result.minute.toString())
           : result.minute.toString();
-      _selectedTime[index].start = TimeOfDay.fromDateTime(
+      _selectedTime[index] = TimeOfDay.fromDateTime(
           DateTime.parse('0000-00-00 $resultHour:$resultMinute'));
       itineraryLogic.update();
     }
@@ -244,9 +244,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
                                                                             {
                                                                               _showTimePicker(index)
                                                                             }),
-                                                                        child: Text(_selectedTime[index]
-                                                                            .start
-                                                                            .format(context)),
+                                                                        child: Text(
+                                                                            _selectedTime[index].format(context)),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -280,7 +279,6 @@ class _ItineraryPageState extends State<ItineraryPage> {
                                                                               8.0),
                                                                       child: Text(calculateSessionEnd(_selectedTime[
                                                                               index]
-                                                                          .start
                                                                           .format(
                                                                               context))),
                                                                     ),

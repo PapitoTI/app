@@ -94,7 +94,6 @@ class SessionsTimelinePage extends StatelessWidget {
                                                               .itinerary
                                                               .sessionsList[
                                                                   index]
-                                                              .start
                                                               .toString()),
                                                         ],
                                                       ),

@@ -8,10 +8,14 @@ import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
+import 'package:app/src/Server/Grpc/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 
 import '../tourist_server_connection_interface.dart';
+
+
+
 
 class GrpcTouristServerConnection extends TouristServerConnectionInterface {
   final TouristServiceClient _client;
@@ -24,7 +28,7 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
 
   @override
   Future<TouristModel> getTouristData() async {
-    var info = await _client.information(TouristInformationRequest(),
+    var info = await _client.information(Empty(),
         options: _callOptions);
     return TouristModel(
         info.profileImageUrl, info.name, info.email, info.phone);
@@ -32,6 +36,7 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
 
   @override
   Image getImage(String url) {
+    assert(!url.isEmpty);
     return Image.network(url);
   }
 
@@ -58,19 +63,19 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista dos destinos em alta
   @override
   Future<List<SpotModel>> getSpots() async {
-    var result =
-        await _client.hotSpots(HotSpotsRequest(), options: _callOptions);
+    var result = await _client.hotSpots(Empty(), options: _callOptions);
     return result.spots
-        .map((e) => SpotModel(
-            e.name, e.address, e.category, e.description, e.imageUrls, false))
-        .toList();
+      .map((e) => e.toModel())
+      .toList();
   }
 
   // retornar lista de roteiros por tipo de guiamento
   @override
-  Future<List<ItineraryModel>> getItinerariesByType(
-      ItineraryType itineraryType) async {
-    throw UnsupportedError("");
+  Future<List<ItineraryModel>> getItinerariesByType(ItineraryType itineraryType) async {
+    var result = await _client.searchTours(SearchToursRequest(first: 0, length: 50, type: TourType.Guide), options: _callOptions);
+    return result.tours
+      .map((e) => e.toModel())
+      .toList();
   }
 
   // retornar lista de roteiros por guia
@@ -89,7 +94,8 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
   // retonar lista de agendamentos do turista
   @override
   Future<List<ScheduleModel>> getSchedules() async {
-    throw UnsupportedError("");
+    var list = await _client.schedules(Empty(), options: _callOptions);
+    return list.schedules.map((e) => e.toModel()).toList();
   }
 
   // retornar lista de pesquisa do usuário (destinos e roteiros)

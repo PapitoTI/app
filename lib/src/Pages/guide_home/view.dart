@@ -78,9 +78,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => Get.to(
-                              GuideProfile(),
-                            ),
+                            onTap: () => Get.to(GuideProfile()),
                             child: Container(
                               height: 80,
                               width: 80,
@@ -88,9 +86,9 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                   borderRadius: BorderRadius.circular(20),
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: AssetImage(
-                                      guide.imageUrl,
-                                    ),
+                                    image: homeBaseLogic.session
+                                        .getImage(guide.imageUrl)
+                                        .image,
                                   )),
                             ),
                           ),
@@ -196,8 +194,8 @@ class _GuideHomePageState extends State<GuideHomePage> {
                         if (snapshot.hasData) {
                           var _filteredArray = snapshot.data
                               ?.where((element) =>
-                                  element.scheduleStatus.toString() ==
-                                  'ScheduleStatus.pending')
+                                  element.scheduleStatus ==
+                                  ScheduleStatus.pending)
                               .toList();
                           return Container(
                             width: 350,
@@ -320,7 +318,6 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                                     .data?[index]
                                                     .spotsList[0]
                                                     .spotImagesList[0],
-                                                isFavorite: 'isFavorite',
                                               ),
                                             );
                                           });

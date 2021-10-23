@@ -4,7 +4,6 @@ import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/desc_guide_widget.dart';
-import 'package:app/src/Widget/guide_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +44,7 @@ class _GuideProfileState extends State<GuideProfile> {
                     SizedBox(
                       height: 10,
                     ),
-                    infoGuiaWidget(),
+                    // TODO: inserir UserCardWidget
                     SizedBox(
                       height: 10,
                     ),
@@ -71,15 +70,12 @@ class _GuideProfileState extends State<GuideProfile> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: GestureDetector(
                                       child: CardGWidget(
-                                          spotName: snapshot.data?[index].name,
-                                          spotAddress: snapshot.data?[index]
-                                              .spotsList[index].address,
-                                          spotImagesList: snapshot
-                                              .data?[index]
-                                              .spotsList[index]
-                                              .spotImagesList[0],
-                                          isFavorite:
-                                              'snapshot.data?[index].isFavorite'),
+                                        spotName: snapshot.data?[index].name,
+                                        spotAddress: snapshot.data?[index]
+                                            .spotsList[index].address,
+                                        spotImagesList: snapshot.data?[index]
+                                            .spotsList[index].spotImagesList[0],
+                                      ),
                                     ),
                                   );
                                 }),

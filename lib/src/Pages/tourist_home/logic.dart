@@ -5,22 +5,22 @@ import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:get/get.dart';
 
 class TouristHomeLogic extends GetxController {
-  final TouristServerConnectionInterface _builder;
+  final TouristServerConnectionInterface builder;
 
-  TouristHomeLogic(this._builder);
+  TouristHomeLogic(this.builder);
 
   Future<TouristModel> getTouristData() async {
-    var result = await _builder.getTouristData();
+    var result = await builder.getTouristData();
     return result;
   }
 
   Future<List<SpotModel>> getSpots() async {
-    var result = await _builder.getSpots();
+    var result = await builder.getSpots();
     return result;
   }
 
   Future<List<ItineraryModel>> getItinerariesByType(itineraryType) async {
-    var result = await _builder.getItinerariesByType(itineraryType);
+    var result = await builder.getItinerariesByType(itineraryType);
     return result;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Pages/add_spots/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
@@ -55,7 +54,7 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
           : result.minute.toString();
       _selectedTime[index] = TimeOfDay.fromDateTime(
           DateTime.parse('0000-00-00 $resultHour:$resultMinute'));
-      itineraryLogic.itinerary.sessionsList[index].start = _selectedTime[index];
+      itineraryLogic.itinerary.sessionsList[index] = _selectedTime[index];
       logic.update();
     }
   }
@@ -71,7 +70,7 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
         List<Duration>? itineraryDuration;
         double? itineraryPrice;
         String? itineraryCategory;
-        List<ItinerarySession>? itinerarySessions;
+        List<TimeOfDay>? TimeOfDays;
         return Scaffold(
           body: SafeArea(
               child: SingleChildScrollView(
@@ -636,7 +635,7 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                                   itineraryWeekdays!,
                                   itineraryPrice!,
                                   itineraryDuration!,
-                                  itinerarySessions!)
+                                  TimeOfDays!)
                             }),
                         child: Column(
                           children: [Text('Salvar')],

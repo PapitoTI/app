@@ -267,7 +267,7 @@ class _ScheduleCustomTableCalendarState
                                         var checkSchedule = DateTime.parse(
                                             '${_selectedDay.toString().substring(0, 10)}' +
                                                 ' ' +
-                                                '${_selectedTime[index].start.format(context)}' +
+                                                '${_selectedTime[index].format(context)}' +
                                                 ':00.000Z');
                                         return Column(
                                           children: [
@@ -345,7 +345,7 @@ class _ScheduleCustomTableCalendarState
                                                                                         child: GestureDetector(
                                                                                           onTap: null,
                                                                                           child: Text(
-                                                                                            _selectedTime[index].start.format(context),
+                                                                                            _selectedTime[index].format(context),
                                                                                             style: TextStyle(color: Palette.cinzaClaro),
                                                                                           ),
                                                                                         ),
@@ -373,7 +373,7 @@ class _ScheduleCustomTableCalendarState
                                                                                     children: [
                                                                                       Padding(
                                                                                         padding: const EdgeInsets.all(8.0),
-                                                                                        child: Text(calculateSessionEnd(_selectedTime[index].start.format(context)), style: TextStyle(color: Palette.cinzaClaro)),
+                                                                                        child: Text(calculateSessionEnd(_selectedTime[index].format(context)), style: TextStyle(color: Palette.cinzaClaro)),
                                                                                       ),
                                                                                     ],
                                                                                   ),
@@ -459,7 +459,7 @@ class _ScheduleCustomTableCalendarState
                                                                                     padding: const EdgeInsets.all(8.0),
                                                                                     child: GestureDetector(
                                                                                       onTap: null,
-                                                                                      child: Text(_selectedTime[index].start.format(context)),
+                                                                                      child: Text(_selectedTime[index].format(context)),
                                                                                     ),
                                                                                   ),
                                                                                 ],
@@ -485,7 +485,7 @@ class _ScheduleCustomTableCalendarState
                                                                                 children: [
                                                                                   Padding(
                                                                                     padding: const EdgeInsets.all(8.0),
-                                                                                    child: Text(calculateSessionEnd(_selectedTime[index].start.format(context))),
+                                                                                    child: Text(calculateSessionEnd(_selectedTime[index].format(context))),
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -500,8 +500,8 @@ class _ScheduleCustomTableCalendarState
                                                                                         Get.to(() => PaymentPage(), arguments: [
                                                                                           itineraryLogic.itinerary,
                                                                                           _selectedDay,
-                                                                                          _selectedTime[index].start.format(context),
-                                                                                          calculateSessionEnd(_selectedTime[index].start.format(context))
+                                                                                          _selectedTime[index].format(context),
+                                                                                          calculateSessionEnd(_selectedTime[index].format(context))
                                                                                         ])
                                                                                       }),
                                                                                   child: OrionButtonWidget(

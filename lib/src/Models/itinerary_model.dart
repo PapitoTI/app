@@ -9,11 +9,11 @@ class ItineraryModel {
   String name;
   List<SpotModel> spotsList;
   List<Duration> spotDuration;
-  List<ItinerarySession> sessionsList;
+  List<TimeOfDay> sessionsList;
   String description;
   String category;
   List<bool> weekdays;
-  List<ExtraSpot> itineraryAddsList;
+  List<ExtraSpotModel> itineraryAddsList;
   double price;
   ItineraryType itineraryType;
 
@@ -30,30 +30,30 @@ class ItineraryModel {
       this.price,
       this.itineraryType);
 
-  clone() => ItineraryModel(
-      guideModel,
-      name,
-      spotsList,
-      spotDuration,
-      sessionsList,
-      description,
-      category,
-      weekdays,
-      itineraryAddsList,
-      price,
-      itineraryType);
+  ItineraryModel clone() => ItineraryModel(
+      this.guideModel.clone(),
+      this.name,
+      this.spotsList.map((e) => e.clone()).toList(),
+      this
+          .spotDuration
+          .map((e) => new Duration(milliseconds: e.inMilliseconds))
+          .toList(),
+      this
+          .sessionsList
+          .map((e) => new TimeOfDay(hour: e.hour, minute: e.minute))
+          .toList(),
+      this.description,
+      this.category,
+      this.weekdays.toList(),
+      this.itineraryAddsList,
+      // TODO: se der merda, arrumar isso
+      this.price,
+      this.itineraryType);
 }
 
-class ItinerarySession {
-  TimeOfDay start;
-
-  ItinerarySession(this.start);
-}
-
-class ExtraSpot {
+class ExtraSpotModel {
   String name;
   String description;
   double price;
-
-  ExtraSpot(this.name, this.description, this.price);
+  ExtraSpotModel(this.name, this.description, this.price);
 }

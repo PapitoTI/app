@@ -113,7 +113,7 @@ class CardGEditableWidget extends StatelessWidget {
                                       builder: (edit) {
                                     return ElevatedButton(
                                         onPressed: (() => {
-                                              edit.itinerary.spotsList
+                                              edit.itineraryEditable.spotsList
                                                   .removeAt(index),
                                               edit.update()
                                             }),
