@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/PerfilG/guide_profile.dart';
 import 'package:app/src/Pages/empty_page/view.dart';
 import 'package:app/src/Pages/guide_home/view.dart';
 import 'package:app/src/Pages/tourist_home/view.dart';
@@ -54,7 +55,7 @@ class _HomeBasePageState extends State<HomeBasePage> {
             if (controller.session is GuideServerConnectionInterface)
               IndexedStack(
                 index: controller.tabIndex,
-                children: [GuideHomePage(), EmptyPagePage(), EmptyPagePage()],
+                children: [GuideHomePage(), EmptyPagePage(), GuideProfile()],
               ),
             if (controller.session is TouristServerConnectionInterface)
               IndexedStack(

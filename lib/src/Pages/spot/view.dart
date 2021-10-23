@@ -123,6 +123,7 @@ class _SpotPageState extends State<SpotPage> {
                   ),
                 ),
                 FutureBuilder<List<ItineraryModel>>(
+                  // TODO: retornar diferentes ItineraryType
                   future:
                       touristLogic.getItinerariesByType(ItineraryType.Guide),
                   builder: (context, snapshot) {

@@ -1,6 +1,7 @@
 import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
+import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
@@ -23,10 +24,19 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePageState extends State<SchedulePage> {
   final logic = Get.put(ScheduleLogic());
+  final itineraryLogic = Get.find<ItineraryLogic>();
 
   final state = Get.find<ScheduleLogic>().state;
 
   var _schedule = Get.arguments;
+
+  String calculateSessionEnd(String start) {
+    var endDuration = TimeOfDay.fromDateTime(DateTime.parse('0000-00-00 $start')
+        .add(Duration(
+            minutes: calculateTotalDurationToMinutes(
+                itineraryLogic.itinerary.spotDuration))));
+    return endDuration.format(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +121,10 @@ class _SchedulePageState extends State<SchedulePage> {
                                             ':' +
                                             DateFormat('mm').format(DateTime(
                                                 0, _schedule.date.minute)) +
-                                            ' às',
+                                            ' às ' +
+                                            calculateSessionEnd(_schedule.date
+                                                .toString()
+                                                .substring(11, 16)),
                                         style: TextStyle(fontSize: 18),
                                       ),
                                     ),
@@ -202,40 +215,47 @@ class _SchedulePageState extends State<SchedulePage> {
                                             ':' +
                                             DateFormat('mm').format(DateTime(
                                                 0, _schedule.date.minute)) +
-                                            ' às',
+                                            ' às ' +
+                                            calculateSessionEnd(_schedule.date
+                                                .toString()
+                                                .substring(11, 16)),
                                         style: TextStyle(fontSize: 18),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: (() async => {
-                                                await home.session
-                                                    .cancelSchedule(_schedule),
-                                                home.update()
-                                              }),
-                                          child: OrionButtonWidget(
-                                              icon: Icon(
-                                            Icons.cancel,
-                                            color: Palette.branco,
-                                          )),
-                                        ),
-                                        GestureDetector(
-                                          onTap: (() async => {
-                                                await home.session
-                                                    .approveSchedule(_schedule),
-                                                home.update()
-                                              }),
-                                          child: OrionButtonWidget(
-                                              icon: Icon(
-                                            Icons.check_circle,
-                                            color: Palette.branco,
-                                          )),
-                                        ),
-                                      ],
-                                    )
+                                    if (home.session
+                                        is GuideServerConnectionInterface)
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: (() async => {
+                                                  await home.session
+                                                      .cancelSchedule(
+                                                          _schedule),
+                                                  home.update()
+                                                }),
+                                            child: OrionButtonWidget(
+                                                icon: Icon(
+                                              Icons.cancel,
+                                              color: Palette.branco,
+                                            )),
+                                          ),
+                                          GestureDetector(
+                                            onTap: (() async => {
+                                                  await home.session
+                                                      .approveSchedule(
+                                                          _schedule),
+                                                  home.update()
+                                                }),
+                                            child: OrionButtonWidget(
+                                                icon: Icon(
+                                              Icons.check_circle,
+                                              color: Palette.branco,
+                                            )),
+                                          ),
+                                        ],
+                                      )
                                   ],
                                 ),
                               ),
@@ -269,7 +289,8 @@ class _SchedulePageState extends State<SchedulePage> {
                     padding: const EdgeInsets.only(
                         left: 8.0, right: 8.0, bottom: 8.0),
                     child: UserCardWidget(
-                      imageUrl: _schedule.itinerary.guideModel.imageUrl,
+                      imageUrl: home.session
+                          .getImage(_schedule.itinerary.guideModel.imageUrl),
                       name: _schedule.itinerary.guideModel.name,
                     ),
                   ),

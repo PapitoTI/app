@@ -1,10 +1,12 @@
 import 'package:app/src/Config/helpers.dart';
+import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/create_schedule/view.dart';
 import 'package:app/src/Pages/edit_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
+import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/description_widget.dart';
 import 'package:app/src/Widget/itinerary_info_widget.dart';
@@ -60,6 +62,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
       home.itinerary = _itinerary;
       _selectedTime = itineraryLogic.itinerary.sessionsList;
+      print(weekdays);
       return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -299,18 +302,19 @@ class _ItineraryPageState extends State<ItineraryPage> {
                             ],
                           ),
                         ),
-                        ElevatedButton(
-                            style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ))),
-                            onPressed: (() =>
-                                {Get.to(() => CreateSchedulePage())}),
-                            child: Column(
-                              children: [Text('Agendar')],
-                            )),
+                        if (home.session is TouristServerConnectionInterface)
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                              onPressed: (() =>
+                                  {Get.to(() => CreateSchedulePage())}),
+                              child: Column(
+                                children: [Text('Agendar')],
+                              )),
                       ],
                     ),
                   ),
