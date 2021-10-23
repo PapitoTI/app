@@ -42,7 +42,7 @@ class UserCardWidget extends StatelessWidget {
               ],
             ),
             Padding(
-              //TODO: remover esse padding e corrigir esse alinhamento
+              // TODO: remover esse padding e corrigir esse alinhamento
               padding: const EdgeInsets.only(bottom: 50),
               child: Container(
                 height: 35,
@@ -54,6 +54,7 @@ class UserCardWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
+                      // TODO: ir pro perfil do guia/turista
                       Icon(Icons.person),
                       Text('Perfil'),
                     ],

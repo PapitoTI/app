@@ -87,7 +87,7 @@ class TouristScheduleCardPWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.only(top: 8.0, right: 8.0),
                     child: Text(
                       date,
                       style: TextStyle(color: Palette.cinzaClaro),

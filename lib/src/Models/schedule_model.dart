@@ -12,11 +12,3 @@ class ScheduleModel {
   ScheduleModel(
       this.itinerary, this.touristModel, this.date, this.scheduleStatus);
 }
-
-var scheduleDB = [
-  {
-    'itinerary': itinerary,
-    'date': DateTime.utc(2021, 08, 10),
-    'status': 'Agendado'
-  }
-];

@@ -26,15 +26,4 @@ class EditItineraryLogic extends GetxController {
     homeBaseLogic.update();
     Get.back();
   }
-
-  void updateWeekdaySelector(day) {
-    final index = day % 7;
-    itinerary.weekdays[index] = !itinerary.weekdays[index];
-    update();
-  }
-
-  void updateSpotsDuration(List<Duration> list) {
-    itinerary.spotDuration = list;
-    update();
-  }
 }

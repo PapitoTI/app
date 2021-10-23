@@ -1,4 +1,5 @@
 import 'package:app/src/Config/helpers.dart';
+import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
@@ -58,17 +59,6 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
     }
   }
 
-  // TimeOfDay calculateSessionEnd(String start) {
-  //   var startToDuration = Duration(
-  //       hours: int.parse(start.substring(0, 2)),
-  //       minutes: int.parse(start.substring(3, 5)));
-  //   var endDuration = minutesToTimeOfDay(startToDuration.inMinutes +
-  //       calculateTotalDurationToMinutes(logic.itinerary.spotDuration));
-  //   print(durationToHours(startToDuration.inMinutes));
-  //   print(endDuration);
-  //   return endDuration;
-  // }
-
   String calculateSessionEnd(String start) {
     var endDuration = TimeOfDay.fromDateTime(DateTime.parse('0000-00-00 $start')
         .add(Duration(
@@ -88,18 +78,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
     _selectedDuration = logic.itinerary.spotDuration;
     _selectedTime = logic.itinerary.sessionsList;
     return GetBuilder<EditItineraryLogic>(builder: (edit) {
-      ItineraryModel itineraryEditable = ItineraryModel(
-          logic.itinerary.guideModel,
-          logic.itinerary.name,
-          logic.itinerary.spotsList,
-          logic.itinerary.spotDuration,
-          logic.itinerary.sessionsList,
-          logic.itinerary.description,
-          logic.itinerary.category,
-          logic.itinerary.weekdays,
-          logic.itinerary.itineraryAddsList,
-          logic.itinerary.price,
-          logic.itinerary.itineraryType);
+      ItineraryModel itineraryEditable = logic.itinerary.clone();
       return Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -361,6 +340,8 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                           final index = day % 7;
                           itineraryEditable.weekdays[index] =
                               !itineraryEditable.weekdays[index];
+                          print(itineraryEditable.weekdays);
+                          print(weekdays);
                           logic.update();
                         },
                         values: itineraryEditable.weekdays,
@@ -610,7 +591,7 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ))),
-                        onPressed: null,
+                        onPressed: () => Get.back(),
                         child: Column(
                           children: [Text('Cancelar')],
                         )),

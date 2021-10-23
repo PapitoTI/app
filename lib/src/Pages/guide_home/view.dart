@@ -4,6 +4,7 @@ import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Pages/PerfilG/guide_profile.dart';
+import 'package:app/src/Pages/Wallet/wallet_page.dart';
 import 'package:app/src/Pages/calendar/view.dart';
 import 'package:app/src/Pages/create_itinerary/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
@@ -105,8 +106,11 @@ class _GuideHomePageState extends State<GuideHomePage> {
                             'Boa noite, ${guide.name.substring(0, idx).trim()}!',
                             style: TextStyle(fontSize: 26),
                           ),
-                          OrionButtonWidget(
-                            text: 'Carteira',
+                          GestureDetector(
+                            onTap: () => Get.to(WalletPage()),
+                            child: OrionButtonWidget(
+                              text: 'Carteira',
+                            ),
                           )
                         ],
                       ),
@@ -140,6 +144,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                           builder: (itinerary) {
                                         return GestureDetector(
                                           onTap: (() => {
+                                                // TODO: ver onde tá pegando o itinerary no código e deixar de um lugar só, tudo no homeBaseLogic
                                                 homeBaseLogic.itinerary =
                                                     snapshot
                                                         .data?[index].itinerary,
@@ -209,9 +214,14 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                           builder: (itinerary) {
                                         return GestureDetector(
                                           onTap: (() => {
+                                                // TODO: ver onde tá pegando o itinerary no código e deixar de um lugar só, tudo no homeBaseLogic
                                                 homeBaseLogic.itinerary =
                                                     _filteredArray[index]
                                                         .itinerary,
+                                                itinerary.insertItinerary(
+                                                    snapshot.data?[index]
+                                                            .itinerary
+                                                        as ItineraryModel),
                                                 Get.to(() => SchedulePage(),
                                                     arguments:
                                                         _filteredArray[index])
@@ -292,6 +302,8 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                               builder: (timeline) {
                                             return GestureDetector(
                                               onTap: (() => {
+                                                    home.itinerary =
+                                                        snapshot.data![index],
                                                     itinerary.insertItinerary(
                                                         snapshot.data![index]),
                                                     Get.to(

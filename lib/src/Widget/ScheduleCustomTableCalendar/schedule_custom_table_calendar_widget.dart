@@ -1,9 +1,10 @@
 import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/schedule_model.dart';
-import 'package:app/src/Pages/empty2/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
+import 'package:app/src/Pages/payment/view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -121,19 +122,38 @@ class _ScheduleCustomTableCalendarState
   }
 
   bool disabledDays(DateTime day) {
-    if (weekdaysItinerary[day.weekday] == false) {
+    if (weekdaysItinerary[day.weekday] == false ||
+        day.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
       return false;
     } else {
       return true;
     }
   }
 
+  bool checkSessionAvailability(
+      List<dynamic> listScheduleModel, DateTime checkDate) {
+    var datesList = [];
+    for (var scheduleDate in listScheduleModel) {
+      datesList.add(scheduleDate.date);
+    }
+    if (datesList.contains(checkDate) ||
+        checkDate.isBefore(DateTime.now().add(Duration(days: 1)))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // if (checkSchedule !=
+  // snapshotList[index].date &&
+  // checkSchedule
+  //     .isAfter(DateTime.now()))
+
   @override
   Widget build(BuildContext context) {
     _selectedTime = itineraryLogic.itinerary.sessionsList;
     weekdaysItinerary = itineraryLogic.itinerary.weekdays;
     weekdaysItinerary.add(itineraryLogic.itinerary.weekdays[0]);
-
     return Column(
       children: [
         Center(
@@ -241,295 +261,273 @@ class _ScheduleCustomTableCalendarState
                                     itemCount: itineraryLogic
                                         .itinerary.sessionsList.length,
                                     itemBuilder: (ctx, index) {
-                                      var snapshotList = snapshot.data as List;
-                                      // print('Schedule ' +
-                                      //     '${snapshotList[0].date}' +
-                                      //     '\n' +
-                                      //     'horário ' +
-                                      //     '${_selectedTime[index].start.format(context)}' +
-                                      //     '\n' +
-                                      //     '_selectedDay ' +
-                                      //     '${_selectedDay.toString().substring(0, 10)}');
-                                      var checkSchedule = DateTime.parse(
-                                          '${_selectedDay.toString().substring(0, 10)}' +
-                                              ' ' +
-                                              '${_selectedTime[index].start.format(context)}' +
-                                              ':00.000Z');
-                                      // print(checkSchedule);
-                                      return Column(
-                                        children: [
-                                          if (checkSchedule ==
-                                              snapshotList[index].date)
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  color: Palette.cinza),
-                                              child: TimelineTile(
-                                                indicatorStyle:
-                                                    IndicatorStyle(width: 0),
-                                                beforeLineStyle:
-                                                    const LineStyle(
-                                                  color: Palette
-                                                      .cinzaClaroTransparente,
-                                                  thickness: 0,
-                                                ),
-                                                endChild: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Container(
-                                                      child: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                      if (snapshot.hasData) {
+                                        var snapshotList =
+                                            snapshot.data as List;
+                                        var checkSchedule = DateTime.parse(
+                                            '${_selectedDay.toString().substring(0, 10)}' +
+                                                ' ' +
+                                                '${_selectedTime[index].start.format(context)}' +
+                                                ':00.000Z');
+                                        return Column(
+                                          children: [
+                                            checkSessionAvailability(
+                                                        snapshotList,
+                                                        checkSchedule) ==
+                                                    true
+                                                ? GestureDetector(
+                                                    onTap: () => Get.snackbar(
+                                                        'Sessão indisponível',
+                                                        'A sessão selecionada não está disponível.',
+                                                        snackPosition:
+                                                            SnackPosition.TOP),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 8.0),
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            color:
+                                                                Palette.cinza),
+                                                        child: TimelineTile(
+                                                          indicatorStyle:
+                                                              IndicatorStyle(
+                                                                  width: 0),
+                                                          beforeLineStyle:
+                                                              const LineStyle(
+                                                            color: Palette
+                                                                .cinzaClaroTransparente,
+                                                            thickness: 0,
+                                                          ),
+                                                          endChild: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Container(
+                                                                child: Row(
                                                                   children: [
-                                                                    Flexible(
+                                                                    Expanded(
                                                                       child:
                                                                           Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
                                                                         children: [
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.only(left: 8.0),
-                                                                            child:
-                                                                                Text(
-                                                                              'Início:',
-                                                                              style: TextStyle(color: Palette.cinzaClaro),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Flexible(
-                                                                      child:
-                                                                          Container(
-                                                                        decoration: BoxDecoration(
-                                                                            color:
-                                                                                Palette.cinzaClaroTransparente,
-                                                                            borderRadius: BorderRadius.circular(20)),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(8.0),
-                                                                              child: GestureDetector(
-                                                                                onTap: null,
-                                                                                child: Text(
-                                                                                  _selectedTime[index].start.format(context),
-                                                                                  style: TextStyle(color: Palette.cinzaClaro),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Flexible(
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.only(left: 8.0),
+                                                                                      child: Text(
+                                                                                        'Início:',
+                                                                                        style: TextStyle(color: Palette.cinzaClaro),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Center(
-                                                                        child:
-                                                                            Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            'Fim:',
-                                                                            style:
-                                                                                TextStyle(color: Palette.cinzaClaro),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    )),
-                                                                    Flexible(
-                                                                      child:
-                                                                          Container(
-                                                                        decoration: BoxDecoration(
-                                                                            color:
-                                                                                Palette.cinzaClaroTransparente,
-                                                                            borderRadius: BorderRadius.circular(20)),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(8.0),
-                                                                              child: Text(calculateSessionEnd(_selectedTime[index].start.format(context)), style: TextStyle(color: Palette.cinzaClaro)),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Flexible(
-                                                                      child:
-                                                                          Column(
-                                                                        children: [
-                                                                          GestureDetector(
-                                                                            child: OrionButtonWidget(
-                                                                                icon: Icon(
-                                                                              Icons.arrow_forward,
-                                                                              color: Palette.cinzaClaro,
-                                                                            )),
-                                                                          ),
+                                                                              Flexible(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(color: Palette.cinzaClaroTransparente, borderRadius: BorderRadius.circular(20)),
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsets.all(8.0),
+                                                                                        child: GestureDetector(
+                                                                                          onTap: null,
+                                                                                          child: Text(
+                                                                                            _selectedTime[index].start.format(context),
+                                                                                            style: TextStyle(color: Palette.cinzaClaro),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Center(
+                                                                                  child: Padding(
+                                                                                padding: const EdgeInsets.all(8.0),
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'Fim:',
+                                                                                      style: TextStyle(color: Palette.cinzaClaro),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              )),
+                                                                              Flexible(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(color: Palette.cinzaClaroTransparente, borderRadius: BorderRadius.circular(20)),
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsets.all(8.0),
+                                                                                        child: Text(calculateSessionEnd(_selectedTime[index].start.format(context)), style: TextStyle(color: Palette.cinzaClaro)),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Flexible(
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    GestureDetector(
+                                                                                      child: OrionButtonWidget(
+                                                                                          icon: Icon(
+                                                                                        Icons.arrow_forward,
+                                                                                        color: Palette.cinzaClaro,
+                                                                                      )),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          )
                                                                         ],
                                                                       ),
                                                                     ),
                                                                   ],
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
+                                                                ),
+                                                              )),
+                                                        ),
                                                       ),
-                                                    )),
-                                              ),
-                                            ),
-                                          if (checkSchedule !=
-                                              snapshotList[index].date)
-                                            TimelineTile(
-                                              indicatorStyle:
-                                                  IndicatorStyle(width: 0),
-                                              beforeLineStyle: const LineStyle(
-                                                color: Palette
-                                                    .cinzaClaroTransparente,
-                                                thickness: 0,
-                                              ),
-                                              endChild: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Flexible(
-                                                                    child:
-                                                                        Column(
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(left: 8.0),
-                                                                          child:
-                                                                              Text('Início:'),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Flexible(
-                                                                    child:
-                                                                        Container(
-                                                                      decoration: BoxDecoration(
-                                                                          color: Palette
-                                                                              .cinza,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)),
-                                                                      child:
-                                                                          Column(
+                                                    ),
+                                                  )
+                                                : Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 8.0),
+                                                    child: TimelineTile(
+                                                      indicatorStyle:
+                                                          IndicatorStyle(
+                                                              width: 0),
+                                                      beforeLineStyle:
+                                                          const LineStyle(
+                                                        color: Palette
+                                                            .cinzaClaroTransparente,
+                                                        thickness: 0,
+                                                      ),
+                                                      endChild: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
                                                                         children: [
-                                                                          Padding(
+                                                                          Flexible(
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.only(left: 8.0),
+                                                                                  child: Text('Início:'),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          Flexible(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(color: Palette.cinza, borderRadius: BorderRadius.circular(20)),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.all(8.0),
+                                                                                    child: GestureDetector(
+                                                                                      onTap: null,
+                                                                                      child: Text(_selectedTime[index].start.format(context)),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Center(
+                                                                              child: Padding(
                                                                             padding:
                                                                                 const EdgeInsets.all(8.0),
                                                                             child:
+                                                                                Row(
+                                                                              children: [
+                                                                                Text('Fim:'),
+                                                                              ],
+                                                                            ),
+                                                                          )),
+                                                                          Flexible(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(color: Palette.cinza, borderRadius: BorderRadius.circular(20)),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.all(8.0),
+                                                                                    child: Text(calculateSessionEnd(_selectedTime[index].start.format(context))),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Flexible(
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
                                                                                 GestureDetector(
-                                                                              onTap: null,
-                                                                              child: Text(_selectedTime[index].start.format(context)),
+                                                                                  onTap: (() => {
+                                                                                        Get.to(() => PaymentPage(), arguments: [
+                                                                                          itineraryLogic.itinerary,
+                                                                                          _selectedDay,
+                                                                                          _selectedTime[index].start.format(context),
+                                                                                          calculateSessionEnd(_selectedTime[index].start.format(context))
+                                                                                        ])
+                                                                                      }),
+                                                                                  child: OrionButtonWidget(
+                                                                                      icon: Icon(
+                                                                                    Icons.arrow_forward,
+                                                                                    color: Palette.branco,
+                                                                                  )),
+                                                                                ),
+                                                                              ],
                                                                             ),
                                                                           ),
                                                                         ],
-                                                                      ),
-                                                                    ),
+                                                                      )
+                                                                    ],
                                                                   ),
-                                                                  Center(
-                                                                      child:
-                                                                          Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Text(
-                                                                            'Fim:'),
-                                                                      ],
-                                                                    ),
-                                                                  )),
-                                                                  Flexible(
-                                                                    child:
-                                                                        Container(
-                                                                      decoration: BoxDecoration(
-                                                                          color: Palette
-                                                                              .cinza,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)),
-                                                                      child:
-                                                                          Column(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(8.0),
-                                                                            child:
-                                                                                Text(calculateSessionEnd(_selectedTime[index].start.format(context))),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Flexible(
-                                                                    child:
-                                                                        Column(
-                                                                      children: [
-                                                                        GestureDetector(
-                                                                          onTap: (() =>
-                                                                              {
-                                                                                Get.to(() => Empty2Page(), arguments: [
-                                                                                  itineraryLogic.itinerary,
-                                                                                  _selectedDay,
-                                                                                  _selectedTime[index].start.format(context),
-                                                                                  calculateSessionEnd(_selectedTime[index].start.format(context))
-                                                                                ])
-                                                                              }),
-                                                                          child: OrionButtonWidget(
-                                                                              icon: Icon(
-                                                                            Icons.arrow_forward,
-                                                                            color:
-                                                                                Palette.branco,
-                                                                          )),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )),
                                                     ),
-                                                  )),
-                                            ),
-                                        ],
-                                      );
+                                                  ),
+                                          ],
+                                        );
+                                      } else {
+                                        return CircularProgressIndicator();
+                                      }
                                     });
                               },
                             );

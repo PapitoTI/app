@@ -29,6 +29,19 @@ class ItineraryModel {
       this.itineraryAddsList,
       this.price,
       this.itineraryType);
+
+  clone() => ItineraryModel(
+      guideModel,
+      name,
+      spotsList,
+      spotDuration,
+      sessionsList,
+      description,
+      category,
+      weekdays,
+      itineraryAddsList,
+      price,
+      itineraryType);
 }
 
 class ItinerarySession {
@@ -44,23 +57,3 @@ class ExtraSpot {
 
   ExtraSpot(this.name, this.description, this.price);
 }
-
-ItineraryModel itinerary = itineraryDB as ItineraryModel;
-
-var itineraryDB = [
-  {
-    'name': 'Roteiro A',
-    'spotsList': '',
-    'spotsDuration': [
-      Duration(hours: 04, minutes: 00),
-    ],
-    'description': 'Descrição do roteiro A bla bla bla bla bla bla',
-    'category': 'Histórico',
-    'weekdays': [DateTime.monday, DateTime.tuesday, DateTime.wednesday],
-    'itineraryImagesList': [
-      'https://cdn2.civitatis.com/francia/paris/galeria/header/torre-eiffel-primavera.jpg'
-    ],
-    'itineraryAddsList': [],
-    'price': 250
-  }
-];

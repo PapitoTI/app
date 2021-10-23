@@ -68,6 +68,10 @@ class PendingSchedulesPage extends StatelessWidget {
                                       builder: (itineraryLogic) {
                                     return GestureDetector(
                                       onTap: (() => {
+                                            // TODO: ver onde tá pegando o itinerary no código e deixar de um lugar só, tudo no homeBaseLogic
+                                            home.itinerary = snapshot
+                                                .data?[index]
+                                                .itinerary as ItineraryModel,
                                             itineraryLogic.insertItinerary(
                                                 snapshot.data?[index].itinerary
                                                     as ItineraryModel),
