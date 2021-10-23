@@ -11,7 +11,7 @@ class ItineraryModel {
   String description;
   String category;
   List<bool> weekdays;
-  List<ExtraSpot> itineraryAddsList;
+  List<ExtraSpotModel> itineraryAddsList;
   double price;
   ItineraryType itineraryType;
 
@@ -28,12 +28,11 @@ class ItineraryModel {
       this.itineraryType);
 }
 
-class ExtraSpot {
+class ExtraSpotModel {
   String name;
   String description;
   double price;
-
-  ExtraSpot(this.name, this.description, this.price);
+  ExtraSpotModel(this.name, this.description, this.price);
 }
 
 ItineraryModel itinerary = itineraryDB as ItineraryModel;

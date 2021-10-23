@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:app/src/Config/images.dart';
+import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
+import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
 import 'package:app/src/Pages/tourist_home/logic.dart';
@@ -22,7 +25,7 @@ class _SpotPageState extends State<SpotPage> {
   final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();
   final ItineraryLogic itineraryLogic = Get.put(ItineraryLogic());
 
-  var _spot = Get.arguments;
+  SpotModel _spot = Get.arguments as SpotModel;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class _SpotPageState extends State<SpotPage> {
                   child: DescriptionWidget(description: _spot.description),
                 ),
                 SpotImagesSlider(
-                  spotImagesList: _spot.spotImagesList,
+                  spotImagesList: _spot.spotImagesList.map((e) => touristLogic.builder.getImage(e)).toList(),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -170,6 +173,61 @@ class _SpotPageState extends State<SpotPage> {
       ],
     ));
   }
+
+  Widget infoGuiaWidget(GuideModel guideModel) => Container(
+    width: 328,
+    height: 72,
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 328,
+          height: 72,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Palette.cinzaTransparente,
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 26,
+                top: 5,
+                child: Container(
+                  width: 62,
+                  height: 62,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                            image: touristLogic.builder.getImage(guideModel.imageUrl).image,
+                            fit: BoxFit.cover)),
+                  ),
+                ),
+              ),
+              Positioned(
+                  left: 98,
+                  top: 12,
+                  child: Text(
+                    guideModel.name,
+                    style: TextStyle(color: Palette.branco, fontSize: 20),
+                  )),
+              Positioned(
+                left: 98,
+                top: 49,
+                child: Text(
+                  "🌟 4.8 • 2 anos na plataforma",
+                  style: TextStyle(fontSize: 12, color: Palette.branco),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+
 
 //   @override
 //   void dispose() {

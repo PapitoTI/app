@@ -6,6 +6,7 @@ import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
+import 'package:app/src/Server/Grpc/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 
@@ -23,17 +24,13 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
   @override
   Future<GuideModel> getGuideData() async {
-    var info = await _client.information(GuideInformationRequest(),
-        options: _callOptions);
-    return GuideModel(info.profileImageUrl, info.name, info.email, info.phone,
-        info.certificate, info.accountBalance.toString());
+    var info = await _client.information(Empty(), options: _callOptions);
+    return GuideModel(info.profileImageUrl, info.name, info.email, info.phone, info.certificate, info.accountBalance.toString());
   }
 
   @override
   Image getImage(String url) {
-    if (url.isEmpty) {
-      return Image.asset('assets/images/felipe_guia.jpg');
-    }
+    assert(!url.isEmpty);
     return Image.network(url);
   }
 
@@ -49,12 +46,8 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
 
   // trocar senha
   @override
-  Future<void> updateProfilePassword(
-      String oldPassword, String newPassword) async {
-    await _client.updatePassword(
-        UpdatePasswordRequest(
-            oldPassword: oldPassword, newPassword: newPassword),
-        options: _callOptions);
+  Future<void> updateProfilePassword(String oldPassword, String newPassword) async {
+    await _client.updatePassword(UpdatePasswordRequest(oldPassword: oldPassword, newPassword: newPassword), options: _callOptions);
   }
 
   // criar roteiro
@@ -82,39 +75,24 @@ class GrpcGuideServerConnection extends GuideServerConnectionInterface {
   @override
   Future<List<ItineraryModel>> getGuideItineraries() async {
     var tours = await _client.tours(Empty(), options: _callOptions);
-    var data = await getGuideData();
     return tours.tours
-        .map((e) => ItineraryModel(
-            data,
-            e.name,
-            e.spots
-                .map((e) => SpotModel(e.name, e.address, e.category,
-                    e.description, e.imageUrls, false))
-                .toList(),
-            e.durationsInSeconds
-                .map((e) =>
-                    Duration(hours: 60 * (e / 60).round(), minutes: e % 60))
-                .toList(),
-            e.description,
-            e.category,
-            e.weekdays,
-            [],
-            e.price,
-            ItineraryType.Guide))
-        .toList();
+      .map((e) => e.toModel())
+      .toList();
   }
 
   // deletar roteir0o do guia
   @override
   Future<void> deleteItinerary(ItineraryModel it) async {
-    await _client.removeTour(RemoveTourRequest(tourName: it.name),
-        options: _callOptions);
+    await _client.removeTour(RemoveTourRequest(tourName: it.name), options: _callOptions);
   }
 
   // retornar lista de agendamentos do guia
   @override
   Future<List<ScheduleModel>> getSchedules() async {
-    throw UnsupportedError("");
+    var res = await _client.listSchedules(Empty(), options: _callOptions);
+    return res.schedules
+      .map((e) => e.toModel())
+      .toList();
   }
 
   // aprovar o agendamento

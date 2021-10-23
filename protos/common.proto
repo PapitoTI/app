@@ -41,7 +41,7 @@ message ExtraSpot {
 }
 
 message Tour {
-	string GuideEmail = 1;
+	Guide Guide = 1;
 	string Name = 2;
 	repeated Spot Spots = 3;
     repeated int32 DurationsInSeconds = 4;
@@ -50,6 +50,29 @@ message Tour {
 	repeated bool Weekdays = 7;
 	repeated ExtraSpot ExtraSpots = 8;
 	double Price = 9;
+}
+
+message Tourist {
+    string ProfileImageUrl = 1;
+    string Name = 2;
+    string Email = 3;
+	string Phone = 4;
+}
+
+message Guide {
+	string ProfileImageUrl = 1;
+	string Name = 2;
+	string Email = 3;
+	string Phone = 4;
+	string Certificate = 5;
+	double AccountBalance = 6;
+}
+
+message Schedule {
+	Tour Tour = 1;
+	Tourist Tourist = 2;
+	string Date = 3;
+	int32 Status = 4;
 }
 
 message Empty {

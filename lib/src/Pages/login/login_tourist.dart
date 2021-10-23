@@ -76,7 +76,6 @@ class LoginTouristPage extends GetWidget<LoginController> {
                         TextFormField(
                           validator: Validatorless.multiple([
                             Validatorless.required("E-mail obrigatório"),
-                            Validatorless.email("E-mail inválido")
                           ]),
                           controller: emailController,
                           style: TextStyle(color: Palette.branco),

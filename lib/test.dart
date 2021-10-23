@@ -4,6 +4,7 @@ import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Server/Grpc/grpc_server_connection_builder.dart';
 import 'package:app/src/Server/credentials.dart';
+import 'package:app/src/Server/local/server_connection_builder.dart';
 import 'package:app/src/Server/register_server_connection_interface.dart';
 import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
@@ -11,15 +12,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  var builder = GrpcServerConnectionBuilder("192.168.0.2", 50051);
+  //var builder = GrpcServerConnectionBuilder("192.168.0.2", 50051);
+  var builder = ServerConnectionBuilder();
   var chup = await builder
       .connectGuide(Credentials("isadora.pimto@hotmail.com", "pimto"));
   await chup.createItinerary(new ItineraryModel(
       await chup.getGuideData(),
       "Passeio",
       [
-        new SpotModel("name", "address", "category", "description",
-            ["spotImagesList"], false)
+        new SpotModel("name", "address", "category", "description", ["spotImagesList"])
       ],
       [Duration(hours: 0)],
       "description",

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/src/Pages/Cadastrar/choice.dart';
 import 'package:app/src/Pages/login/initialPage.dart';
 import 'package:app/src/Pages/login/login_controller.dart';
+import 'package:app/src/Server/Grpc/grpc_server_connection_builder.dart';
 import 'package:app/src/Server/local/server_connection_builder.dart';
 import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,9 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
-  ServerConnectionBuilderInterface builder = ServerConnectionBuilder();
+  ServerConnectionBuilderInterface builder = GrpcServerConnectionBuilder("177.140.117.183", 5001);
+  // ServerConnectionBuilderInterface builder = ServerConnectionBuilder();
   Get.lazyPut<LoginController>(() => LoginController());
-
   Get.put(builder, tag: "builder");
   runApp(MyApp());
 }
@@ -39,18 +40,12 @@ class _MyAppState extends State<MyApp> {
         GetPage(
           name: '/',
           page: () => FutureBuilder(
-              future: getTemporaryDirectory(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Directory> snapshot) {
-                if (snapshot.hasData) {
-                  return FileSystemEntity.typeSync(
-                              snapshot.data!.path + "Tutorial") ==
-                          FileSystemEntityType.notFound
-                      ? InitialPage()
-                      : ChoicePage();
-                }
-                return ListView();
-              }),
+            future: getTemporaryDirectory(),
+            builder: (context, AsyncSnapshot<Directory> snapshot) =>
+              !snapshot.hasData || FileSystemEntity.typeSync(snapshot.data!.path + "Tutorial") == FileSystemEntityType.notFound
+              ? InitialPage()
+              : ChoicePage()
+          ),
         )
       ],
     );

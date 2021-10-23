@@ -29,8 +29,7 @@ SpotModel spotModel1 = SpotModel(
       'assets/images/masp1.jpg',
       'assets/images/masp2.jpg',
       'assets/images/masp3.jpg'
-    ],
-    true);
+    ]);
 
 SpotModel spotModel2 = SpotModel(
     'Parque Ibirapuera',
@@ -41,8 +40,7 @@ SpotModel spotModel2 = SpotModel(
       'assets/images/ibirapuera1.jpg',
       'assets/images/ibirapuera2.jpg',
       'assets/images/ibirapuera3.jpg'
-    ],
-    true);
+    ]);
 
 SpotModel spotModel3 = SpotModel(
     'Catedral da Sé',
@@ -53,8 +51,7 @@ SpotModel spotModel3 = SpotModel(
       'assets/images/catedralse1.jpg',
       'assets/images/catedralse2.jpg',
       'assets/images/catedralse3.jpg'
-    ],
-    true);
+    ]);
 
 List<SpotModel> spotList = [spotModel1, spotModel2, spotModel3];
 
@@ -77,9 +74,9 @@ List<Duration> spotDuration = [
 
 List<bool> weekdays = [false, true, true, true, true, true, false];
 
-List<ExtraSpot> itineraryAddsList = [
-  ExtraSpot('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
-  ExtraSpot('Serviço Y', 'Faça aquilo e aproveite mais sua viagem!', 20.00)
+List<ExtraSpotModel> itineraryAddsList = [
+  ExtraSpotModel('Serviço X', 'Faça isso e aproveite mais sua viagem!', 45.00),
+  ExtraSpotModel('Serviço Y', 'Faça aquilo e aproveite mais sua viagem!', 20.00)
 ];
 
 var itinerariesDB = [
@@ -262,14 +259,13 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   @override
   Future<List<SpotModel>> getSpots() async {
     List<SpotModel> spotsList = spotsDB
-        .map((item) => SpotModel(
-            item['name'].toString(),
-            item['address'].toString(),
-            item['category'].toString(),
-            item['description'].toString(),
-            item['spotImagesList'] as List<String>,
-            item['isFavorite'] as bool))
-        .toList();
+      .map((item) => SpotModel(
+        item['name'].toString(),
+        item['address'].toString(),
+        item['category'].toString(),
+        item['description'].toString(),
+        item['spotImagesList'] as List<String>))
+      .toList();
 
     return spotsList;
   }

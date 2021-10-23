@@ -16,27 +16,8 @@ message Favorite {
     
 }
 
-message FavoriteRequest {
-    
-}
-
 message FavoriteResponse {
     repeated Favorite values = 1;
-}
-
-message TouristInformationRequest {
-
-}
-
-message TouristInformationResponse {
-    string ProfileImageUrl = 1;
-    string Name = 2;
-    string Email = 3;
-	string Phone = 4;
-}
-
-message HotSpotsRequest {
-    
 }
 
 message HotSpotsResponse {
@@ -50,15 +31,20 @@ message SearchToursRequest {
 }
 
 message SearchToursResponse {
-    
+    repeated common.Tour Tours = 1;
+}
+
+message SchedulesResponse {
+    repeated common.Schedule Schedules = 1;
 }
 
 service TouristService {
     rpc Login(common.LoginRequest) returns(common.LoginResponse);
-    rpc Information(TouristInformationRequest) returns(TouristInformationResponse);
-    rpc Favorites(FavoriteRequest) returns(FavoriteResponse);
+    rpc Information(common.Empty) returns(common.Tourist);
+    rpc Favorites(common.Empty) returns(FavoriteResponse);
     rpc UpdatePicture(common.UpdatePictureRequest) returns(common.UpdatePictureResponse);
     rpc UpdatePassword(common.UpdatePasswordRequest) returns(common.Empty);
-    rpc HotSpots(HotSpotsRequest) returns(HotSpotsResponse);
+    rpc HotSpots(common.Empty) returns(HotSpotsResponse);
     rpc SearchTours(SearchToursRequest) returns(SearchToursResponse);
+    rpc Schedules(common.Empty) returns(SchedulesResponse);
 }

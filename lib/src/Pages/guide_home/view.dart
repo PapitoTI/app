@@ -82,9 +82,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                 borderRadius: BorderRadius.circular(20),
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    guide.imageUrl,
-                                  ),
+                                  image: homeBaseLogic.session.getImage(guide.imageUrl).image,
                                 )),
                           ),
                         ],
@@ -181,9 +179,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var _filteredArray = snapshot.data
-                              ?.where((element) =>
-                                  element.scheduleStatus.toString() ==
-                                  'ScheduleStatus.pending')
+                              ?.where((element) => element.scheduleStatus == ScheduleStatus.pending)
                               .toList();
                           return Container(
                             width: 350,
@@ -301,7 +297,6 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                                     .data?[index]
                                                     .spotsList[0]
                                                     .spotImagesList[0],
-                                                isFavorite: 'isFavorite',
                                               ),
                                             );
                                           });

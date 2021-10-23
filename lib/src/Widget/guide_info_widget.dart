@@ -2,7 +2,7 @@ import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Server/local/guide_server_connection.dart';
 import 'package:flutter/material.dart';
 
-Widget infoGuiaWidget() => Container(
+Widget infoGuiaWidgetOld() => Container(
       width: 328,
       height: 72,
       child: Row(
