@@ -5,64 +5,6 @@ import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:flutter/material.dart';
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Destiny> destiny = [
-      Destiny("Paulista1", "assets/images/spot3.jpg", "Paulista ccc"),
-      Destiny("Paulista2", "assets/images/spot3.jpg", "Paulista ccc"),
-      Destiny("Trindade", "assets/images/spot3.jpg", "Paulista ccc"),
-      Destiny("Guarulhos", "assets/images/spot3.jpg", "Paulista ccc"),
-    ];
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/Ceu.jpg"),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                  Color.fromRGBO(36, 117, 252, 20), BlendMode.modulate)),
-        ),
-        child: Center(
-          child: SafeArea(
-              child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [BackButtonWidget(title: "Pesquisa")],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              GestureDetector(
-                onTap: () {
-                  showSearch(
-                      context: context, delegate: SearchPageDelegate(destiny));
-                },
-                child: Container(
-                  width: 347,
-                  height: 47,
-                  decoration: BoxDecoration(
-                    color: Palette.cinzaTransparente,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                ),
-              )
-            ],
-          )),
-        ),
-      ),
-    );
-  }
-}
-
 class SearchPageDelegate extends SearchDelegate<Destiny> {
   final List<Destiny> destiny;
 
