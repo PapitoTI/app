@@ -27,6 +27,17 @@ class _SpotPageState extends State<SpotPage> {
   final HomeBaseLogic homeBaseLogic = Get.find<HomeBaseLogic>();
 
   SpotModel _spot = Get.arguments as SpotModel;
+  var _filteredArray = [];
+
+  void verAParada(List<ItineraryModel> listinha) {
+    listinha.forEach((element) {
+      element.spotsList.forEach((e) {
+        if (e.name == _spot.name) {
+          _filteredArray.add(element);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,110 +79,116 @@ class _SpotPageState extends State<SpotPage> {
                       .map((e) => touristLogic.builder.getImage(e))
                       .toList(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Conheça este destino',
-                        style: TextStyle(fontSize: 16),
-                      )),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))),
-                          onPressed: (() => Get.to(SelfGuide())),
-                          child: Row(
-                            children: [
-                              Icon(Icons.map),
-                              Text('Roteiro'),
-                            ],
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Conheça este destino',
+                            style: TextStyle(fontSize: 16),
                           )),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))),
-                          onPressed: null,
-                          child: Row(
-                            children: [
-                              Icon(Icons.location_on),
-                              Text('Guia'),
-                            ],
-                          )),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))),
-                          onPressed: null,
-                          child: Row(
-                            children: [
-                              Icon(Icons.emoji_people),
-                              Text('Anfitrião'),
-                            ],
-                          )),
-                    ],
-                  ),
-                ),
-                FutureBuilder<List<ItineraryModel>>(
-                  // TODO: retornar diferentes ItineraryType
-                  future:
-                      touristLogic.getItinerariesByType(ItineraryType.Guide),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: snapshot.data?.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child:
-                                  GetBuilder<ItineraryLogic>(builder: (logic) {
-                                return GestureDetector(
-                                  onTap: (() => {
-                                        homeBaseLogic.itinerary =
-                                            snapshot.data![index],
-                                        logic.insertItinerary(
-                                            snapshot.data![index]),
-                                        Get.to(() => ItineraryPage(),
-                                            arguments: snapshot.data?[index])
-                                      }),
-                                  child: CardPWidget(
-                                    title: snapshot.data?[index].name,
-                                    description:
-                                        '${snapshot.data?[index].spotsList.length} locais',
-                                    image: snapshot.data?[index].spotsList[0]
-                                            .spotImagesList[0] ??
-                                        '',
-                                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                              onPressed: (() => Get.to(SelfGuide())),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.map),
+                                  Text('Roteiro'),
+                                ],
+                              )),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                              onPressed: null,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.location_on),
+                                  Text('Guia'),
+                                ],
+                              )),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                              onPressed: null,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.emoji_people),
+                                  Text('Anfitrião'),
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                    FutureBuilder<List<ItineraryModel>>(
+                      // TODO: retornar diferentes ItineraryType
+                      future: homeBaseLogic.session.getGuideItineraries(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          verAParada(snapshot.data!);
+                          return Container(
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _filteredArray.length,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GetBuilder<ItineraryLogic>(
+                                      builder: (logic) {
+                                    return GestureDetector(
+                                      onTap: (() => {
+                                            homeBaseLogic.itinerary =
+                                                _filteredArray[index],
+                                            logic.insertItinerary(
+                                                _filteredArray[index]),
+                                            Get.to(() => ItineraryPage(),
+                                                arguments:
+                                                    _filteredArray[index])
+                                          }),
+                                      child: CardPWidget(
+                                        title: _filteredArray[index].name,
+                                        description:
+                                            '${_filteredArray[index].spotsList.length} locais',
+                                        image: _filteredArray[index]
+                                                .spotsList[0]
+                                                .spotImagesList[0] ??
+                                            '',
+                                      ),
+                                    );
+                                  }),
                                 );
-                              }),
-                            );
-                          },
-                        ),
-                      );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  },
-                )
+                              },
+                            ),
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    )
+                  ],
+                ),
               ],
             ),
           ),

@@ -100,11 +100,13 @@ class CardGCreatableWidget extends StatelessWidget {
                                         size: 18,
                                         color: Palette.cinzaClaro,
                                       ),
-                                      Text(
-                                        spotAddress,
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Palette.cinzaClaro),
+                                      Expanded(
+                                        child: Text(
+                                          spotAddress,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Palette.cinzaClaro),
+                                        ),
                                       ),
                                     ],
                                   ),

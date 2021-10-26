@@ -1,29 +1,21 @@
+//import 'package:app/src/Pages/chat/listChat.dart';
+import 'package:app/src/Pages/chat/chatList.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
-import 'state.dart';
 
 class ChatPage extends StatefulWidget {
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
-  final ChatLogic logic = Get.put(ChatLogic());
-  final ChatState state = Get.find<ChatLogic>().state;
+class _ChatPageState extends State<ChatPage> {  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Text(
-            "Chat",
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-      ),
+      body: ChatList(),
     );
   }
 

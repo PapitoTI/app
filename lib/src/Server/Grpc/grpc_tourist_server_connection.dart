@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app/src/Generated/Protos/common.pb.dart';
 import 'package:app/src/Generated/Protos/tourist.pb.dart';
 import 'package:app/src/Generated/Protos/tourist.pbgrpc.dart';
-import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
@@ -13,9 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 
 import '../tourist_server_connection_interface.dart';
-
-
-
 
 class GrpcTouristServerConnection extends TouristServerConnectionInterface {
   final TouristServiceClient _client;
@@ -28,8 +24,7 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
 
   @override
   Future<TouristModel> getTouristData() async {
-    var info = await _client.information(Empty(),
-        options: _callOptions);
+    var info = await _client.information(Empty(), options: _callOptions);
     return TouristModel(
         info.profileImageUrl, info.name, info.email, info.phone);
   }
@@ -64,24 +59,22 @@ class GrpcTouristServerConnection extends TouristServerConnectionInterface {
   @override
   Future<List<SpotModel>> getSpots() async {
     var result = await _client.hotSpots(Empty(), options: _callOptions);
-    return result.spots
-      .map((e) => e.toModel())
-      .toList();
+    return result.spots.map((e) => e.toModel()).toList();
   }
 
   // retornar lista de roteiros por tipo de guiamento
   @override
-  Future<List<ItineraryModel>> getItinerariesByType(ItineraryType itineraryType) async {
-    var result = await _client.searchTours(SearchToursRequest(first: 0, length: 50, type: TourType.Guide), options: _callOptions);
-    return result.tours
-      .map((e) => e.toModel())
-      .toList();
+  Future<List<ItineraryModel>> getItinerariesByType(
+      ItineraryType itineraryType) async {
+    var result = await _client.searchTours(
+        SearchToursRequest(first: 0, length: 50, type: TourType.Guide),
+        options: _callOptions);
+    return result.tours.map((e) => e.toModel()).toList();
   }
 
   // retornar lista de roteiros por guia
   @override
-  Future<List<ItineraryModel>> getGuideItineraries(
-      GuideModel guideModel) async {
+  Future<List<ItineraryModel>> getGuideItineraries() async {
     throw UnsupportedError("");
   }
 

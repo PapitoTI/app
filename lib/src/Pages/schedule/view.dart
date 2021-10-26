@@ -1,5 +1,6 @@
 import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/chat/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
@@ -64,6 +65,7 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
     _selectedTime = itineraryLogic.itinerary.sessionsList;
+    print(_schedule);
     return GetBuilder<HomeBaseLogic>(builder: (home) {
       return Scaffold(
         body: SafeArea(
@@ -164,7 +166,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                             ))),
-                                            onPressed: null,
+                                            onPressed: (() =>
+                                                {Get.to(() => ChatPage())}),
                                             child: Text('Chat')),
                                         ElevatedButton(
                                             style: ButtonStyle(

@@ -58,7 +58,7 @@ class CardGEditableWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 130,
+                    height: 150,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         gradient: LinearGradient(
@@ -88,10 +88,13 @@ class CardGEditableWidget extends StatelessWidget {
                                   size: 18,
                                   color: Palette.cinzaClaro,
                                 ),
-                                Text(
-                                  spotAddress,
-                                  style: TextStyle(
-                                      fontSize: 14, color: Palette.cinzaClaro),
+                                Expanded(
+                                  child: Text(
+                                    spotAddress,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Palette.cinzaClaro),
+                                  ),
                                 ),
                               ],
                             ),

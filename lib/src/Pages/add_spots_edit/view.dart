@@ -1,5 +1,5 @@
 import 'package:app/src/Models/spot_model.dart';
-import 'package:app/src/Pages/create_itinerary/logic.dart';
+import 'package:app/src/Pages/edit_itinerary/logic.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
@@ -9,16 +9,15 @@ import 'package:get/get.dart';
 
 import 'logic.dart';
 
-class AddSpotsPage extends StatefulWidget {
+class AddSpotsEditPage extends StatefulWidget {
   @override
-  _AddSpotsPageState createState() => _AddSpotsPageState();
+  _AddSpotsEditPageState createState() => _AddSpotsEditPageState();
 }
 
-class _AddSpotsPageState extends State<AddSpotsPage> {
-  final logic = Get.put(AddSpotsLogic());
+class _AddSpotsEditPageState extends State<AddSpotsEditPage> {
+  final logic = Get.put(AddSpotsEditLogic());
   final HomeBaseLogic homeBaseLogic = Get.find<HomeBaseLogic>();
-  final CreateItineraryLogic createItineraryLogic =
-      Get.find<CreateItineraryLogic>();
+  final EditItineraryLogic editItineraryLogic = Get.find<EditItineraryLogic>();
   var newSpot;
   var spotsList;
 
@@ -52,13 +51,13 @@ class _AddSpotsPageState extends State<AddSpotsPage> {
                               child: GestureDetector(
                                 onTap: (() => {
                                       newSpot = snapshot.data?[index],
-                                      createItineraryLogic
-                                          .itineraryCreatable.spotsList
+                                      editItineraryLogic
+                                          .itineraryEditable.spotsList
                                           .add(newSpot),
-                                      createItineraryLogic
-                                          .itineraryCreatable.spotDuration
+                                      editItineraryLogic
+                                          .itineraryEditable.spotDuration
                                           .add(Duration(hours: 0, minutes: 0)),
-                                      createItineraryLogic.update(),
+                                      editItineraryLogic.update(),
                                       Get.back()
                                     }),
                                 child: CardPWidget(
@@ -117,7 +116,7 @@ class _AddSpotsPageState extends State<AddSpotsPage> {
 
   @override
   void dispose() {
-    Get.delete<AddSpotsLogic>();
+    Get.delete<AddSpotsEditLogic>();
     super.dispose();
   }
 }

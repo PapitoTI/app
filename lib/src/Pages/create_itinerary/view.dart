@@ -90,7 +90,7 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: BackButtonWidget(title: 'Editar roteiro'),
+                        child: BackButtonWidget(title: 'Criar roteiro'),
                       ),
                       TitleWidget(text: 'Nome do roteiro:'),
                       Row(
@@ -115,27 +115,54 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                           ),
                         ],
                       ),
-                      TitleWidget(text: 'Locais do roteiro:'),
-                      Container(
-                        width: 1000,
-                        height: 300,
-                        child: ListView.builder(
-                            itemCount:
-                                logic.itineraryCreatable.spotsList.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CardGCreatableWidget(
-                                      spotName: logic.itineraryCreatable
-                                          .spotsList[index].name,
-                                      spotAddress: logic.itineraryCreatable
-                                          .spotsList[index].address,
-                                      spotImagesList: logic.itineraryCreatable
-                                          .spotsList[index].spotImagesList[0],
-                                      index: index));
-                            }),
+                      TitleWidget(text: 'Categoria do roteiro:'),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Palette.cinzaTransparente),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  onChanged: (category) {
+                                    logic.itineraryCreatable.category =
+                                        category;
+                                  },
+                                  decoration:
+                                      InputDecoration(border: InputBorder.none),
+                                  initialValue: logic.itineraryCreatable.name,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                      TitleWidget(text: 'Locais do roteiro:'),
+                      if (logic.itineraryCreatable.spotsList.isEmpty)
+                        Container(),
+                      if (logic.itineraryCreatable.spotsList.isNotEmpty)
+                        Container(
+                          width: 1000,
+                          height: 300,
+                          child: ListView.builder(
+                              itemCount:
+                                  logic.itineraryCreatable.spotsList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CardGCreatableWidget(
+                                        spotName: logic.itineraryCreatable
+                                            .spotsList[index].name,
+                                        spotAddress: logic.itineraryCreatable
+                                            .spotsList[index].address,
+                                        spotImagesList: logic.itineraryCreatable
+                                            .spotsList[index].spotImagesList[0],
+                                        index: index));
+                              }),
+                        ),
                       Container(
                         child: Align(
                           alignment: Alignment.topRight,
@@ -626,7 +653,9 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
                                     logic.saveItinerary(
                                         logic.itineraryCreatable),
                                     print(logic.itineraryCreatable),
-                                    logic.update()
+                                    logic.update(),
+                                    Get.snackbar('Roteiro criado!',
+                                        'Seu novo roteiro foi criado com sucesso.')
                                   }),
                               child: Column(
                                 children: [Text('Salvar')],

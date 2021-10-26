@@ -2,9 +2,11 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:app/src/Config/mock.dart';
+import 'package:app/src/Models/chat_users_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
+import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +14,21 @@ class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
   @override
   Future<GuideModel> getGuideData() async {
-    GuideModel guideModel = GuideModel(
-        'assets/images/felipe_guia.jpg',
-        'Guia Ferreira de Souza',
-        'fefsouza10@gmail.com',
-        '+5511968638792',
-        'assets/images/certificado.jpg',
-        '100,00');
+    GuideModel guideModel = guidePedroModel;
 
     return guideModel;
+  }
+
+  // retornar lista dos destinos em alta
+  Future<List<SpotModel>> getSpots() async {
+    return spotListAll.map((e) => e.clone()).toList();
+  }
+
+  Future<List<ChatUsers>> getListMessagesGuide(String email) async {
+    var messagesList = chatUsers
+        .where((element) => element.guideModel.email == email)
+        .toList();
+    return messagesList;
   }
 
   @override

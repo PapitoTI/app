@@ -36,6 +36,7 @@ class _ScheduleCustomTableCalendarState
   var _selectedTime;
   final ItineraryLogic itineraryLogic = Get.find<ItineraryLogic>();
   var weekdaysItinerary;
+  var weekdaysItineraryClone;
 
   String calculateSessionEnd(String start) {
     var endDuration = TimeOfDay.fromDateTime(DateTime.parse('0000-00-00 $start')
@@ -123,7 +124,7 @@ class _ScheduleCustomTableCalendarState
 
   bool disabledDays(DateTime day) {
     if (weekdaysItinerary[day.weekday] == false ||
-        day.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+        day.isBefore(DateTime.now())) {
       return false;
     } else {
       return true;
@@ -152,7 +153,8 @@ class _ScheduleCustomTableCalendarState
   @override
   Widget build(BuildContext context) {
     _selectedTime = itineraryLogic.itinerary.sessionsList;
-    weekdaysItinerary = itineraryLogic.itinerary.weekdays;
+    weekdaysItineraryClone = itineraryLogic.itinerary.clone();
+    weekdaysItinerary = weekdaysItineraryClone.weekdays;
     weekdaysItinerary.add(itineraryLogic.itinerary.weekdays[0]);
     return Column(
       children: [

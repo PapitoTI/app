@@ -11,4 +11,7 @@ class ScheduleModel {
 
   ScheduleModel(
       this.itinerary, this.touristModel, this.date, this.scheduleStatus);
+
+  ScheduleModel clone() => ScheduleModel(
+      this.itinerary, this.touristModel, this.date, this.scheduleStatus);
 }

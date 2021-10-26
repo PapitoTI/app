@@ -1,6 +1,6 @@
 import 'package:app/src/Config/helpers.dart';
-import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/add_spots_edit/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/card_g_editable_widget.dart';
@@ -109,6 +109,29 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                       ),
                     ],
                   ),
+                  TitleWidget(text: 'Categoria do roteiro:'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Palette.cinzaTransparente),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              onChanged: (category) {
+                                logic.itineraryEditable.name = category;
+                              },
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                              initialValue: logic.itineraryEditable.category,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   TitleWidget(text: 'Locais do roteiro:'),
                   Container(
                     width: 1000,
@@ -132,8 +155,11 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                   Container(
                     child: Align(
                       alignment: Alignment.topRight,
-                      child: OrionButtonWidget(
-                        text: 'Adicionar local',
+                      child: GestureDetector(
+                        onTap: () => Get.to(() => AddSpotsEditPage()),
+                        child: OrionButtonWidget(
+                          text: 'Adicionar local',
+                        ),
                       ),
                     ),
                   ),
@@ -342,8 +368,6 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                             final index = day % 7;
                             logic.itineraryEditable.weekdays[index] =
                                 !logic.itineraryEditable.weekdays[index];
-                            print(logic.itineraryEditable.weekdays);
-                            print(weekdays);
                             logic.update();
                           },
                           values: logic.itineraryEditable.weekdays,
@@ -583,36 +607,43 @@ class _EditItineraryPageState extends State<EditItineraryPage> {
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))),
-                          onPressed: () => Get.back(),
-                          child: Column(
-                            children: [Text('Cancelar')],
-                          )),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))),
-                          onPressed: (() => {
-                                logic.itineraryEditable.spotDuration =
-                                    _selectedDuration,
-                                logic.itineraryEditable.sessionsList =
-                                    _selectedTime,
-                                logic.saveItinerary(),
-                                logic.update()
-                              }),
-                          child: Column(
-                            children: [Text('Salvar')],
-                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ))),
+                            onPressed: () => Get.back(),
+                            child: Column(
+                              children: [Text('Cancelar')],
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ))),
+                            onPressed: (() => {
+                                  logic.itineraryEditable.spotDuration =
+                                      _selectedDuration,
+                                  logic.itineraryEditable.sessionsList =
+                                      _selectedTime,
+                                  logic.saveItinerary(),
+                                  logic.update()
+                                }),
+                            child: Column(
+                              children: [Text('Salvar')],
+                            )),
+                      ),
                     ],
                   ),
                 ],

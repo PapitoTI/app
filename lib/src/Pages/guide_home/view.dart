@@ -4,7 +4,7 @@ import 'package:app/src/Models/destiny_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
-import 'package:app/src/Pages/PerfilG/guide_profile.dart';
+import 'package:app/src/Pages/PerfilG/guide_profile_w_back_button.dart';
 import 'package:app/src/Pages/Wallet/wallet_page.dart';
 import 'package:app/src/Pages/calendar/view.dart';
 import 'package:app/src/Pages/create_itinerary/view.dart';
@@ -86,7 +86,8 @@ class _GuideHomePageState extends State<GuideHomePage> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => Get.to(GuideProfile()),
+                            onTap: () =>
+                                Get.to(() => GuideProfileWBackButton()),
                             child: Container(
                               height: 80,
                               width: 80,
@@ -185,23 +186,31 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                                     arguments:
                                                         snapshot.data?[index])
                                               }),
-                                          child: CardPWidget(
-                                            title: snapshot
-                                                .data?[index].itinerary.name,
-                                            description:
-                                                '${snapshot.data?[index].itinerary.spotsList.length} locais',
-                                            image: snapshot
-                                                    .data?[index]
-                                                    .itinerary
-                                                    .spotsList[0]
-                                                    .spotImagesList[0] ??
-                                                '',
-                                          ),
+                                          child: GetBuilder<HomeBaseLogic>(
+                                              builder: (logic) {
+                                            return CardPWidget(
+                                              title: snapshot
+                                                  .data?[index].itinerary.name,
+                                              description:
+                                                  '${snapshot.data?[index].itinerary.spotsList.length} locais',
+                                              image: snapshot
+                                                      .data?[index]
+                                                      .itinerary
+                                                      .spotsList[0]
+                                                      .spotImagesList[0] ??
+                                                  '',
+                                            );
+                                          }),
                                         );
                                       }),
                                     );
                                   } else {
-                                    return Text('Sem compromissos agendados!');
+                                    return Padding(
+                                      padding: const EdgeInsets.all(40),
+                                      child: Center(
+                                          child: Text(
+                                              'Sem compromissos agendados!')),
+                                    );
                                   }
                                 }),
                           );
@@ -270,7 +279,12 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                       }),
                                     );
                                   } else {
-                                    return Text('Sem compromissos pendentes!');
+                                    return Padding(
+                                      padding: const EdgeInsets.all(40.0),
+                                      child: Center(
+                                          child: Text(
+                                              'Sem compromissos pendentes!')),
+                                    );
                                   }
                                 }),
                           );
@@ -282,7 +296,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                     Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 8, 8, 0),
+                            padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: (() =>
                                   {Get.to(() => PendingSchedulesPage())}),

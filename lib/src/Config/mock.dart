@@ -1,9 +1,50 @@
+import 'package:app/src/Models/chat_users_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
 import 'package:flutter/material.dart';
+
+class TouristRegister {
+  String? email;
+  String? password;
+
+  TouristRegister(this.email, this.password);
+}
+
+TouristRegister touristRegister = TouristRegister('email', 'password');
+
+TouristModel touristFelipeModel = TouristModel("assets/images/Felipe.jpg",
+    "Felipe Ferreira", 'felipe@gmail.com', '11985961520');
+
+TouristModel touristLucasModel = TouristModel(
+    "assets/images/Lucas.jpg", "Lucas Thomaz", 'lucas@gmail.com', '1195952002');
+
+GuideModel guideBrunoModel = GuideModel(
+  "assets/images/PerfilBruno.jpg",
+  "Bruno Garcia",
+  'bruno@gmail.com',
+  '11959825200',
+  'assets/images/certificado.jpg',
+  '100,00',
+);
+
+GuideModel guidePedroModel = GuideModel(
+    "assets/images/Pedro.jpg",
+    "Pedro Louco",
+    'pedro@gmail.com',
+    '11988593650',
+    'assets/images/certificado.jpg',
+    '100,00');
+
+/*Chat*/
+List<ChatUsers> chatUsers = [
+  ChatUsers(touristLucasModel, guidePedroModel, "Olá Lucas, tudo bem?", false,
+      DateTime(2021, 10, 18, 21, 48, 30)),
+  ChatUsers(touristLucasModel, guidePedroModel, "Tudo ótimo e com você?", true,
+      DateTime(2021, 10, 18, 21, 52, 31)),
+];
 
 TouristModel touristModel = TouristModel('assets/images/felipe_turista.jpg',
     'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
@@ -127,7 +168,7 @@ List<SpotModel> spotList6 = [
     'Ouro Preto é o berço do Barroco Mineiro, aqui poderemos contemplar o mais importante conjunto arquitetônico do Brasil, suas Igrejas, Museus, Pontes, Chafarizes, Casarios e ruínas de mineração.\nMariana é o lugar da religiosidade mineira, tornou-se sede do primeiro bispado da região e foi uma das primeiras cidades planejadas do País, com linhas retas e praças retangulares.',
     [
       'assets/images/ouro.jpg',
-      'assets/images/ouro1.png',
+      'assets/images/ouro1.jpg',
       'assets/images/ouro2.jpg',
     ],
   ),
@@ -140,7 +181,7 @@ List<SpotModel> spotList7 = [
     'Ouro Preto é conhecida pela arquitetura barroca, que inclui pontes, fontes e praças, e pelas ruas calcetadas íngremes e sinuosas. A Praça central de Tiradentes recebeu o nome do mártir da independência brasileira.',
     [
       'assets/images/preto.jpg',
-      'assets/images/preto1.png',
+      'assets/images/preto1.jpg',
       'assets/images/preto2.jpg',
     ],
   ),
@@ -252,17 +293,6 @@ List<SpotModel> spotListAll = [
       'assets/images/gramado.jpeg',
       'assets/images/gramado1.jpeg',
       'assets/images/gramado2.jpeg',
-    ],
-  ),
-  SpotModel(
-    'Maria Fumaça e a rota dos vinhos',
-    'Vale dos vinhedos, Rio Grande do Sul',
-    'Cultural',
-    'Conheça Gramado de uma forma espetacular e um tanto tradicional: nesta rota, você irá se divertir muito ao som de músicas italianas e gaúchas ao vivo, no passeio de trem Maria Fumaça (preço da  Maria Fumaça nao esta incluso). Muita dança, cultura e boas histórias dos imigrantes Italianos para contar… Isso e muito mais você verá por aqui! ',
-    [
-      'assets/images/vinho.jpg',
-      'assets/images/vinho1.jpg',
-      'assets/images/vinho2.jpg',
     ],
   ),
   SpotModel(
@@ -501,7 +531,7 @@ List<ItineraryModel> itinerariesDB = [
   //     ItineraryType.Guide),
 ];
 
-DateTime dateItinerary = DateTime.utc(2021, 10, 25, 10, 00);
+DateTime dateItinerary = DateTime.utc(2021, 10, 27, 10, 00);
 DateTime dateItinerary2 = DateTime.utc(2021, 10, 25, 16, 00);
 
 TimeOfDay session1 = TimeOfDay(hour: 10, minute: 00);
@@ -525,13 +555,13 @@ ItineraryModel itineraryModel1 = ItineraryModel(
 
 ItineraryModel itineraryModel2 = ItineraryModel(
     guideModel,
-    'Rolê no MASP',
+    'Conheça o MASP',
     spotListMASP,
-    spotDuration,
-    sessionsList,
+    [Duration(hours: 1, minutes: 30)],
+    [TimeOfDay(hour: 10, minute: 00)],
     'Este roteiro passa por vários lugares de São Paulo, aproveite!',
     'Rolê',
-    weekdays,
+    [false, true, true, true, true, true, false],
     itineraryAddsList,
     120.00,
     ItineraryType.Guide);
@@ -658,7 +688,7 @@ ItineraryModel itineraryModel12 = ItineraryModel(
     ItineraryType.Guide);
 
 ScheduleModel scheduleModel1 = ScheduleModel(
-    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+    itineraryModel2, touristModel, dateItinerary, ScheduleStatus.approved);
 ScheduleModel scheduleModel2 = ScheduleModel(
     itineraryModel1, touristModel, dateItinerary2, ScheduleStatus.approved);
 ScheduleModel scheduleModel3 = ScheduleModel(
@@ -671,17 +701,7 @@ ScheduleModel scheduleModel5 = ScheduleModel(
 List<ScheduleModel> scheduleList = [scheduleModel1];
 
 List<ItineraryModel> guideItinerariesList = [
-  itineraryModel1,
   itineraryModel2,
-  itineraryModel4,
-  itineraryModel5,
-  itineraryModel6,
-  itineraryModel7,
-  itineraryModel8,
-  itineraryModel9,
-  itineraryModel10,
-  itineraryModel11,
-  itineraryModel12
 ];
 
 var imageUrl1 =

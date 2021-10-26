@@ -50,6 +50,8 @@ dependencies:
   fl_chart: ^0.40.2
   image_picker: ^0.8.4+1
   xfile: ^1.1.0
+  collection: ^1.14.13
+
 
 dev_dependencies:
   flutter_test:
