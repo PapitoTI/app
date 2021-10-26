@@ -18,8 +18,8 @@ class ServerConnectionBuilder extends ServerConnectionBuilderInterface {
   }
 
   Future<GuideServerConnection> connectGuide(Credentials credentials) async {
-    if (credentials.email == "pedro@gmail.com" && credentials.password == "123")
-      return GuideServerConnection();
+    if (credentials.email == "pedro@gmail.com" &&
+        credentials.password == "teste123") return GuideServerConnection();
     throw Exception("Você digitou a senha errada");
   }
 

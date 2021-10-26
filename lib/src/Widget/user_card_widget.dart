@@ -1,6 +1,8 @@
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/PerfilG/guide_profile_w_back_button.dart';
 import 'package:app/src/Widget/user_avatar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserCardWidget extends StatelessWidget {
   const UserCardWidget({Key? key, required this.imageUrl, required this.name})
@@ -18,7 +20,7 @@ class UserCardWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -41,27 +43,30 @@ class UserCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              // TODO: remover esse padding e corrigir esse alinhamento
-              padding: const EdgeInsets.only(bottom: 50),
-              child: Container(
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Palette.cinzaClaro),
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      // TODO: ir pro perfil do guia/turista
-                      Icon(Icons.person),
-                      Text('Perfil'),
-                    ],
+            if (name.contains('Pedro'))
+              Padding(
+                // TODO: remover esse padding e corrigir esse alinhamento
+                padding: const EdgeInsets.only(bottom: 50),
+                child: GestureDetector(
+                  onTap: () => Get.to(() => GuideProfileWBackButton()),
+                  child: Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Palette.cinzaClaro),
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.person),
+                          Text('Perfil'),
+                        ],
+                      ),
+                    )),
                   ),
-                )),
-              ),
-            )
+                ),
+              )
           ],
         ),
       ),

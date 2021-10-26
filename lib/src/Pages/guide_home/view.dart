@@ -1,6 +1,5 @@
 import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Models/destiny_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
@@ -13,7 +12,6 @@ import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
 import 'package:app/src/Pages/pending_schedules/view.dart';
 import 'package:app/src/Pages/schedule/view.dart';
-import 'package:app/src/Pages/search_page/search_page.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
@@ -36,13 +34,6 @@ class _GuideHomePageState extends State<GuideHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Destiny> destiny = [
-      Destiny("Paulista1", "assets/images/spot3.jpg", "Paulista ccc"),
-      Destiny("Paulista2", "assets/images/spot3.jpg", "Paulista ccc"),
-      Destiny("Trindade", "assets/images/spot3.jpg", "Paulista ccc"),
-      Destiny("Guarulhos", "assets/images/spot3.jpg", "Paulista ccc"),
-    ];
-
     return FutureBuilder<GuideModel>(
         future: homeBaseLogic.session.getGuideData(),
         builder: (context, snapshot) {
@@ -122,29 +113,6 @@ class _GuideHomePageState extends State<GuideHomePage> {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        showSearch(
-                            context: context,
-                            delegate: SearchPageDelegate(destiny));
-                      },
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        width: 347,
-                        height: 47,
-                        decoration: BoxDecoration(
-                          color: Palette.cinzaTransparente,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            "Pesquisar...",
-                            style: TextStyle(color: Palette.cinzaClaro),
-                          ),
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Align(
@@ -158,61 +126,75 @@ class _GuideHomePageState extends State<GuideHomePage> {
                       future: homeBaseLogic.session.getSchedules(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Container(
-                            width: 350,
-                            height: 100,
-                            child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 1,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (context, index) {
-                                  if (snapshot.data?[index].scheduleStatus ==
-                                      ScheduleStatus.approved) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: GetBuilder<ItineraryLogic>(
-                                          builder: (itinerary) {
-                                        return GestureDetector(
-                                          onTap: (() => {
-                                                // TODO: ver onde tá pegando o itinerary no código e deixar de um lugar só, tudo no homeBaseLogic
-                                                homeBaseLogic.itinerary =
-                                                    snapshot
-                                                        .data?[index].itinerary,
-                                                itinerary.insertItinerary(
-                                                    snapshot.data?[index]
-                                                            .itinerary
-                                                        as ItineraryModel),
-                                                Get.to(() => SchedulePage(),
-                                                    arguments:
-                                                        snapshot.data?[index])
+                          return Column(
+                            children: [
+                              if (snapshot.data!.isEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 20, 8.0, 0),
+                                  child: Center(
+                                      child:
+                                          Text('Sem compromissos agendados!')),
+                                ),
+                              Container(
+                                width: 350,
+                                height: 100,
+                                child: ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: snapshot.data!.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      if (snapshot
+                                              .data?[index].scheduleStatus ==
+                                          ScheduleStatus.approved) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: GetBuilder<ItineraryLogic>(
+                                              builder: (itinerary) {
+                                            return GestureDetector(
+                                              onTap: (() => {
+                                                    // TODO: ver onde tá pegando o itinerary no código e deixar de um lugar só, tudo no homeBaseLogic
+                                                    homeBaseLogic.itinerary =
+                                                        snapshot.data?[index]
+                                                            .itinerary,
+                                                    itinerary.insertItinerary(
+                                                        snapshot.data?[index]
+                                                                .itinerary
+                                                            as ItineraryModel),
+                                                    Get.to(() => SchedulePage(),
+                                                        arguments: snapshot
+                                                            .data?[index])
+                                                  }),
+                                              child: GetBuilder<HomeBaseLogic>(
+                                                  builder: (logic) {
+                                                return CardPWidget(
+                                                  title: snapshot.data?[index]
+                                                      .itinerary.name,
+                                                  description:
+                                                      '${snapshot.data?[index].itinerary.spotsList.length} locais',
+                                                  image: snapshot
+                                                          .data?[index]
+                                                          .itinerary
+                                                          .spotsList[0]
+                                                          .spotImagesList[0] ??
+                                                      '',
+                                                );
                                               }),
-                                          child: GetBuilder<HomeBaseLogic>(
-                                              builder: (logic) {
-                                            return CardPWidget(
-                                              title: snapshot
-                                                  .data?[index].itinerary.name,
-                                              description:
-                                                  '${snapshot.data?[index].itinerary.spotsList.length} locais',
-                                              image: snapshot
-                                                      .data?[index]
-                                                      .itinerary
-                                                      .spotsList[0]
-                                                      .spotImagesList[0] ??
-                                                  '',
                                             );
                                           }),
                                         );
-                                      }),
-                                    );
-                                  } else {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(40),
-                                      child: Center(
-                                          child: Text(
-                                              'Sem compromissos agendados!')),
-                                    );
-                                  }
-                                }),
+                                      } else {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(40),
+                                          child: Center(
+                                              child: Text(
+                                                  'Sem compromissos agendados!')),
+                                        );
+                                      }
+                                    }),
+                              ),
+                            ],
                           );
                         } else {
                           return CircularProgressIndicator();

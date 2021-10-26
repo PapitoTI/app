@@ -1,9 +1,10 @@
+import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/destiny_model.dart';
 import 'package:app/src/Pages/spot/view.dart';
-import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SearchPageDelegate extends SearchDelegate<Destiny> {
   final List<Destiny> destiny;
@@ -31,6 +32,16 @@ class SearchPageDelegate extends SearchDelegate<Destiny> {
         },
         icon: const Icon(Icons.arrow_back),
       );
+
+  var spotter;
+
+  void goGogGo(Destiny _filter) {
+    spotListAll.forEach((element) {
+      if (element.name == _filter.name) {
+        spotter = element;
+      }
+    });
+  }
 
   @override
   Widget buildResults(BuildContext context) {
@@ -153,82 +164,91 @@ class SearchPageDelegate extends SearchDelegate<Destiny> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                width: 350,
-                height: 84,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Palette.cinzaTransparente),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Container(
-                        height: 65,
-                        width: 65,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                _filter[index].image,
-                              ),
-                            )),
+              GestureDetector(
+                onTap: (() => {
+                      goGogGo(_filter[index]),
+                      Get.to(() => SpotPage(), arguments: spotter)
+                    }),
+                child: Container(
+                  width: 350,
+                  height: 90,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Palette.cinzaTransparente),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Container(
+                          height: 65,
+                          width: 65,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                  _filter[index].image,
+                                ),
+                              )),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _filter[index].name,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                _filter[index].description,
-                                style: TextStyle(
-                                    fontSize: 12, color: Palette.cinzaClaro),
-                              ),
-                            ],
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _filter[index].name,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    _filter[index].description,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Palette.cinzaClaro),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                '2km',
-                                style: TextStyle(color: Palette.cinzaClaro),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  '2km',
+                                  style: TextStyle(color: Palette.cinzaClaro),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: GestureDetector(
-                                onTap: () => SpotPage(),
-                                child: OrionButtonWidget(
-                                    icon: Icon(
-                                  Icons.arrow_forward,
-                                  color: Palette.branco,
-                                )),
-                              ),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: GestureDetector(
+                                  onTap: () => SpotPage(),
+                                  child: OrionButtonWidget(
+                                      icon: Icon(
+                                    Icons.arrow_forward,
+                                    color: Palette.branco,
+                                  )),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
