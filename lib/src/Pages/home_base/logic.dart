@@ -1,7 +1,6 @@
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Pages/add_spots/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
-import 'package:app/src/Widget/timeline_widget/logic.dart';
 import 'package:get/get.dart';
 
 import 'state.dart';
@@ -16,8 +15,6 @@ class HomeBaseLogic extends GetxController {
   final state = HomeBaseState();
   final ItineraryLogic itineraryLogic = Get.put(ItineraryLogic());
   final AddSpotsLogic addSpotsLogic = Get.put(AddSpotsLogic());
-  final TimelineWidgetLogic timelineWidgetLogic =
-      Get.put(TimelineWidgetLogic());
 
   var tabIndex = 0;
 

@@ -17,7 +17,6 @@ import 'package:app/src/Pages/search_page/search_page.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
-import 'package:app/src/Widget/timeline_widget/logic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -327,32 +326,27 @@ class _GuideHomePageState extends State<GuideHomePage> {
                                           builder: (home) {
                                         return GetBuilder<ItineraryLogic>(
                                             builder: (itinerary) {
-                                          return GetBuilder<
-                                                  TimelineWidgetLogic>(
-                                              builder: (timeline) {
-                                            return GestureDetector(
-                                              onTap: (() => {
-                                                    home.itinerary =
-                                                        snapshot.data![index],
-                                                    itinerary.insertItinerary(
-                                                        snapshot.data![index]),
-                                                    Get.to(
-                                                        () => ItineraryPage(),
-                                                        arguments: snapshot
-                                                            .data?[index])
-                                                  }),
-                                              child: CardGWidget(
-                                                spotName:
-                                                    snapshot.data?[index].name,
-                                                spotAddress:
-                                                    '${snapshot.data?[index].spotsList.length} locais',
-                                                spotImagesList: snapshot
-                                                    .data?[index]
-                                                    .spotsList[0]
-                                                    .spotImagesList[0],
-                                              ),
-                                            );
-                                          });
+                                          return GestureDetector(
+                                            onTap: (() => {
+                                                  home.itinerary =
+                                                      snapshot.data![index],
+                                                  itinerary.insertItinerary(
+                                                      snapshot.data![index]),
+                                                  Get.to(() => ItineraryPage(),
+                                                      arguments:
+                                                          snapshot.data?[index])
+                                                }),
+                                            child: CardGWidget(
+                                              spotName:
+                                                  snapshot.data?[index].name,
+                                              spotAddress:
+                                                  '${snapshot.data?[index].spotsList.length} locais',
+                                              spotImagesList: snapshot
+                                                  .data?[index]
+                                                  .spotsList[0]
+                                                  .spotImagesList[0],
+                                            ),
+                                          );
                                         });
                                       }),
                                     );

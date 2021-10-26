@@ -1,4 +1,3 @@
-import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
@@ -11,14 +10,14 @@ class CreateItineraryLogic extends GetxController {
       GuideModel('imageUrl', 'name', 'email', 'phone', 'certificate',
           'accountBalance'),
       '',
-      spotList,
-      spotDuration,
-      sessionsList,
+      [],
+      [],
+      [],
       '',
       '',
       [false, false, false, false, false, false, false],
       [],
-      200.00,
+      0.00,
       ItineraryType.Guide);
 
   void saveItinerary(ItineraryModel creatableItineraryModel) {

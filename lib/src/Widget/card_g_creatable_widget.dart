@@ -67,7 +67,7 @@ class CardGCreatableWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 100,
+                          height: 130,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               gradient: LinearGradient(

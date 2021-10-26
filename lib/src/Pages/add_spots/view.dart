@@ -1,5 +1,3 @@
-import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Pages/create_itinerary/logic.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Widget/title_widget.dart';
@@ -22,122 +20,13 @@ class _AddSpotsPageState extends State<AddSpotsPage> {
 
   @override
   Widget build(BuildContext context) {
-    String? spotName;
-    String? spotAddress;
-    String? spotCategory;
-    String? spotDescription;
-    List<String>? spotImagesList = [
-      'assets/images/ibirapuera1.jpg',
-      'assets/images/ibirapuera2.jpg',
-      'assets/images/ibirapuera3.jpg',
-      'assets/images/ibirapuera4.jpg',
-      'assets/images/ibirapuera5.jpg'
-    ];
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               TitleWidget(text: 'Nome do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotName = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Endereço do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotAddress = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Categoria do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotCategory = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Descrição do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotDescription = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Adicione fotos do destino:'),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ))),
-                  onPressed: () => null,
-                  child: Column(
-                    children: [Text('Adicionar foto')],
-                  )),
-              Container(),
+              // ListView.builder(itemBuilder: itemBuilder)
               Row(
                 children: [
                   ElevatedButton(
@@ -159,12 +48,12 @@ class _AddSpotsPageState extends State<AddSpotsPage> {
                         borderRadius: BorderRadius.circular(20.0),
                       ))),
                       onPressed: (() => {
-                            newSpot = SpotModel(
-                                spotName!,
-                                spotAddress!,
-                                spotCategory!,
-                                spotDescription!,
-                                spotImagesList),
+                            // newSpot = SpotModel(
+                            //     spotName!,
+                            //     spotAddress!,
+                            //     spotCategory!,
+                            //     spotDescription!,
+                            //     spotImagesList),
                             createItineraryLogic.itineraryCreatable.spotsList
                                 .add(newSpot),
                             createItineraryLogic.itineraryCreatable.spotDuration

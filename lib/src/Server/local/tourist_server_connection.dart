@@ -38,7 +38,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista dos destinos em alta
   @override
   Future<List<SpotModel>> getSpots() async {
-    return spotList.map((e) => e.clone()).toList();
+    return spotListAll.map((e) => e.clone()).toList();
   }
 
   // retornar lista de destinos favoritos
@@ -52,7 +52,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
     ItineraryModel itineraryModel4841 = ItineraryModel(
         guideModel,
         'Rolê em SP',
-        spotList,
+        spotListAll,
         spotDuration,
         sessionsList,
         'Este roteiro passa por vários lugares de São Paulo, aproveite!',

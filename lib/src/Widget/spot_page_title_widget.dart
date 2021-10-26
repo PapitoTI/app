@@ -19,9 +19,11 @@ class SpotPageTitleWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 30),
+            Flexible(
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 30),
+              ),
             ),
             Container(
               height: 35,

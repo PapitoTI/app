@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CardGWidget extends StatelessWidget {
-  const CardGWidget(
-      {Key? key,
-      required this.spotName,
-      required this.spotAddress,
-      required this.spotImagesList,
-      })
-      : super(key: key);
+  const CardGWidget({
+    Key? key,
+    required this.spotName,
+    required this.spotAddress,
+    required this.spotImagesList,
+  }) : super(key: key);
 
   final spotName;
   final spotAddress;
@@ -56,7 +55,7 @@ class CardGWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 100,
+                    height: 135,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         gradient: LinearGradient(
@@ -86,10 +85,13 @@ class CardGWidget extends StatelessWidget {
                                   size: 18,
                                   color: Palette.cinzaClaro,
                                 ),
-                                Text(
-                                  spotAddress,
-                                  style: TextStyle(
-                                      fontSize: 14, color: Palette.cinzaClaro),
+                                Flexible(
+                                  child: Text(
+                                    spotAddress,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Palette.cinzaClaro),
+                                  ),
                                 ),
                               ],
                             ),
