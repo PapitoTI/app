@@ -1,5 +1,6 @@
 import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Models/destiny_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
@@ -12,6 +13,7 @@ import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
 import 'package:app/src/Pages/pending_schedules/view.dart';
 import 'package:app/src/Pages/schedule/view.dart';
+import 'package:app/src/Pages/search_page/search_page.dart';
 import 'package:app/src/Widget/card_g_widget.dart';
 import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
@@ -35,6 +37,13 @@ class _GuideHomePageState extends State<GuideHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Destiny> destiny = [
+      Destiny("Paulista1", "assets/images/spot3.jpg", "Paulista ccc"),
+      Destiny("Paulista2", "assets/images/spot3.jpg", "Paulista ccc"),
+      Destiny("Trindade", "assets/images/spot3.jpg", "Paulista ccc"),
+      Destiny("Guarulhos", "assets/images/spot3.jpg", "Paulista ccc"),
+    ];
+
     return FutureBuilder<GuideModel>(
         future: homeBaseLogic.session.getGuideData(),
         builder: (context, snapshot) {
@@ -111,6 +120,29 @@ class _GuideHomePageState extends State<GuideHomePage> {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showSearch(
+                            context: context,
+                            delegate: SearchPageDelegate(destiny));
+                      },
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        width: 347,
+                        height: 47,
+                        decoration: BoxDecoration(
+                          color: Palette.cinzaTransparente,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            "Pesquisar...",
+                            style: TextStyle(color: Palette.cinzaClaro),
+                          ),
+                        ),
                       ),
                     ),
                     Padding(

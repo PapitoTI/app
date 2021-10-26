@@ -38,16 +38,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   // retornar lista dos destinos em alta
   @override
   Future<List<SpotModel>> getSpots() async {
-    List<SpotModel> spotsList = spotsDB
-        .map((item) => SpotModel(
-            item['name'].toString(),
-            item['address'].toString(),
-            item['category'].toString(),
-            item['description'].toString(),
-            item['spotImagesList'] as List<String>))
-        .toList();
-
-    return spotsList;
+    return spotList.map((e) => e.clone()).toList();
   }
 
   // retornar lista de destinos favoritos

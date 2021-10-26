@@ -16,21 +16,22 @@ class WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     final List<TouristPayment> tourist = [
-      TouristPayment("Felipe Ferreira", "R\$ 200,00",
-          "assets/images/felipe_turista.jpg", '15/10/2021', 'Paulista1'),
-      TouristPayment("Felipe Ferreira", "R\$ 380,00",
-          "assets/images/felipe_turista.jpg", '15/10/2021', 'Paulista2'),
-      TouristPayment("Weslley", "R\$ 240,00",
-          "assets/images/felipe_turista.jpg", '15/10/2021', 'Paulista1'),
-    ];
-
-    final List<TouristPayment> tourist2 = [
-      TouristPayment("Felipe Ferreira", "R\$ 200,00",
-          "assets/images/felipe_turista.jpg", '15/09/2021', 'Paulista1'),
-      TouristPayment("Felipe Ferreira", "R\$ 380,00",
-          "assets/images/felipe_turista.jpg", '14/09/2021', 'Paulista2'),
-      TouristPayment("Weslley", "R\$ 240,00",
-          "assets/images/felipe_turista.jpg", '02/09/2021', 'Paulista1'),
+      TouristPayment("Lucas Tomaz", "R\$ 200,00", "assets/images/Lucas.jpg",
+          '20/10/2021', 'Paulista 1'),
+      TouristPayment("Bruno Garcia", "R\$ 380,00", "assets/images/Bruno.jpg",
+          '18/10/2021', 'Paulista 2'),
+      TouristPayment("Weslley Francis", "R\$ 50,00",
+          "assets/images/Weslley.jpg", '15/10/2021', 'Parque do Carmo'),
+      TouristPayment("Weslley", "R\$ 90,00", "assets/images/Weslley.jpg",
+          '15/10/2021', 'Rua Augusta'),
+      TouristPayment("Lucas Tomaz", "R\$ 80,00", "assets/images/Lucas.jpg",
+          '14/10/2021', 'Parada Inglesa'),
+      TouristPayment("Bruno Garcia", "R\$ 150,00", "assets/images/Bruno.jpg",
+          '14/10/2021', 'Pico do Jaraqua'),
+      TouristPayment("Weslley Francis", "R\$ 150,00",
+          "assets/images/Weslley.jpg", '12/10/2021', 'Cantareira'),
+      TouristPayment("Weslley", "R\$ 90,00", "assets/images/Weslley.jpg",
+          '10/10/2021', 'Mosteiro da Sé'),
     ];
 
     return SafeArea(
@@ -59,39 +60,68 @@ class WalletPageState extends State<WalletPage> {
                 SizedBox(
                   height: 30,
                 ),
-                Container(
-                  width: 340,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Ganhos",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "R\$ 6.350,00",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w900),
-                            ),
-                          ],
+                Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      top: -35,
+                      child: Container(
+                        padding: EdgeInsets.all(3),
+                        width: 70,
+                        height: 70,
+                        child: CircleAvatar(
+                          backgroundImage:
+                              AssetImage("assets/images/felipe_turista.jpg"),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Palette.cinzaTransparente,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: 340,
+                      height: 120,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 16, right: 16, top: 35),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Ganhos",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "R\$ 6.350,00",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Palette.branco.withOpacity(.4)),
+                SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(right: 250.0),
                   child: Text(
@@ -100,14 +130,7 @@ class WalletPageState extends State<WalletPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 250.0),
-                  child: Text(
-                    "Outubro",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
+                  height: 10,
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -116,13 +139,15 @@ class WalletPageState extends State<WalletPage> {
                       return Column(
                         children: [
                           SizedBox(
-                            height: 5,
+                            height: 2,
                           ),
                           Container(
-                            // width: 350,
+                            width: 350,
                             height: 84,
-                            decoration:
-                                BoxDecoration(color: Palette.cinzaTransparente),
+                            decoration: BoxDecoration(
+                              color: Palette.cinzaTransparente,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -187,120 +212,6 @@ class WalletPageState extends State<WalletPage> {
                                               const EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             tourist[index].dataPay,
-                                            style: TextStyle(
-                                                color: Palette.cinzaClaro),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8.0),
-                                          child: OrionButtonWidget(
-                                              icon: Icon(
-                                            Icons.arrow_forward,
-                                            color: Palette.branco,
-                                          )),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-                Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Palette.branco.withOpacity(.4)),
-                Padding(
-                  padding: const EdgeInsets.only(right: 250.0),
-                  child: Text(
-                    "Setembro",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: tourist2.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            // width: 350,
-                            height: 84,
-                            decoration:
-                                BoxDecoration(color: Palette.cinzaTransparente),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Container(
-                                    height: 65,
-                                    width: 65,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                            tourist2[index].imageUrl,
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            tourist2[index].destiny,
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            tourist2[index].name,
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Palette.cinzaClaro),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    tourist2[index].budget,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8.0),
-                                          child: Text(
-                                            tourist2[index].dataPay,
                                             style: TextStyle(
                                                 color: Palette.cinzaClaro),
                                           ),
