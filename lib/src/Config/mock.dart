@@ -13,7 +13,8 @@ class TouristRegister {
   TouristRegister(this.email, this.password);
 }
 
-TouristRegister touristRegister = TouristRegister('email', 'password');
+TouristRegister touristRegister =
+    TouristRegister('lucas@gmail.com', 'teste123');
 
 TouristModel touristFelipeModel = TouristModel("assets/images/Felipe.jpg",
     "Felipe Ferreira", 'felipe@gmail.com', '11985961520');
@@ -46,8 +47,8 @@ List<ChatUsers> chatUsers = [
       DateTime(2021, 10, 18, 21, 52, 31)),
 ];
 
-TouristModel touristModel = TouristModel('assets/images/felipe_turista.jpg',
-    'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
+// TouristModel touristModel = TouristModel('assets/images/felipe_turista.jpg',
+//     'Felipe Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
 
 GuideModel guideModel = GuideModel(
     'assets/images/felipe_guia.jpg',
@@ -554,7 +555,7 @@ ItineraryModel itineraryModel1 = ItineraryModel(
     ItineraryType.Guide);
 
 ItineraryModel itineraryModel2 = ItineraryModel(
-    guideModel,
+    guidePedroModel,
     'Conheça o MASP',
     spotListMASP,
     [Duration(hours: 1, minutes: 30)],
@@ -687,18 +688,18 @@ ItineraryModel itineraryModel12 = ItineraryModel(
     90.00,
     ItineraryType.Guide);
 
-ScheduleModel scheduleModel1 = ScheduleModel(
-    itineraryModel2, touristModel, dateItinerary, ScheduleStatus.approved);
-ScheduleModel scheduleModel2 = ScheduleModel(
-    itineraryModel1, touristModel, dateItinerary2, ScheduleStatus.approved);
-ScheduleModel scheduleModel3 = ScheduleModel(
-    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
-ScheduleModel scheduleModel4 = ScheduleModel(
-    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
-ScheduleModel scheduleModel5 = ScheduleModel(
-    itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+// ScheduleModel scheduleModel1 = ScheduleModel(
+//     itineraryModel2, touri, dateItinerary, ScheduleStatus.approved);
+// ScheduleModel scheduleModel2 = ScheduleModel(
+//     itineraryModel1, touristModel, dateItinerary2, ScheduleStatus.approved);
+// ScheduleModel scheduleModel3 = ScheduleModel(
+//     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.approved);
+// ScheduleModel scheduleModel4 = ScheduleModel(
+//     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
+// ScheduleModel scheduleModel5 = ScheduleModel(
+//     itineraryModel1, touristModel, dateItinerary, ScheduleStatus.pending);
 
-List<ScheduleModel> scheduleList = [scheduleModel1];
+List<ScheduleModel> scheduleList = [];
 
 List<ItineraryModel> guideItinerariesList = [
   itineraryModel2,

@@ -169,16 +169,6 @@ class _SchedulePageState extends State<SchedulePage> {
                                             onPressed: (() =>
                                                 {Get.to(() => ChatPage())}),
                                             child: Text('Chat')),
-                                        ElevatedButton(
-                                            style: ButtonStyle(
-                                                shape: MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                    RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ))),
-                                            onPressed: null,
-                                            child: Text('Cancelar'))
                                       ],
                                     )
                                   ],

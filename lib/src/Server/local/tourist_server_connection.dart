@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Models/chat_users_model.dart';
+import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
@@ -13,6 +14,12 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   Future<TouristModel> registerTourist(TouristModel touristModel) async {
     TouristModel t = touristModel;
     return t;
+  }
+
+  Future<GuideModel> getGuideData() async {
+    GuideModel guideModel = guidePedroModel;
+
+    return guideModel;
   }
 
   Future<TouristModel> getTouristData() async {

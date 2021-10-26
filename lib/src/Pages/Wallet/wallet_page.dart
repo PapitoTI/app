@@ -2,7 +2,6 @@ import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Models/payment_model.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class WalletPage extends StatefulWidget {
@@ -72,7 +71,7 @@ class WalletPageState extends State<WalletPage> {
                         height: 70,
                         child: CircleAvatar(
                           backgroundImage:
-                              AssetImage("assets/images/felipe_turista.jpg"),
+                              AssetImage("assets/images/Pedro.jpg"),
                         ),
                       ),
                     ),
