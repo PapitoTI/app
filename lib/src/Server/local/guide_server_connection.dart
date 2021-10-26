@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'dart:io';
 
+import 'package:app/src/Models/chat_users_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
@@ -90,8 +91,7 @@ var itinerariesDB = [
     'name': 'Rolê no MASP',
     'spotsList': spotsDB,
     'spotDuration': spotDuration,
-    'description':
-        'Este roteiro passa por vários lugares de São Paulo, aproveite!',
+    'description': 'Este roteiro passa por vários lugares de São Paulo, aproveite!',
     'category': 'Rolê',
     'weekdays': weekdays,
     'itineraryAddsList': itineraryAddsList,
@@ -134,19 +134,59 @@ List<ScheduleModel> scheduleList = [
 
 List<ItineraryModel> guideItinerariesList = [itineraryModel1];
 
+
+TouristModel touristFelipeModel = TouristModel(
+  "assets/images/Felipe.jpg",
+  "Felipe Ferreira", 
+  'felipe@gmail.com', 
+  '11985961520'
+);
+
+TouristModel touristLucasModel = TouristModel(
+  "assets/images/Lucas.jpg",
+  "Lucas Thomaz", 
+  'lucas@gmail.com', 
+  '1195952002'
+);
+
+GuideModel guideBrunoModel = GuideModel(
+  "assets/images/PerfilBruno.jpg",
+  "Bruno Garcia", 
+  'bruno@gmail.com', 
+  '11959825200',
+  'assets/images/certificado.jpg',
+  '100,00',
+);
+
+GuideModel guidePedroModel = GuideModel(
+  "assets/images/Pedro.jpg",
+  "Pedro Louco", 
+  'pedro@gmail.com', 
+  '11988593650',
+  'assets/images/certificado.jpg',
+  '100,00'
+);
+
+/*Chat*/
+List<ChatUsers> chatUsers = [
+  ChatUsers(touristLucasModel, guidePedroModel, "Olá Lucas, tudo bem?",  false, DateTime(2021, 10, 18, 21, 48, 30)),
+  ChatUsers(touristLucasModel, guidePedroModel, "Tudo ótimo e com você?", true, DateTime(2021, 10, 18, 21, 52, 31)),        
+];
+
+
+
 class GuideServerConnection extends GuideServerConnectionInterface {
   // retornar dados do guia
   @override
   Future<GuideModel> getGuideData() async {
-    GuideModel guideModel = GuideModel(
-        'assets/images/felipe_guia.jpg',
-        'Guia Ferreira de Souza',
-        'fefsouza10@gmail.com',
-        '+5511968638792',
-        'assets/images/certificado.jpg',
-        '100,00');
+    GuideModel guideModel = guidePedroModel;
 
     return guideModel;
+  }
+
+  Future<List<ChatUsers>> getListMessagesGuide(String email) async{
+    var messagesList = chatUsers.where((element) => element.guideModel.email == email).toList();
+    return messagesList;
   }
 
   @override

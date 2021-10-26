@@ -10,8 +10,7 @@ class DashboardBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => DashboardLogic());
     Get.lazyPut<DashboardLogic>(() => DashboardLogic());
-    Get.lazyPut<GuideHomeLogic>(() => GuideHomeLogic());
-    Get.lazyPut<ChatLogic>(() => ChatLogic());
+    Get.lazyPut<GuideHomeLogic>(() => GuideHomeLogic());    
     Get.lazyPut<ProfileGLogic>(() => ProfileGLogic());
   }
 }

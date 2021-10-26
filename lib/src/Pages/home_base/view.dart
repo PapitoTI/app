@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:app/src/Config/images.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Pages/chat/view.dart';
 import 'package:app/src/Pages/empty_page/view.dart';
 import 'package:app/src/Pages/guide_home/view.dart';
 import 'package:app/src/Pages/tourist_home/view.dart';
@@ -54,12 +55,12 @@ class _HomeBasePageState extends State<HomeBasePage> {
             if (controller.session is GuideServerConnectionInterface)
               IndexedStack(
                 index: controller.tabIndex,
-                children: [GuideHomePage(), EmptyPagePage(), EmptyPagePage()],
+                children: [GuideHomePage(), ChatPage(), EmptyPagePage()],
               ),
             if (controller.session is TouristServerConnectionInterface)
               IndexedStack(
                 index: controller.tabIndex,
-                children: [TouristHomePage(), EmptyPagePage(), EmptyPagePage()],
+                children: [TouristHomePage(), ChatPage(), EmptyPagePage()],
               ),
           ]),
           bottomNavigationBar: FloatingNavbar(

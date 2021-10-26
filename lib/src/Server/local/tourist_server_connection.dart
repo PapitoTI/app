@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:app/src/Models/chat_users_model.dart';
 import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Models/tourist_model.dart';
+import 'package:app/src/Server/local/guide_server_connection.dart';
 import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:flutter/material.dart';
 
@@ -232,10 +234,12 @@ List<String> imagesUrlList = [
   imageUrl5
 ];
 
+
+
+
 class TouristServerConnection extends TouristServerConnectionInterface {
   Future<TouristModel> getTouristData() async {
-    TouristModel touristModel = TouristModel('assets/images/becobatman1.jpg',
-        'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
+    TouristModel touristModel = touristLucasModel;
 
     return touristModel;
   }
@@ -256,6 +260,12 @@ class TouristServerConnection extends TouristServerConnectionInterface {
   Future<void> updateProfilePassword(
       String oldPassword, String newPassword) async {
     throw UnsupportedError("");
+  }
+
+  @override
+  Future<List<ChatUsers>> getListMessagesTourist(String email) async{
+    var messagesList = chatUsers.where((element) => element.guideModel.email == email).toList();
+    return messagesList;
   }
 
   // retornar lista dos destinos em alta

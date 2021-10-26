@@ -16,8 +16,7 @@ class HomeBaseLogic extends GetxController {
   final state = HomeBaseState();
   final ItineraryLogic itineraryLogic = Get.put(ItineraryLogic());
   final AddSpotsLogic addSpotsLogic = Get.put(AddSpotsLogic());
-  final TimelineWidgetLogic timelineWidgetLogic =
-      Get.put(TimelineWidgetLogic());
+  final TimelineWidgetLogic timelineWidgetLogic = Get.put(TimelineWidgetLogic());
 
   var tabIndex = 0;
 
