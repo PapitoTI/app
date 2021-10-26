@@ -1,4 +1,3 @@
-import 'package:app/src/Pages/SelfGuide/self_guide.dart';
 import 'package:app/src/Pages/home_base/view.dart';
 import 'package:app/src/Server/credentials.dart';
 import 'package:app/src/Server/guide_server_connection_interface.dart';
@@ -23,7 +22,7 @@ class LoginController extends GetxController {
     try {
       _userT.value =
           await _builder.connectTourist(Credentials(email, password));
-      Get.to(HomeBasePage(), arguments: _userT.value);
+      Get.to(() => HomeBasePage(), arguments: _userT.value);
     } catch (e) {
       print(e);
     }
@@ -32,7 +31,7 @@ class LoginController extends GetxController {
   void loginGUser(String email, String password) async {
     try {
       _userG.value = await _builder.connectGuide(Credentials(email, password));
-      Get.to(HomeBasePage(), arguments: _userG.value);
+      Get.to(() => HomeBasePage(), arguments: _userG.value);
     } catch (e) {
       print(e);
     }

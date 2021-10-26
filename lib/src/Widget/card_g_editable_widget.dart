@@ -58,7 +58,7 @@ class CardGEditableWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 100,
+                    height: 150,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         gradient: LinearGradient(
@@ -88,10 +88,13 @@ class CardGEditableWidget extends StatelessWidget {
                                   size: 18,
                                   color: Palette.cinzaClaro,
                                 ),
-                                Text(
-                                  spotAddress,
-                                  style: TextStyle(
-                                      fontSize: 14, color: Palette.cinzaClaro),
+                                Expanded(
+                                  child: Text(
+                                    spotAddress,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Palette.cinzaClaro),
+                                  ),
                                 ),
                               ],
                             ),
@@ -115,12 +118,15 @@ class CardGEditableWidget extends StatelessWidget {
                                         onPressed: (() => {
                                               edit.itineraryEditable.spotsList
                                                   .removeAt(index),
+                                              edit.itineraryEditable
+                                                  .spotDuration
+                                                  .removeAt(index),
                                               edit.update()
                                             }),
                                         style: ButtonStyle(
                                             backgroundColor:
-                                                MaterialStateProperty.all<Color>(
-                                                    Palette.branco),
+                                                MaterialStateProperty.all<
+                                                    Color>(Palette.branco),
                                             shape: MaterialStateProperty.all<
                                                     RoundedRectangleBorder>(
                                                 RoundedRectangleBorder(
@@ -128,7 +134,8 @@ class CardGEditableWidget extends StatelessWidget {
                                                         BorderRadius.circular(
                                                             10),
                                                     side: BorderSide(
-                                                        color: Palette.cinzaClaro)))),
+                                                        color: Palette
+                                                            .cinzaClaro)))),
                                         child: Icon(
                                           Icons.delete,
                                           color: Palette.cinzaClaro,

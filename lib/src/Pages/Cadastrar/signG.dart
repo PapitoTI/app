@@ -1,6 +1,5 @@
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/Cadastrar/register_guide.dart';
-import 'package:app/src/Pages/login/login_guide.dart';
 import 'package:app/src/Server/server_connection_builder_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -227,8 +226,7 @@ class _CadastroGuiaState extends State<CadastroGuia> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     TextButton(
-                                        onPressed: () =>
-                                            Get.to(LoginGuidePage()),
+                                        onPressed: () => Get.back(),
                                         child: Text("Cancelar")),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(

@@ -1,9 +1,11 @@
+import 'package:app/src/Config/helpers.dart';
 import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Pages/add_spots/view.dart';
 import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Widget/back_button_widget.dart';
-import 'package:app/src/Widget/card_g_editable_widget.dart';
+import 'package:app/src/Widget/card_g_creatable_widget.dart';
 import 'package:app/src/Widget/orion_button_widget.dart';
 import 'package:app/src/Widget/title_widget.dart';
 import 'package:app/src/Widget/user_avatar_widget.dart';
@@ -25,16 +27,16 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
   final logic = Get.put(CreateItineraryLogic());
   final itineraryLogic = Get.find<ItineraryLogic>();
   var _selectedDuration;
-  List<TimeOfDay> _selectedTime = [TimeOfDay(hour: 00, minute: 00)];
+  var _selectedTime;
+  //List<TimeOfDay> _selectedTime = [TimeOfDay(hour: 00, minute: 00)];
 
   Future<void> _showDurationPicker(index) async {
     final Duration? result = await showDurationPicker(
       context: context,
-      initialTime: logic.itinerary.spotDuration[index],
+      initialTime: logic.itineraryCreatable.spotDuration[index],
     );
     if (result != null) {
       _selectedDuration[index] = result;
-      print(result);
       logic.update();
     }
   }
@@ -42,7 +44,7 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
   Future<void> _showTimePicker(index) async {
     final TimeOfDay? result = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(hour: 0, minute: 0),
+      initialTime: _selectedTime[index],
       initialEntryMode: TimePickerEntryMode.dial,
     );
     if (result != null) {
@@ -54,597 +56,618 @@ class _CreateItineraryPageState extends State<CreateItineraryPage> {
           : result.minute.toString();
       _selectedTime[index] = TimeOfDay.fromDateTime(
           DateTime.parse('0000-00-00 $resultHour:$resultMinute'));
-      itineraryLogic.itinerary.sessionsList[index] = _selectedTime[index];
       logic.update();
     }
   }
 
+  String calculateSessionEnd(String start) {
+    var endDuration = TimeOfDay.fromDateTime(DateTime.parse('0000-00-00 $start')
+        .add(Duration(
+            minutes: calculateTotalDurationToMinutes(
+                logic.itineraryCreatable.spotDuration))));
+    return endDuration.format(context);
+  }
+
+  TimeOfDay minutesToTimeOfDay(int minutes) {
+    Duration duration = Duration(minutes: minutes);
+    List<String> parts = duration.toString().split(':');
+    return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+  }
+
   @override
   Widget build(BuildContext context) {
-    _selectedDuration = logic.itinerary.spotDuration.obs;
-    return GetBuilder<HomeBaseLogic>(builder: (home) {
+    _selectedDuration = logic.itineraryCreatable.spotDuration;
+    _selectedTime = logic.itineraryCreatable.sessionsList;
+    return GetBuilder<HomeBaseLogic>(builder: (homeBaseLogic) {
       return GetBuilder<CreateItineraryLogic>(builder: (create) {
-        String? itineraryTitle;
-        String? itineraryDescription;
-        List<bool>? itineraryWeekdays;
-        List<Duration>? itineraryDuration;
-        double? itineraryPrice;
-        String? itineraryCategory;
-        List<TimeOfDay>? TimeOfDays;
-        return Scaffold(
-          body: SafeArea(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: BackButtonWidget(title: 'Criar roteiro'),
-                ),
-                TitleWidget(text: 'Nome do roteiro:'),
-                Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Palette.cinzaTransparente),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            onChanged: (title) {
-                              itineraryTitle = title;
-                            },
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
+        return FutureBuilder(
+          future: homeBaseLogic.session.getGuideData(),
+          builder: (context, snapshot) {
+            return Scaffold(
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: BackButtonWidget(title: 'Criar roteiro'),
+                      ),
+                      TitleWidget(text: 'Nome do roteiro:'),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Palette.cinzaTransparente),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  onChanged: (name) {
+                                    logic.itineraryCreatable.name = name;
+                                  },
+                                  decoration:
+                                      InputDecoration(border: InputBorder.none),
+                                  initialValue: logic.itineraryCreatable.name,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TitleWidget(text: 'Categoria do roteiro:'),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Palette.cinzaTransparente),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  onChanged: (category) {
+                                    logic.itineraryCreatable.category =
+                                        category;
+                                  },
+                                  decoration:
+                                      InputDecoration(border: InputBorder.none),
+                                  initialValue: logic.itineraryCreatable.name,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TitleWidget(text: 'Locais do roteiro:'),
+                      if (logic.itineraryCreatable.spotsList.isEmpty)
+                        Container(),
+                      if (logic.itineraryCreatable.spotsList.isNotEmpty)
+                        Container(
+                          width: 1000,
+                          height: 300,
+                          child: ListView.builder(
+                              itemCount:
+                                  logic.itineraryCreatable.spotsList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CardGCreatableWidget(
+                                        spotName: logic.itineraryCreatable
+                                            .spotsList[index].name,
+                                        spotAddress: logic.itineraryCreatable
+                                            .spotsList[index].address,
+                                        spotImagesList: logic.itineraryCreatable
+                                            .spotsList[index].spotImagesList[0],
+                                        index: index));
+                              }),
+                        ),
+                      Container(
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap: () => Get.to(() => AddSpotsPage()),
+                            child: OrionButtonWidget(
+                              text: 'Adicionar local',
+                            ),
                           ),
                         ),
                       ),
-                    ))
-                  ],
-                ),
-                TitleWidget(text: 'Locais do roteiro:'),
-                GetBuilder<CreateItineraryLogic>(builder: (logic) {
-                  if (create.itinerary.spotsList.length >= 1) {
-                    return Container(
-                        width: 1000,
-                        height: 300,
-                        child: ListView.builder(
-                            itemCount: create.itinerary.spotsList.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Text(create.itinerary.spotsList.length
-                                          .toString()),
-                                      CardGEditableWidget(
-                                          spotName: create
-                                              .itinerary.spotsList[index].name,
-                                          spotAddress: create.itinerary
-                                              .spotsList[index].address,
-                                          spotImagesList: create
-                                              .itinerary
-                                              .spotsList[index]
-                                              .spotImagesList[0],
-                                          index: index),
-                                    ],
-                                  ));
-                            }));
-                  } else {
-                    return Text('Nenhum local adicionado!');
-                  }
-                }),
-                Container(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                      onTap: (() => {Get.to(AddSpotsPage())}),
-                      child: OrionButtonWidget(
-                        text: 'Adicionar local',
-                      ),
-                    ),
-                  ),
-                ),
-                TitleWidget(text: 'Tempo previsto em cada local:'),
-                GetBuilder<CreateItineraryLogic>(builder: (logic) {
-                  if (create.itinerary.spotsList.length >= 1) {
-                    return Container(
-                        width: 1000,
-                        height: 300,
-                        child: ListView.builder(
-                            itemCount: create.itinerary.spotsList.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(20.0),
-                                      decoration: BoxDecoration(
-                                          color: Palette.cinzaTransparente,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'Linha do Tempo',
-                                              style: TextStyle(fontSize: 22),
-                                            ),
+                      TitleWidget(text: 'Tempo previsto em cada local:'),
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(20.0),
+                              decoration: BoxDecoration(
+                                  color: Palette.cinzaTransparente,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Linha do Tempo',
+                                      style: TextStyle(fontSize: 22),
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: logic
+                                          .itineraryCreatable.spotsList.length,
+                                      itemBuilder: (ctx, index) {
+                                        return TimelineTile(
+                                          indicatorStyle:
+                                              IndicatorStyle(width: 15),
+                                          beforeLineStyle: const LineStyle(
+                                            thickness: 2,
                                           ),
-                                          GetBuilder<CreateItineraryLogic>(
-                                              builder: (logic) {
-                                            return ListView.builder(
-                                                scrollDirection: Axis.vertical,
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                itemCount: logic
-                                                    .itinerary.spotsList.length,
-                                                itemBuilder: (ctx, index) {
-                                                  return TimelineTile(
-                                                    hasIndicator: false,
-                                                    endChild: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Container(
-                                                          child: Row(
+                                          endChild: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child: Row(
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Container(
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child: GetBuilder<
+                                                                    HomeBaseLogic>(
+                                                                builder:
+                                                                    (home) {
+                                                              return UserAvatarWidget(
+                                                                  height: 70,
+                                                                  width: 70,
+                                                                  image: home.session.getImage(logic
+                                                                      .itineraryCreatable
+                                                                      .spotsList[
+                                                                          index]
+                                                                      .spotImagesList[0]));
+                                                            }),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
-                                                              Column(
-                                                                children: [
-                                                                  Container(
-                                                                    child:
-                                                                        ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                      child: UserAvatarWidget(
-                                                                          height: 70,
-                                                                          width: 70,
-                                                                          image: home.session.getImage(
-                                                                            logic.itinerary.spotsList[index].spotImagesList[0],
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Expanded(
+                                                              Flexible(
                                                                 child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
                                                                   children: [
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Flexible(
-                                                                          child:
-                                                                              Column(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(left: 8.0),
-                                                                                child: Text(logic.itinerary.spotsList[index].name),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Flexible(
-                                                                          child:
-                                                                              Container(
-                                                                            decoration:
-                                                                                BoxDecoration(color: Palette.cinza, borderRadius: BorderRadius.circular(20)),
-                                                                            child:
-                                                                                Column(
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.all(8.0),
-                                                                                  child: GestureDetector(
-                                                                                    onTap: (() => {
-                                                                                          _showTimePicker(index)
-                                                                                        }),
-                                                                                    child: Text(_selectedDuration[index].format(context)),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        Container(
-                                                                          height:
-                                                                              35,
-                                                                          decoration: BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(20),
-                                                                              color: Palette.cinzaClaro),
-                                                                          child: Center(
-                                                                              child: Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(8.0),
-                                                                            child:
-                                                                                Row(
-                                                                              children: [
-                                                                                Text(logic.itinerary.spotsList[index].category),
-                                                                              ],
-                                                                            ),
-                                                                          )),
-                                                                        )
-                                                                      ],
-                                                                    )
+                                                                    Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              8.0),
+                                                                      child: Text(logic
+                                                                          .itineraryCreatable
+                                                                          .spotsList[
+                                                                              index]
+                                                                          .name),
+                                                                    ),
                                                                   ],
                                                                 ),
+                                                              ),
+                                                              Flexible(
+                                                                child:
+                                                                    Container(
+                                                                  decoration: BoxDecoration(
+                                                                      color: Palette
+                                                                          .cinza,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20)),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(8.0),
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap: (() =>
+                                                                              {
+                                                                                _showDurationPicker(index)
+                                                                              }),
+                                                                          child:
+                                                                              Text(durationToHours(_selectedDuration[index].inMinutes)),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                height: 35,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                    color: Palette
+                                                                        .cinzaClaro),
+                                                                child: Center(
+                                                                    child:
+                                                                        Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(logic
+                                                                          .itineraryCreatable
+                                                                          .spotsList[
+                                                                              index]
+                                                                          .category),
+                                                                    ],
+                                                                  ),
+                                                                )),
                                                               )
                                                             ],
-                                                          ),
-                                                        )),
-                                                  );
-                                                });
-                                          })
-                                          // Row(
-                                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          //   children: [
-                                          //     Align(
-                                          //         alignment: Alignment.topRight,
-                                          //         child: ElevatedButton(
-                                          //             onPressed: (() =>
-                                          //                 {_controller.timelineNameDB.removeLast()}),
-                                          //             child: Text('Remover local'))),
-                                          //     Align(
-                                          //         alignment: Alignment.topRight,
-                                          //         child: ElevatedButton(
-                                          //             onPressed: (() =>
-                                          //                 {_controller.timelineNameDB.add('Local')}),
-                                          //             child: Text('Adicionar local'))),
-                                          //   ],
-                                          // )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )),
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TitleWidget(text: 'Descrição:'),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Palette.cinzaTransparente),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  minLines: 1,
+                                  maxLines: 35,
+                                  decoration:
+                                      InputDecoration(border: InputBorder.none),
+                                  initialValue:
+                                      logic.itineraryCreatable.description,
+                                  onChanged: (description) {
+                                    logic.itineraryCreatable.description =
+                                        description;
+                                  },
                                 ),
-                              );
-                            }));
-                  } else {
-                    return Text('Nenhum local adicionado!');
-                  }
-                }),
-                TitleWidget(text: 'Descrição:'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Palette.cinzaTransparente),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            minLines: 1,
-                            maxLines: 35,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                            onChanged: (description) {
-                              itineraryDescription = description;
-                            },
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                TitleWidget(text: 'Categoria:'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Palette.cinzaTransparente),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            minLines: 1,
-                            maxLines: 35,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                            onChanged: (category) {
-                              itineraryCategory = category;
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                TitleWidget(text: 'Dias de atuação:'),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Palette.cinzaTransparente,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Column(
-                    children: [
-                      WeekdaySelector(
-                        firstDayOfWeek: 0,
-                        onChanged: (int day) {
-                          logic.updateWeekdaySelector(day);
-                        },
-                        values: logic.itinerary.weekdays,
-                      ),
-                    ],
-                  ),
-                ),
-                TitleWidget(text: 'Sessões disponíveis:'),
-                Container(
-                  child: Column(
-                    children: [
+                      TitleWidget(text: 'Dias de atuação:'),
                       Container(
-                        padding: EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
                             color: Palette.cinzaTransparente,
                             borderRadius: BorderRadius.circular(20)),
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Sessões disponíveis',
-                                style: TextStyle(fontSize: 22),
-                              ),
+                            WeekdaySelector(
+                              firstDayOfWeek: 0,
+                              onChanged: (int day) {
+                                final index = day % 7;
+                                logic.itineraryCreatable.weekdays[index] =
+                                    !logic.itineraryCreatable.weekdays[index];
+                                logic.update();
+                              },
+                              values: logic.itineraryCreatable.weekdays,
                             ),
-                            GetBuilder<ItineraryLogic>(
-                                builder: (itineraryLogic) {
-                              return ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: _selectedTime.length,
-                                  itemBuilder: (ctx, index) {
-                                    return TimelineTile(
-                                      indicatorStyle: IndicatorStyle(width: 0),
-                                      beforeLineStyle: const LineStyle(
-                                        color: Palette.cinzaClaroTransparente,
-                                        thickness: 0,
-                                      ),
-                                      endChild: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                          ],
+                        ),
+                      ),
+                      TitleWidget(text: 'Sessões disponíveis:'),
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(20.0),
+                              decoration: BoxDecoration(
+                                  color: Palette.cinzaTransparente,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Sessões disponíveis',
+                                      style: TextStyle(fontSize: 22),
+                                    ),
+                                  ),
+                                  GetBuilder<CreateItineraryLogic>(
+                                      builder: (create) {
+                                    return ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: logic.itineraryCreatable
+                                            .sessionsList.length,
+                                        itemBuilder: (ctx, index) {
+                                          return TimelineTile(
+                                            indicatorStyle:
+                                                IndicatorStyle(width: 0),
+                                            beforeLineStyle: const LineStyle(
+                                              color: Palette
+                                                  .cinzaClaroTransparente,
+                                              thickness: 0,
+                                            ),
+                                            endChild: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  child: Row(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Flexible(
-                                                            child: Column(
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                               children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      left:
-                                                                          8.0),
-                                                                  child: Text(
-                                                                      'Ínicio:'),
+                                                                Flexible(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(left: 8.0),
+                                                                        child: Text(
+                                                                            'Ínicio:'),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Flexible(
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  color: Palette
-                                                                      .cinza,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                              child: Column(
-                                                                children: [
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
+                                                                Flexible(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Palette
+                                                                            .cinza,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(20)),
                                                                     child:
-                                                                        GestureDetector(
-                                                                      onTap:
-                                                                          (() =>
-                                                                              {
-                                                                                _showTimePicker(index)
-                                                                              }),
-                                                                      child: Text(_selectedTime[
-                                                                              index]
-                                                                          .format(
-                                                                              context)),
+                                                                        Column(
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              GestureDetector(
+                                                                            onTap: (() =>
+                                                                                {
+                                                                                  _showTimePicker(index)
+                                                                                }),
+                                                                            child:
+                                                                                Text(_selectedTime[index].format(context)),
+                                                                          ),
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Center(
-                                                              child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Row(
-                                                              children: [
-                                                                Text('Fim:'),
-                                                              ],
-                                                            ),
-                                                          )),
-                                                          Flexible(
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  color: Palette
-                                                                      .cinza,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                              child: Column(
-                                                                children: [
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Text(_selectedTime[
-                                                                            index]
-                                                                        .format(
-                                                                            context)),
+                                                                ),
+                                                                Center(
+                                                                    child:
+                                                                        Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                          'Fim:'),
+                                                                    ],
                                                                   ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                                )),
+                                                                Flexible(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Palette
+                                                                            .cinza,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(20)),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Text(calculateSessionEnd(_selectedTime[index].format(context))),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
                                                       )
                                                     ],
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          )),
-                                    );
-                                  });
-                            }),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                    alignment: Alignment.topRight,
-                                    child: ElevatedButton(
-                                        onPressed: (() => {
-                                              _selectedTime.removeLast(),
-                                              logic.update()
-                                            }),
-                                        child: Text('Remover sessão'))),
-                                Align(
-                                    alignment: Alignment.topRight,
-                                    child: ElevatedButton(
-                                        onPressed: (() => {
-                                              _selectedTime.add(TimeOfDay(
-                                                  hour: 00, minute: 00)),
-                                              logic.update()
-                                            }),
-                                        child: Text('Adicionar sessão'))),
-                              ],
-                            )
+                                                )),
+                                          );
+                                        });
+                                  }),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Align(
+                                          alignment: Alignment.topRight,
+                                          child: ElevatedButton(
+                                              onPressed: (() => {
+                                                    _selectedTime.removeLast(),
+                                                    logic.update()
+                                                  }),
+                                              child: Text('Remover sessão'))),
+                                      Align(
+                                          alignment: Alignment.topRight,
+                                          child: ElevatedButton(
+                                              onPressed: (() => {
+                                                    _selectedTime.add(TimeOfDay(
+                                                        hour: 00, minute: 00)),
+                                                    logic.update()
+                                                  }),
+                                              child: Text('Adicionar sessão'))),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
+                      ),
+                      TitleWidget(text: 'Preço:'),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Palette.cinzaTransparente),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Palette.cinzaTransparente),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'R\$',
+                                          style: TextStyle(fontSize: 30),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Palette.preto),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: TextFormField(
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: InputDecoration(
+                                                  border: InputBorder.none),
+                                              style: TextStyle(fontSize: 30),
+                                              initialValue: logic
+                                                  .itineraryCreatable.price
+                                                  .toStringAsFixed(2)
+                                                  .replaceAll('.', ','),
+                                              onChanged: (price) {
+                                                var priceToDouble =
+                                                    double.tryParse(
+                                                            price.toString())! +
+                                                        0.00;
+                                                logic.itineraryCreatable.price =
+                                                    priceToDouble;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                              onPressed: () => Get.back(),
+                              child: Column(
+                                children: [Text('Cancelar')],
+                              )),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                              onPressed: (() => {
+                                    logic.itineraryCreatable.spotDuration =
+                                        _selectedDuration,
+                                    logic.itineraryCreatable.sessionsList =
+                                        _selectedTime,
+                                    logic.itineraryCreatable.guideModel =
+                                        snapshot.data as GuideModel,
+                                    logic.saveItinerary(
+                                        logic.itineraryCreatable),
+                                    print(logic.itineraryCreatable),
+                                    logic.update(),
+                                    Get.snackbar('Roteiro criado!',
+                                        'Seu novo roteiro foi criado com sucesso.')
+                                  }),
+                              child: Column(
+                                children: [Text('Salvar')],
+                              )),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                TitleWidget(text: 'Preço:'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Palette.cinzaTransparente),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Palette.cinzaTransparente),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'R\$',
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Palette.preto),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none),
-                                        style: TextStyle(fontSize: 30),
-                                        onChanged: (price) {
-                                          var priceToDouble = double.tryParse(
-                                                  price.toString())! +
-                                              0.00;
-                                          itineraryPrice = priceToDouble;
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ))),
-                        onPressed: null,
-                        child: Column(
-                          children: [Text('Cancelar')],
-                        )),
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ))),
-                        onPressed: (() => {
-                              itineraryDuration = _selectedDuration,
-                              create.saveItinerary(
-                                  itineraryTitle!,
-                                  itineraryDescription!,
-                                  itineraryCategory!,
-                                  itineraryWeekdays!,
-                                  itineraryPrice!,
-                                  itineraryDuration!,
-                                  TimeOfDays!)
-                            }),
-                        child: Column(
-                          children: [Text('Salvar')],
-                        )),
-                  ],
-                ),
-              ],
-            ),
-          )),
+              ),
+            );
+          },
         );
       });
     });

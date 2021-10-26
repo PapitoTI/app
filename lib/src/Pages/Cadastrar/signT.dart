@@ -1,7 +1,14 @@
+import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
-import 'package:app/src/Pages/login/login_tourist.dart';
+import 'package:app/src/Server/local/register_server_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+final RegisterServerConnection _builder = Get.put(RegisterServerConnection());
+
+var touristName;
+var touristEmail;
+var touristPassword;
 
 class CadastroTurista extends StatelessWidget {
   @override
@@ -58,11 +65,9 @@ class CadastroTurista extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
-                            /*validator: (String? value) {
-                                return (value != null && value.contains('@'))
-                                    ? "Email deve conter @ para ser valido"
-                                    : null;
-                              },*/
+                            onChanged: (name) {
+                              touristName = name;
+                            },
                             decoration: InputDecoration(
                               labelText: "NOME",
                               labelStyle: TextStyle(color: Palette.branco),
@@ -89,43 +94,11 @@ class CadastroTurista extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
-                            /*validator: (String? value) {
-                                return (value != null && value.contains('@'))
-                                    ? "Email deve conter @ para ser valido"
-                                    : null;
-                              },*/
+                            onChanged: (email) {
+                              touristEmail = email;
+                            },
                             decoration: InputDecoration(
                               labelText: "E-MAIL",
-                              labelStyle: TextStyle(color: Palette.branco),
-                              floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.white38),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.red),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              prefixIcon:
-                                  Icon(Icons.email, color: Colors.white),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            /*validator: (String? value) {
-                                return (value != null && value.contains('@'))
-                                    ? "Email deve conter @ para ser valido"
-                                    : null;
-                              },*/
-                            decoration: InputDecoration(
-                              labelText: "CONFIRMAÇÃO DO E-MAIL:",
                               labelStyle: TextStyle(color: Palette.branco),
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               enabledBorder: OutlineInputBorder(
@@ -179,37 +152,11 @@ class CadastroTurista extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
+                            onChanged: (senha) {
+                              touristPassword = senha;
+                            },
                             decoration: InputDecoration(
                               labelText: "SENHA",
-                              labelStyle: TextStyle(color: Palette.branco),
-                              floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.white38),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.red),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              prefixIcon: Icon(Icons.lock, color: Colors.white),
-                              /*suffixIcon: IconButton(
-                                  onPressed(){};
-
-                                ),*/
-                            ),
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: "CONFIRMAÇÃO DE SENHA",
                               labelStyle: TextStyle(color: Palette.branco),
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               enabledBorder: OutlineInputBorder(
@@ -243,7 +190,7 @@ class CadastroTurista extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: () => Get.to(LoginTouristPage()),
+                                    onPressed: () => Get.back(),
                                     child: Text('Já sou cadastrado')),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -252,7 +199,12 @@ class CadastroTurista extends StatelessWidget {
                                               BorderRadius.circular(50)),
                                       elevation: 0,
                                       primary: Palette.cinzaClaroTransparente),
-                                  onPressed: () {},
+                                  onPressed: (() => {
+                                        _builder.registerTourist(touristEmail,
+                                            touristPassword, touristName),
+                                        print(touristRegister.email),
+                                        print(touristRegister.password),
+                                      }),
                                   child: Text("Cadastrar"),
                                 ),
                               ],

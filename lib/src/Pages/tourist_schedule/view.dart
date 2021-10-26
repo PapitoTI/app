@@ -185,6 +185,9 @@ class TouristSchedulePage extends StatelessWidget {
                                                 builder: (itinerary) {
                                               return GestureDetector(
                                                 onTap: (() => {
+                                                      home.itinerary =
+                                                          _filteredArray[index]
+                                                              .itinerary,
                                                       itinerary.insertItinerary(
                                                           _filteredArray[index]
                                                               .itinerary),

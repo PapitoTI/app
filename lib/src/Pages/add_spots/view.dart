@@ -1,4 +1,8 @@
-import 'package:app/src/Config/palette.dart';
+import 'package:app/src/Models/spot_model.dart';
+import 'package:app/src/Pages/create_itinerary/logic.dart';
+import 'package:app/src/Pages/home_base/logic.dart';
+import 'package:app/src/Widget/back_button_widget.dart';
+import 'package:app/src/Widget/card_p_widget.dart';
 import 'package:app/src/Widget/title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,110 +16,98 @@ class AddSpotsPage extends StatefulWidget {
 
 class _AddSpotsPageState extends State<AddSpotsPage> {
   final logic = Get.put(AddSpotsLogic());
+  final HomeBaseLogic homeBaseLogic = Get.find<HomeBaseLogic>();
+  final CreateItineraryLogic createItineraryLogic =
+      Get.find<CreateItineraryLogic>();
+  var newSpot;
+  var spotsList;
 
   @override
   Widget build(BuildContext context) {
-    String spotName;
-    String spotAddress;
-    String spotCategory;
-    String spotDescription;
-    List<String> spotImagesList;
-    bool spotIsFavorite;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TitleWidget(text: 'Nome do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotName = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BackButtonWidget(title: 'Adicionar destino'),
               ),
-              TitleWidget(text: 'Endereço do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotName = title;
+              TitleWidget(
+                  text: 'Selecione o destino que deseja adicionar ao roteiro:'),
+              FutureBuilder<List<SpotModel>>(
+                  future: homeBaseLogic.session.getSpots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      spotsList = snapshot.data;
+                      return Container(
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: (() => {
+                                      newSpot = snapshot.data?[index],
+                                      createItineraryLogic
+                                          .itineraryCreatable.spotsList
+                                          .add(newSpot),
+                                      createItineraryLogic
+                                          .itineraryCreatable.spotDuration
+                                          .add(Duration(hours: 0, minutes: 0)),
+                                      createItineraryLogic.update(),
+                                      Get.back()
+                                    }),
+                                child: CardPWidget(
+                                  title: spotsList[index].name,
+                                  description: spotsList[index].address,
+                                  image: spotsList[index].spotImagesList[0],
+                                ),
+                              ),
+                            );
                           },
-                          decoration: InputDecoration(border: InputBorder.none),
                         ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Categoria do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotName = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Descrição do destino:'),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Palette.cinzaTransparente),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onChanged: (title) {
-                            spotName = title;
-                          },
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-              TitleWidget(text: 'Adicione fotos do destino:'),
-              Container()
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
+              // Row(
+              //   children: [
+              //     ElevatedButton(
+              //         style: ButtonStyle(
+              //             shape:
+              //                 MaterialStateProperty.all<RoundedRectangleBorder>(
+              //                     RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(20.0),
+              //         ))),
+              //         onPressed: () => Get.back(),
+              //         child: Column(
+              //           children: [Text('Cancelar')],
+              //         )),
+              //     ElevatedButton(
+              //         style: ButtonStyle(
+              //             shape:
+              //                 MaterialStateProperty.all<RoundedRectangleBorder>(
+              //                     RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(20.0),
+              //         ))),
+              //         onPressed: (() => {
+              //               // newSpot = SpotModel(
+              //               //     spotName!,
+              //               //     spotAddress!,
+              //               //     spotCategory!,
+              //               //     spotDescription!,
+              //               //     spotImagesList),
+              //             }),
+              //         child: Column(
+              //           children: [Text('Salvar')],
+              //         )),
+              //   ],
+              // ),
             ],
           ),
         ),

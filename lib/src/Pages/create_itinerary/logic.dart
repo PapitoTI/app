@@ -1,16 +1,18 @@
-import 'package:app/src/Config/mock.dart';
+import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
-import 'package:app/src/Server/local/guide_server_connection.dart';
-import 'package:flutter/material.dart';
+import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:get/get.dart';
 
 class CreateItineraryLogic extends GetxController {
-  ItineraryModel itinerary = ItineraryModel(
-      guideModel,
+  final homeBaseLogic = Get.find<HomeBaseLogic>();
+
+  ItineraryModel itineraryCreatable = ItineraryModel(
+      GuideModel('imageUrl', 'name', 'email', 'phone', 'certificate',
+          'accountBalance'),
       '',
       [],
       [],
-      sessionsList,
+      [],
       '',
       '',
       [false, false, false, false, false, false, false],
@@ -18,40 +20,22 @@ class CreateItineraryLogic extends GetxController {
       0.00,
       ItineraryType.Guide);
 
-  GuideServerConnection connection = GuideServerConnection();
-
-  void saveItinerary(
-      String itineraryName,
-      String itineraryDescription,
-      String itineraryCategory,
-      List<bool> itineraryWeekdays,
-      double itineraryPrice,
-      List<Duration> itineraryDuration,
-      List<TimeOfDay> sessionsList) {
-    ItineraryModel itineraryModel = ItineraryModel(
-        guideModel,
-        itineraryName,
-        spotList,
-        spotDuration,
-        sessionsList,
-        itineraryDescription,
-        itineraryCategory,
-        weekdays,
-        itineraryAddsList,
-        itineraryPrice,
-        ItineraryType.Guide);
-    connection.createItinerary(itineraryModel);
+  void saveItinerary(ItineraryModel creatableItineraryModel) {
+    ItineraryModel itineraryModel = creatableItineraryModel;
+    homeBaseLogic.session.createItinerary(itineraryModel);
+    homeBaseLogic.update();
+    Get.back();
     update();
   }
 
   void updateWeekdaySelector(day) {
     final index = day % 7;
-    itinerary.weekdays[index] = !itinerary.weekdays[index];
+    itineraryCreatable.weekdays[index] = !itineraryCreatable.weekdays[index];
     update();
   }
 
   void updateSpotsDuration(List<Duration> list) {
-    itinerary.spotDuration = list;
+    itineraryCreatable.spotDuration = list;
     update();
   }
 }

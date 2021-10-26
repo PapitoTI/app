@@ -1,5 +1,4 @@
 import 'package:app/src/Config/helpers.dart';
-import 'package:app/src/Config/mock.dart';
 import 'package:app/src/Config/palette.dart';
 import 'package:app/src/Pages/create_schedule/view.dart';
 import 'package:app/src/Pages/edit_itinerary/view.dart';
@@ -60,9 +59,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
-      home.itinerary = _itinerary;
       _selectedTime = itineraryLogic.itinerary.sessionsList;
-      print(weekdays);
       return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -97,19 +94,19 @@ class _ItineraryPageState extends State<ItineraryPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ItineraryPageTitleWidget(
-                    title: _itinerary.name,
-                    category: _itinerary.category,
+                    title: home.itinerary.name,
+                    category: home.itinerary.category,
                     duration: durationToHours(calculateTotalDurationToMinutes(
-                        _itinerary.spotDuration)),
+                        home.itinerary.spotDuration)),
                   ),
                 ),
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                   child: UserCardWidget(
-                    imageUrl:
-                        home.session.getImage(_itinerary.guideModel.imageUrl),
-                    name: _itinerary.guideModel.name,
+                    imageUrl: home.session
+                        .getImage(home.itinerary.guideModel.imageUrl),
+                    name: home.itinerary.guideModel.name,
                   ),
                 ),
                 Padding(
@@ -119,7 +116,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
                     children: [
                       Expanded(
                           child: DescriptionWidget(
-                              description: _itinerary.description)),
+                              description: home.itinerary.description)),
                     ],
                   ),
                 ),
@@ -127,7 +124,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
                   padding:
                       const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                   child: ItineraryInfoWidget(
-                    price: _itinerary.price.toStringAsFixed(2),
+                    price: home.itinerary.price.toStringAsFixed(2),
                     duration: itineraryLogic.totalTime,
                   ),
                 ),
@@ -181,8 +178,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: itineraryLogic
-                                        .itinerary.sessionsList.length,
+                                    itemCount:
+                                        home.itinerary.sessionsList.length,
                                     itemBuilder: (ctx, index) {
                                       return TimelineTile(
                                         indicatorStyle:

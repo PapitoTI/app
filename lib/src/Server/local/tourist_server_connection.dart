@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:app/src/Config/mock.dart';
-import 'package:app/src/Models/guide_model.dart';
+import 'package:app/src/Models/chat_users_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
@@ -10,9 +10,13 @@ import 'package:app/src/Server/tourist_server_connection_interface.dart';
 import 'package:flutter/material.dart';
 
 class TouristServerConnection extends TouristServerConnectionInterface {
+  Future<TouristModel> registerTourist(TouristModel touristModel) async {
+    TouristModel t = touristModel;
+    return t;
+  }
+
   Future<TouristModel> getTouristData() async {
-    TouristModel touristModel = TouristModel('assets/images/becobatman1.jpg',
-        'Turista Ferreira de Souza', 'fefsouza10@gmail.com', '+5511968638792');
+    TouristModel touristModel = touristLucasModel;
 
     return touristModel;
   }
@@ -35,19 +39,18 @@ class TouristServerConnection extends TouristServerConnectionInterface {
     throw UnsupportedError("");
   }
 
+  @override
+  Future<List<ChatUsers>> getListMessagesTourist(String email) async {
+    var messagesList = chatUsers
+        .where((element) => element.guideModel.email == email)
+        .toList();
+    return messagesList;
+  }
+
   // retornar lista dos destinos em alta
   @override
   Future<List<SpotModel>> getSpots() async {
-    List<SpotModel> spotsList = spotsDB
-        .map((item) => SpotModel(
-            item['name'].toString(),
-            item['address'].toString(),
-            item['category'].toString(),
-            item['description'].toString(),
-            item['spotImagesList'] as List<String>))
-        .toList();
-
-    return spotsList;
+    return spotListAll.map((e) => e.clone()).toList();
   }
 
   // retornar lista de destinos favoritos
@@ -61,7 +64,7 @@ class TouristServerConnection extends TouristServerConnectionInterface {
     ItineraryModel itineraryModel4841 = ItineraryModel(
         guideModel,
         'Rolê em SP',
-        spotList,
+        spotListAll,
         spotDuration,
         sessionsList,
         'Este roteiro passa por vários lugares de São Paulo, aproveite!',
@@ -75,11 +78,10 @@ class TouristServerConnection extends TouristServerConnectionInterface {
     return guideItinerary;
   }
 
-  // retornar lista de roteiros por guia
+// retornar lista de roteiros do guia
   @override
-  Future<List<ItineraryModel>> getGuideItineraries(
-      GuideModel guideModel) async {
-    throw UnsupportedError("");
+  Future<List<ItineraryModel>> getGuideItineraries() async {
+    return guideItinerariesList.map((e) => e.clone()).toList();
   }
 
   // criar novo roteiro

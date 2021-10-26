@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:app/src/Models/guide_model.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/schedule_model.dart';
 import 'package:app/src/Models/spot_model.dart';
@@ -38,9 +37,7 @@ abstract class TouristServerConnectionInterface {
     throw UnsupportedError("");
   }
 
-  // retornar lista de roteiros por guia
-  Future<List<ItineraryModel>> getGuideItineraries(
-      GuideModel guideModel) async {
+  Future<List<ItineraryModel>> getGuideItineraries() async {
     throw UnsupportedError("");
   }
 

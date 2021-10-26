@@ -11,13 +11,11 @@ class GrpcRegisterServerConnection extends RegisterServerConnectionInterface {
       : _callOptions = CallOptions(timeout: Duration(seconds: 450));
 
   @override
-  Future<int> registerTourist(
-      String email, String password, String name, String phone) async {
+  Future<void> registerTourist(
+      String email, String password, String name) async {
     await _client.registerTourist(
-        RegisterTouristRequest(
-            email: email, password: password, name: name, phone: phone),
+        RegisterTouristRequest(email: email, password: password, name: name),
         options: _callOptions);
-    return 0;
   }
 
   @override
