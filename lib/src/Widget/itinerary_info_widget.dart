@@ -18,7 +18,6 @@ class ItineraryInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeBaseLogic>(builder: (home) {
-      print(duration);
       return GetBuilder<ItineraryLogic>(builder: (itinerary) {
         return Container(
           decoration: BoxDecoration(

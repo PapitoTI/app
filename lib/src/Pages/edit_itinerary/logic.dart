@@ -16,6 +16,7 @@ class EditItineraryLogic extends GetxController {
     itineraryLogic.insertItinerary(itineraryEditable);
     await homeBaseLogic.session
         .updateItinerary(_itinerary.name, itineraryEditable);
+    homeBaseLogic.itinerary = itineraryEditable;
     homeBaseLogic.update();
     Get.back();
   }

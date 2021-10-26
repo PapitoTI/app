@@ -48,6 +48,8 @@ dependencies:
   file_picker: ^4.0.3
   duration_picker: ^1.0.1
   fl_chart: ^0.40.2
+  image_picker: ^0.8.4+1
+  xfile: ^1.1.0
 
 dev_dependencies:
   flutter_test:

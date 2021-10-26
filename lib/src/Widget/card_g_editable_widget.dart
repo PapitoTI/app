@@ -115,12 +115,15 @@ class CardGEditableWidget extends StatelessWidget {
                                         onPressed: (() => {
                                               edit.itineraryEditable.spotsList
                                                   .removeAt(index),
+                                              edit.itineraryEditable
+                                                  .spotDuration
+                                                  .removeAt(index),
                                               edit.update()
                                             }),
                                         style: ButtonStyle(
                                             backgroundColor:
-                                                MaterialStateProperty.all<Color>(
-                                                    Palette.branco),
+                                                MaterialStateProperty.all<
+                                                    Color>(Palette.branco),
                                             shape: MaterialStateProperty.all<
                                                     RoundedRectangleBorder>(
                                                 RoundedRectangleBorder(
@@ -128,7 +131,8 @@ class CardGEditableWidget extends StatelessWidget {
                                                         BorderRadius.circular(
                                                             10),
                                                     side: BorderSide(
-                                                        color: Palette.cinzaClaro)))),
+                                                        color: Palette
+                                                            .cinzaClaro)))),
                                         child: Icon(
                                           Icons.delete,
                                           color: Palette.cinzaClaro,

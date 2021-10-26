@@ -45,7 +45,7 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                           scrollDirection: Axis.vertical,
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: timeline.spotsList.length,
+                          itemCount: home.itinerary.spotsList.length,
                           itemBuilder: (ctx, index) {
                             return TimelineTile(
                               indicatorStyle: IndicatorStyle(width: 15),
@@ -67,7 +67,8 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                                                     height: 70,
                                                     width: 70,
                                                     image: home.session
-                                                        .getImage(timeline
+                                                        .getImage(home
+                                                            .itinerary
                                                             .spotsList[index]
                                                             .spotImagesList[0])),
                                               ),
@@ -94,7 +95,8 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                                                                 const EdgeInsets
                                                                         .only(
                                                                     left: 8.0),
-                                                            child: Text(timeline
+                                                            child: Text(home
+                                                                .itinerary
                                                                 .spotsList[
                                                                     index]
                                                                 .name),
@@ -129,7 +131,8 @@ class _TimelineWidgetPageState extends State<TimelineWidgetPage> {
                                                                 .all(8.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(timeline
+                                                            Text(home
+                                                                .itinerary
                                                                 .spotsList[
                                                                     index]
                                                                 .category),

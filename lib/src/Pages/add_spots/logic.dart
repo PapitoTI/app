@@ -1,5 +1,3 @@
 import 'package:get/get.dart';
 
-class AddSpotsLogic extends GetxController {
-
-}
+class AddSpotsLogic extends GetxController {}

@@ -4,6 +4,7 @@ import 'package:app/src/Config/images.dart';
 import 'package:app/src/Models/itinerary_model.dart';
 import 'package:app/src/Models/spot_model.dart';
 import 'package:app/src/Pages/SelfGuide/self_guide.dart';
+import 'package:app/src/Pages/home_base/logic.dart';
 import 'package:app/src/Pages/itinerary/logic.dart';
 import 'package:app/src/Pages/itinerary/view.dart';
 import 'package:app/src/Pages/tourist_home/logic.dart';
@@ -23,6 +24,7 @@ class SpotPage extends StatefulWidget {
 class _SpotPageState extends State<SpotPage> {
   final TouristHomeLogic touristLogic = Get.find<TouristHomeLogic>();
   final ItineraryLogic itineraryLogic = Get.put(ItineraryLogic());
+  final HomeBaseLogic homeBaseLogic = Get.find<HomeBaseLogic>();
 
   SpotModel _spot = Get.arguments as SpotModel;
 
@@ -144,6 +146,8 @@ class _SpotPageState extends State<SpotPage> {
                                   GetBuilder<ItineraryLogic>(builder: (logic) {
                                 return GestureDetector(
                                   onTap: (() => {
+                                        homeBaseLogic.itinerary =
+                                            snapshot.data![index],
                                         logic.insertItinerary(
                                             snapshot.data![index]),
                                         Get.to(() => ItineraryPage(),

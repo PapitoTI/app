@@ -17,6 +17,7 @@ class ItineraryPageTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: título grande dando overflow
     return GetBuilder<HomeBaseLogic>(builder: (home) {
       return Container(
         decoration: BoxDecoration(
@@ -32,18 +33,13 @@ class ItineraryPageTitleWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Wrap(
-                      direction: Axis.vertical,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(fontSize: 30),
-                        ),
-                        Text(
-                          '${duration.substring(0, 2).replaceAll(new RegExp(r'^0+(?=.)'), '')}h de duração prevista',
-                          style: TextStyle(color: Palette.cinzaClaro),
-                        )
-                      ],
+                    Text(
+                      title,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    Text(
+                      '${duration.substring(0, 2).replaceAll(new RegExp(r'^0+(?=.)'), '')}h de duração prevista',
+                      style: TextStyle(color: Palette.cinzaClaro),
                     )
                   ],
                 ),
@@ -65,7 +61,7 @@ class ItineraryPageTitleWidget extends StatelessWidget {
                     width: 10,
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
